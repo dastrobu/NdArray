@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AccelerateArray",
+        "repositoryURL": "https://github.com/dastrobu/AccelerateArray.git",
+        "state": {
+          "branch": null,
+          "revision": "3c673a34c6525958d1d569ab479679cbe564a643",
+          "version": "0.3.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

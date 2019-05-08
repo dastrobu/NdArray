@@ -1,0 +1,10 @@
+# IDEs
+.idea/
+*.xcodeproj/
+
+# Swift Package Manager
+.build/
+
+DerivedData/
+
+**.log
