@@ -423,9 +423,6 @@ open class NdArray<T>:
     }
 }
 
-
-// TODO extension with abs, map
-
 // extension helping to handle different memory alignments
 extension NdArray {
     /// flag indicating if the array is C contiguous, i.e. is stored contiguously in memory and has C order

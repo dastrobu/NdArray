@@ -171,9 +171,6 @@ public extension NdArray where T == Double {
         return r
     }
 
-    // TODO amax
-    // TODO cblas_daxpy
-    // TODO catlas_daxpby
     /// in place multiplication by a scalar
     func multiplyBy(_ x: T) {
         let n = Int32(shape.reduce(1, *))
@@ -232,9 +229,6 @@ public extension NdArray where T == Double {
 /// Extension for NdArray<Float> arithmetic
 /// The logic is always implemented in the extension, operators are defined for convenience.
 public extension NdArray where T == Float {
-    // TODO amax
-    // TODO cblas_saxpy
-    // TODO catlas_saxpby
 
     /// - Returns: maximum element, nil for empty arrays
     func max() -> T? {

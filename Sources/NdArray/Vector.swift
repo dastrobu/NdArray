@@ -121,3 +121,7 @@ public func *=(a: Vector<Double>, b: Vector<Double>) {
 }
 
 
+// TODO cblas_daxpy
+// TODO catlas_daxpby
+// TODO cblas_saxpy
+// TODO catlas_saxpby

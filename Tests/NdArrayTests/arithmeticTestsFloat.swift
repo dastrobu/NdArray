@@ -570,7 +570,6 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>(rangeFrom: 1, to: 4 * 3 + 1).reshaped([4, 3], order: .C)[1..., 2]
-            print(a)
             XCTAssertEqual(a.product(), 158400)
         }
     }

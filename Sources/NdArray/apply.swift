@@ -2,44 +2,40 @@
 // Created by Daniel Strobusch on 2019-05-11.
 //
 
-import Foundation
-
-/// Extension defining the reduce operation
 public extension NdArray {
-    /// reduce all elements of the array
-    /// if the array is empty, the initial result is returned
-    func reduce<Result>(_ initialResult: Result,
-                        _ nextPartialResult: (Result, T) throws -> Result) rethrows -> Result {
-        var r = initialResult;
+    /// apply a function to all elements in place
+    /// - Parameters:
+    ///   - f: closure to apply to each array element
+    func apply(_ f: (T) throws -> T) rethrows {
         let n = shape.reduce(1, *)
         if n == 0 {
-            return r
+            return
         }
         switch ndim {
         case 0:
-            return r
+            return
         case 1:
             let s = strides[0]
             var p = data
             for _ in 0..<n {
-                r = try nextPartialResult(r, p.pointee)
+                p.initialize(to: try f(p.pointee))
                 p += s
             }
         default:
             if isContiguous {
                 var p = data
                 for _ in 0..<n {
-                    r = try nextPartialResult(r, p.pointee)
+                    p.initialize(to: try f(p.pointee))
                     p += 1
                 }
             } else {
                 // make sure the array is not sliced
                 let a = NdArray(self)
                 for i in 0..<shape[0] {
-                    r = try a[i].reduce(r, nextPartialResult)
+                    try a[i].apply(f)
                 }
             }
         }
-        return r
     }
 }
+
