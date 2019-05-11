@@ -112,7 +112,7 @@ public class NdArraySlice<T>: NdArray<T> {
                 return slice
             }
 
-            let upperBound = min(r.upperBound, shape[sliced])
+            let upperBound = Swift.min(r.upperBound, shape[sliced])
             var startIndex = Array<Int>(repeating: 0, count: ndim)
             startIndex[sliced] = r.lowerBound
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)

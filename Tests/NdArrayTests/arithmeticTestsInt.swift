@@ -314,7 +314,160 @@ class arithmeticTestsInt: XCTestCase {
         do {
             let a = NdArray<Int>(rangeTo: 4 * 3).reshaped([4, 3], order: .C)
             a[..., 2] -= 2
-            XCTAssertEqual(a.dataArray, [-2, -1,  0,  3,  4,  5,  4,  5,  6,  9, 10, 11])
+            XCTAssertEqual(a.dataArray, [-2, -1, 0, 3, 4, 5, 4, 5, 6, 9, 10, 11])
+        }
+    }
+
+    func testMax() {
+        // 0d
+        do {
+            let a = NdArray<Int>(zeros: [])
+            XCTAssertNil(a.max())
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Int>(zeros: [1, 0])
+            XCTAssertNil(a.max())
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6)
+            XCTAssertEqual(a.max()!, 5)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 6)[..., 2]
+            XCTAssertEqual(a.max()!, 4)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .C)
+            XCTAssertEqual(a.max()!, 5)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .F)
+            XCTAssertEqual(a.max()!, 5)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            XCTAssertEqual(a.max()!, 8)
+        }
+    }
+
+    func testMin() {
+        // 0d
+        do {
+            let a = NdArray<Int>(zeros: [])
+            XCTAssertNil(a.min())
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Int>(zeros: [1, 0])
+            XCTAssertNil(a.min())
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6)
+            XCTAssertEqual(a.min()!, 0)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 6)[..., 2]
+            XCTAssertEqual(a.min()!, 0)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .C)
+            XCTAssertEqual(a.min()!, 0)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .F)
+            XCTAssertEqual(a.min()!, 0)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 4 * 3).reshaped([4, 3], order: .C)[1..., 2]
+            XCTAssertEqual(a.min()!, 3)
+        }
+    }
+
+    func testSum() {
+        // 0d
+        do {
+            let a = NdArray<Int>(zeros: [])
+            XCTAssertEqual(a.sum(), 0)
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Int>(zeros: [1, 0])
+            XCTAssertEqual(a.sum(), 0)
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6)
+            XCTAssertEqual(a.sum(), 15)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 6)[..., 2]
+            XCTAssertEqual(a.sum(), 6)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .C)
+            XCTAssertEqual(a.sum(), 15)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Int>(rangeTo: 6).reshaped([2, 3], order: .F)
+            XCTAssertEqual(a.sum(), 15)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Int>(rangeTo: 4 * 3).reshaped([4, 3], order: .C)[1..., 2]
+            XCTAssertEqual(a.sum(), 42)
+        }
+    }
+
+    func testProduct() {
+        // 0d
+        do {
+            let a = NdArray<Int>(zeros: [])
+            XCTAssertEqual(a.product(), 0)
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Int>(zeros: [1, 0])
+            XCTAssertEqual(a.product(), 0)
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Int>(rangeFrom: 1, to: 6)
+            XCTAssertEqual(a.product(), 120)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Int>(rangeFrom: 1, to: 7)[..., 2]
+            XCTAssertEqual(a.product(), 15)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Int>(rangeFrom: 1, to: 7).reshaped([2, 3], order: .C)
+            XCTAssertEqual(a.product(), 720)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Int>(rangeFrom: 1, to: 7).reshaped([2, 3], order: .F)
+            XCTAssertEqual(a.product(), 720)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Int>(rangeFrom: 1, to: 4 * 3 + 1).reshaped([4, 3], order: .C)[1..., 2]
+            print(a)
+            XCTAssertEqual(a.product(), 158400)
         }
     }
 }

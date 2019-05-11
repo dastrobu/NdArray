@@ -51,7 +51,7 @@ final class NdArrayTests: XCTestCase {
     func testDescription() {
         XCTAssertEqual(NdArray<Double>([]).description, "[]")
         XCTAssertEqual(NdArray<Double>([1, 2, 3]).description, "[1.0, 2.0, 3.0]")
-        XCTAssertEqual(NdArray<Double>([[1, 2, 3], [4, 5, 6]]).description, "[[1.0, 2.0, 3.0],\n[4.0, 5.0, 6.0]]")
+        XCTAssertEqual(NdArray<Double>([[1, 2, 3], [4, 5, 6]]).description, "[[1.0, 2.0, 3.0],\n [4.0, 5.0, 6.0]]")
         XCTAssert(NdArray<Double>([Double]()).description.hasPrefix("[]"))
         XCTAssert(NdArray<Double>([[Double]]()).description.hasPrefix("[]"))
     }

@@ -6,6 +6,7 @@ public enum Contiguous {
     case F
 }
 
+// TODO Equitable
 open class NdArray<T>:
     CustomDebugStringConvertible,
     CustomStringConvertible {
@@ -269,7 +270,7 @@ open class NdArray<T>:
     }
 
     public var description: String {
-        return "\(self, format: .multiLine)"
+        return "\(self, style: .multiLine)"
     }
 
     /// element access
@@ -423,7 +424,7 @@ open class NdArray<T>:
 }
 
 
-// TODO extension with max, min, abs, sum, map
+// TODO extension with abs, map
 
 // extension helping to handle different memory alignments
 extension NdArray {
@@ -474,14 +475,14 @@ extension NdArray {
             for i in (0..<ndim - 1).reversed() {
                 for j in 0...i {
                     // zero shapes have stride 1
-                    strides[j] *= max(1, shape[i + 1])
+                    strides[j] *= Swift.max(1, shape[i + 1])
                 }
             }
         case .F:
             for i in 1..<ndim {
                 for j in i..<ndim {
                     // zero shapes have stride 1
-                    strides[j] *= max(1, shape[i - 1])
+                    strides[j] *= Swift.max(1, shape[i - 1])
                 }
             }
         }

@@ -5,6 +5,7 @@
 import Darwin
 import Accelerate
 
+// TODO sort, norm2, dot
 public class Vector<T>: NdArray<T> {
     /// create a Vector from a plain array
     init(_ a: [T]) {
