@@ -5,6 +5,7 @@ import Foundation
 class MatrixTests: XCTestCase {
     func testInit() {
         let a = Matrix<Double>([[Double]]())
+        // TODO
 
     }
 }

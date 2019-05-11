@@ -2,8 +2,8 @@
 // Created by Daniel Strobusch on 2019-05-03.
 //
 
+/// Extension for reshaping arrays
 public extension NdArray {
-    // TODO: maybe this must be moved, since otherwise one cannot override it
 
     /// Perform a no-copy (in place) reshape of the array. That means the existing data is interpreted as a different
     /// NdArray with a new shape (and new strides).

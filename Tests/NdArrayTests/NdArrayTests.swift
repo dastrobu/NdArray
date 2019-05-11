@@ -67,4 +67,23 @@ final class NdArrayTests: XCTestCase {
         XCTAssertEqual(NdArray<Double>(zeros: []).dataArray, [])
         XCTAssertEqual(NdArray<Double>(zeros: [1, 0]).dataArray, [])
     }
+
+    func testOverlaps() {
+        let a = NdArray<Double>(rangeTo: 11)
+        let b = a[...5]
+        let c = a[5...]
+        XCTAssert(a.overlaps(b))
+        XCTAssert(b.overlaps(a))
+        XCTAssert(b.overlaps(c))
+        XCTAssert(c.overlaps(b))
+        XCTAssert(a.overlaps(c))
+        XCTAssert(c.overlaps(a))
+    }
+
+    func testEmptyArrayShouldBeCAndFContiguous() {
+        let a = NdArray<Double>(zeros: [])
+        XCTAssert(a.isCContiguous)
+        XCTAssert(a.isFContiguous)
+        XCTAssert(a.isContiguous)
+    }
 }

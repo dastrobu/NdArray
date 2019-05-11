@@ -10,6 +10,24 @@ open class NdArray<T>:
     CustomDebugStringConvertible,
     CustomStringConvertible {
 
+    /// data buffer
+    internal(set) public var data: UnsafeMutablePointer<T>
+
+    /// length of the buffer
+    internal var count: Int
+
+    /// shape of the array
+    internal(set) public var shape: [Int]
+
+    /// strides of the dimensions
+    internal(set) public var strides: [Int]
+
+    /// owner of the data, if nil self is the owner and must deallocate the data buffer on destruction
+    /// if self is just a view on a buffer, this reference to the owner prevents the data from being deallocated
+    private var owner: NdArray<T>? = nil
+
+    /// dimension of the array, i.e. the length of the shape
+    /// - SeeAlso: effectiveNdim
     var ndim: Int {
         get {
             return shape.count
@@ -17,7 +35,7 @@ open class NdArray<T>:
     }
 
     /// the effective ndim is the number of dimensions, the array actually has, if any size is 0, the elemnent
-    /// has an elemnent ndim of 0 since it has no elements.
+    /// has an element ndim of 0 since it has no elements.
     var effectiveNdim: Int {
         get {
             if shape.isEmpty || shape.reduce(1, *) == 0 {
@@ -34,44 +52,64 @@ open class NdArray<T>:
         }
     }
 
-    /// flag indicating if the array is C contiguous, i.e. is stored contiguously in memory and has C order
-    /// (row major)
-    public var isCContiguous: Bool {
-        // compare C contiguous strides to actual strides
-        return strides == cContiguousStrides
-    }
-
-    /// flag indicating if the array is F contiguous, i.e. is stored contiguously in memory and has Fortran order
-    /// (column major)
-    public var isFContiguous: Bool {
-        // compare F contiguous strides to actual strides
-        return strides == fContiguousStrides
-    }
-
-    /// flag indicating if the array is contiguous, i.e. is stored contiguously in memory and has either C or Fortran
-    /// order.
-    public var isContiguous: Bool {
-        return isCContiguous || isFContiguous
-    }
-
-    /// data buffer
-    internal(set) public var data: UnsafeMutablePointer<T>
-    /// length of the buffer
-    internal var count: Int
-
-    /// shape of the array
-    internal(set) public var shape: [Int]
-
-    /// strides of the dimensions
-    internal(set) public var strides: [Int]
-
-    /// owner of the data, if nil self is the owner and must deallocate the data buffer on destruction
-    /// if self is just a view on a buffer, this reference to the owner prevents the data from being deallocated
-    private var owner: NdArray<T>? = nil
-
     /// flag indicating if this ndarray owns its data
     public var ownsData: Bool {
         return owner == nil
+    }
+
+    /// create a new array without initializing any memory
+    public init(empty count: Int = 0) {
+        self.count = count
+        data = UnsafeMutablePointer<T>.allocate(capacity: count)
+        if count == 0 {
+            shape = [0]
+        } else {
+            shape = [count]
+        }
+        strides = [1]
+    }
+
+    /// creates a view on another array without copying any data
+    public init(_ a: NdArray<T>) {
+        if a.ownsData {
+            self.owner = a
+        } else {
+            self.owner = a.owner
+        }
+        self.data = a.data
+        self.count = a.count
+        self.shape = a.shape
+        self.strides = a.strides
+        assert(self !== owner)
+    }
+
+    deinit {
+        if ownsData {
+            data.deallocate()
+        }
+    }
+
+    /// creates a copy of an array (not sharing data) and aligning it in memory
+    /// if the array to copy is contiguous, the order (F or C) will be kept for the copied array
+    /// if the array is not contiguous, a C ordered array will be created.
+    ///
+    /// - SeeAlso: init(copy: NdArray<T>, order: Contiguous)
+    public required convenience init(copy a: NdArray<T>) {
+
+        let n = a.shape.reduce(1, *)
+        self.init(empty: n)
+
+        // check if the entire data buffer can be simply copied
+        if a.isContiguous {
+            memcpy(data, a.data, a.count * MemoryLayout<T>.stride)
+            self.shape = a.shape
+            self.strides = a.strides
+            return
+        }
+
+        // reshape the new array
+        self.reshape(a.shape)
+        a.copyTo(self)
     }
 
     convenience init(empty shape: [Int], order: Contiguous = .C) {
@@ -122,29 +160,6 @@ open class NdArray<T>:
                 self.init(copy: a, order: .F)
             }
         }
-    }
-
-    /// creates a copy of an array (not sharing data) and aligning it in memory
-    /// if the array to copy is contiguous, the order (F or C) will be kept for the copied array
-    /// if the array is not contiguous, a C ordered array will be created.
-    ///
-    /// - SeeAlso: init(copy: NdArray<T>, order: Contiguous)
-    public required convenience init(copy a: NdArray<T>) {
-
-        let n = a.shape.reduce(1, *)
-        self.init(empty: n)
-
-        // check if the entire data buffer can be simply copied
-        if a.isContiguous {
-            memcpy(data, a.data, a.count * MemoryLayout<T>.stride)
-            self.shape = a.shape
-            self.strides = a.strides
-            return
-        }
-
-        // reshape the new array
-        self.reshape(a.shape)
-        a.copyTo(self)
     }
 
     /// creates a copy of an array (not sharing data) and aligning it in memory according to the specified order.
@@ -240,38 +255,6 @@ open class NdArray<T>:
         }
     }
 
-    /// create a new array without initializing any memory
-    public init(empty count: Int = 0) {
-        self.count = count
-        data = UnsafeMutablePointer<T>.allocate(capacity: count)
-        if count == 0 {
-            shape = [0]
-        } else {
-            shape = [count]
-        }
-        strides = [1]
-    }
-
-    /// creates a view on another array without copying any data
-    public init(_ a: NdArray<T>) {
-        if a.ownsData {
-            self.owner = a
-        } else {
-            self.owner = a.owner
-        }
-        self.data = a.data
-        self.count = a.count
-        self.shape = a.shape
-        self.strides = a.strides
-        assert(self !== owner)
-    }
-
-    deinit {
-        if ownsData {
-            data.deallocate()
-        }
-    }
-
     /// copies the data to an array (note, copy on write does not work)
     public var dataArray: [T] {
         if isEmpty {
@@ -289,40 +272,6 @@ open class NdArray<T>:
         return "\(self, format: .multiLine)"
     }
 
-    private var cContiguousStrides: [Int] {
-        if shape.count == 0 {
-            return []
-        }
-        if ndim == 1 {
-            return [1]
-        }
-        var strides = Array<Int>(repeating: 1, count: ndim)
-        for i in (0..<ndim - 1).reversed() {
-            for j in 0...i {
-                // zero shapes have stride 1
-                strides[j] *= max(1, shape[i + 1])
-            }
-        }
-        return strides
-    }
-
-    private var fContiguousStrides: [Int] {
-        if shape.count == 0 {
-            return []
-        }
-        if ndim == 1 {
-            return [1]
-        }
-        var strides = Array<Int>(repeating: 1, count: ndim)
-        for i in 1..<ndim {
-            for j in i..<ndim {
-                // zero shapes have stride 1
-                strides[j] *= max(1, shape[i - 1])
-            }
-        }
-        return strides
-    }
-
     /// element access
     public subscript(index: [Int]) -> T {
         get {
@@ -336,7 +285,7 @@ open class NdArray<T>:
     /// full slice access
     public subscript(r: UnboundedRange) -> NdArraySlice<T> {
         get {
-            return NdArraySlice(self, sliced: 1)
+            return NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -346,7 +295,7 @@ open class NdArray<T>:
     /// partial range slice access
     public subscript(r: ClosedRange<Int>) -> NdArraySlice<T> {
         get {
-            return self[r.lowerBound..<r.upperBound + 1]
+            return NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -356,7 +305,7 @@ open class NdArray<T>:
     /// partial range slice access
     public subscript(r: PartialRangeThrough<Int>) -> NdArraySlice<T> {
         get {
-            return self[0...r.upperBound]
+            return NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -366,7 +315,7 @@ open class NdArray<T>:
     /// partial range slice access
     public subscript(r: PartialRangeUpTo<Int>) -> NdArraySlice<T> {
         get {
-            return self[0..<r.upperBound]
+            return NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -376,7 +325,7 @@ open class NdArray<T>:
     /// partial range slice access
     public subscript(r: PartialRangeFrom<Int>) -> NdArraySlice<T> {
         get {
-            return self[r.lowerBound..<shape[0]]
+            return NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -396,11 +345,7 @@ open class NdArray<T>:
     /// range with stride
     public subscript(r: Range<Int>, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -410,11 +355,7 @@ open class NdArray<T>:
     /// closed range with stride
     public subscript(r: ClosedRange<Int>, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -424,11 +365,7 @@ open class NdArray<T>:
     /// partial range with stride
     public subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -438,11 +375,7 @@ open class NdArray<T>:
     /// partial range with stride
     public subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -452,11 +385,7 @@ open class NdArray<T>:
     /// partial range with stride
     public subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -466,21 +395,11 @@ open class NdArray<T>:
     /// full range with stride
     public subscript(r: UnboundedRange, stride: Int) -> NdArraySlice<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
-
-            let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: 0)
-            return slice
+            return NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
         }
-    }
-
-    internal func multiplyBy(stride: Int, axis: Int) {
-        strides[axis] *= stride
-        // integer ceiling division
-        shape[axis] = (shape[axis] - 1 + stride) / stride
     }
 
     /// single slice access
@@ -501,31 +420,31 @@ open class NdArray<T>:
             newValue.copyTo(self[i])
         }
     }
+}
 
-    /// compute the flat index from strides and an index array of size ndim
-    internal func flatIndex(_ index: [Int]) -> Int {
-        let ndim = self.ndim
-        assert(index.count == ndim, "\(index.count) != \(ndim)")
-        var flatIndex: Int = 0
-        for i in 0..<ndim {
-            flatIndex += index[i] * strides[i]
-        }
-        return flatIndex
+
+// TODO extension with max, min, abs, sum, map
+
+// extension helping to handle different memory alignments
+extension NdArray {
+    /// flag indicating if the array is C contiguous, i.e. is stored contiguously in memory and has C order
+    /// (row major)
+    public var isCContiguous: Bool {
+        // compare C contiguous strides to actual strides
+        return strides == strides(order: .C)
     }
 
-    /// compute the length of the array
-    /// the length can be less than count, if the data array is larger than the references elements
-    internal var len: Int {
-        // check if there is any shape set to 0
-        if let _ = shape.first(where: {
-            $0 == 0
-        }) {
-            return 0
-        }
-        let lastIndex = shape.map {
-            $0 - 1
-        }
-        return flatIndex(lastIndex) + 1
+    /// flag indicating if the array is F contiguous, i.e. is stored contiguously in memory and has Fortran order
+    /// (column major)
+    public var isFContiguous: Bool {
+        // compare F contiguous strides to actual strides
+        return strides == strides(order: .F)
+    }
+
+    /// flag indicating if the array is contiguous, i.e. is stored contiguously in memory and has either C or Fortran
+    /// order.
+    public var isContiguous: Bool {
+        return isCContiguous || isFContiguous
     }
 
     /// - Returns: true if data regions of this array overlap with data region of the other array
@@ -540,7 +459,63 @@ open class NdArray<T>:
         }
         return false
     }
+
+    /// compute the strides that a C or F contiguously aligned array would have
+    private func strides(order: Contiguous) -> [Int] {
+        if shape.count == 0 {
+            return []
+        }
+        if ndim == 1 {
+            return [1]
+        }
+        var strides = Array<Int>(repeating: 1, count: ndim)
+        switch order {
+        case .C:
+            for i in (0..<ndim - 1).reversed() {
+                for j in 0...i {
+                    // zero shapes have stride 1
+                    strides[j] *= max(1, shape[i + 1])
+                }
+            }
+        case .F:
+            for i in 1..<ndim {
+                for j in i..<ndim {
+                    // zero shapes have stride 1
+                    strides[j] *= max(1, shape[i - 1])
+                }
+            }
+        }
+        return strides
+    }
 }
 
+// internal extension
+internal extension NdArray {
 
-// TODO extension with max, min, abs, sum, map
+    /// compute the flat index from strides and an index array of size ndim
+    func flatIndex(_ index: [Int]) -> Int {
+        let ndim = self.ndim
+        assert(index.count == ndim, "\(index.count) != \(ndim)")
+        var flatIndex: Int = 0
+        for i in 0..<ndim {
+            flatIndex += index[i] * strides[i]
+        }
+        return flatIndex
+    }
+
+    /// compute the length of the array
+    /// the length can be less than count, if the data array is larger than the referenced elements
+    /// basically the length is the last valid flat index of the array + 1
+    var len: Int {
+        // check if there is any shape set to 0
+        if let _ = shape.first(where: {
+            $0 == 0
+        }) {
+            return 0
+        }
+        let lastIndex = shape.map {
+            $0 - 1
+        }
+        return flatIndex(lastIndex) + 1
+    }
+}

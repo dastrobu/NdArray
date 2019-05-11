@@ -5,18 +5,17 @@
 import Darwin
 
 public class NdArraySlice<T>: NdArray<T> {
-    // number of dimensions that have been sliced
+    /// number of dimensions that have been sliced
     private var sliced: Int
 
-    /// creates a copy of the array and defines a full slice of the copied array
-    public required convenience init(copy a: NdArray<T>) {
-        self.init(NdArray(copy: a), sliced: 0)
-    }
+    /// array of slices that have been applied to the original array, used for debugDescription
+    private var sliceDescription: [String] = []
 
     /// creates a view on another array without copying any data
-    internal init(_ a: NdArray<T>, sliced: Int) {
+    internal init(_ a: NdArray<T>, sliced: Int = 0) {
         self.sliced = sliced
         super.init(a)
+        assert(sliced <= ndim, "\(sliced) <= \(ndim)")
     }
 
     /// construct an array slice from a starting at index start
@@ -29,10 +28,18 @@ public class NdArraySlice<T>: NdArray<T> {
         self.count = a.len
     }
 
+    /// creates a copy of the array and defines a full slice of the copied array
+    public required convenience init(copy a: NdArray<T>) {
+        self.init(NdArray(copy: a), sliced: 0)
+    }
+
     /// full slice access
     public override subscript(r: UnboundedRange) -> NdArraySlice<T> {
         get {
-            return NdArraySlice(self, sliced: sliced + 1)
+            let slice = NdArraySlice(self, sliced: sliced + 1)
+            slice.sliceDescription = self.sliceDescription
+            slice.sliceDescription.append("[...]")
+            return slice
         }
         set {
             newValue.copyTo(self[r])
@@ -42,7 +49,10 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: ClosedRange<Int>) -> NdArraySlice<T> {
         get {
-            return self[r.lowerBound..<r.upperBound + 1]
+            let slice = self[r.lowerBound..<r.upperBound + 1]
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[\(r.lowerBound)...\(r.upperBound)]")
+            return slice
         }
         set {
             newValue.copyTo(self[r])
@@ -52,7 +62,10 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeThrough<Int>) -> NdArraySlice<T> {
         get {
-            return self[0...r.upperBound]
+            let slice = self[0...r.upperBound]
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[...\(r.upperBound)]")
+            return slice
         }
         set {
             newValue.copyTo(self[r])
@@ -62,7 +75,10 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeUpTo<Int>) -> NdArraySlice<T> {
         get {
-            return self[0..<r.upperBound]
+            let slice = self[0..<r.upperBound]
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[..<\(r.upperBound)]")
+            return slice
         }
         set {
             newValue.copyTo(self[r])
@@ -72,7 +88,10 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeFrom<Int>) -> NdArraySlice<T> {
         get {
-            return self[r.lowerBound..<shape[sliced]]
+            let slice = self[r.lowerBound..<shape[sliced]]
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[\(r.lowerBound)...]")
+            return slice
         }
         set {
             newValue.copyTo(self[r])
@@ -99,6 +118,8 @@ public class NdArraySlice<T>: NdArray<T> {
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)
             slice.shape[sliced] = upperBound - r.lowerBound
             slice.count = slice.len
+            slice.sliceDescription = self.sliceDescription
+            slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound)]")
             return slice
         }
         set {
@@ -112,11 +133,13 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[\(r.lowerBound)...\(r.upperBound), \(stride)]")
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -126,11 +149,13 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound), \(stride)]")
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -140,11 +165,13 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[\(r.lowerBound)..., \(stride)]")
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -154,11 +181,13 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[...\(r.upperBound), \(stride)]")
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -168,11 +197,14 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[..<\(r.upperBound), \(stride)]")
+
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -182,11 +214,14 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(stride > 0, "\(stride) > 0")
 
             let slice = self[r]
-            slice.multiplyBy(stride: stride, axis: sliced)
+            slice.sliceDescription.removeLast()
+            slice.sliceDescription.append("[..., \(stride)]")
+
+            slice.strideBy(stride, axis: sliced)
             return slice
         }
         set {
-            newValue.copyTo(self[r])
+            newValue.copyTo(self[r, stride])
         }
     }
 
@@ -201,6 +236,8 @@ public class NdArraySlice<T>: NdArray<T> {
 
             // here we reduce the shape, hence sliced stays the same
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced)
+            slice.sliceDescription = self.sliceDescription
+            slice.sliceDescription.append("[\(i)]")
             // drop shape and stride
             slice.shape = Array(slice.shape[0..<sliced] + slice.shape[(sliced + 1)...])
             slice.strides = Array(slice.strides[0..<sliced] + slice.strides[(sliced + 1)...])
@@ -210,5 +247,21 @@ public class NdArraySlice<T>: NdArray<T> {
         set {
             newValue.copyTo(self[i])
         }
+    }
+
+    public override var debugDescription: String {
+        let address = String(format: "%p", Int(bitPattern: data))
+        var sliceDescription = self.sliceDescription.joined()
+        if sliceDescription == "" {
+            sliceDescription = "-"
+        }
+        return "NdArraySlice(\(sliceDescription), shape: \(shape), strides: \(strides), data: \(address))"
+    }
+
+    /// adjust strides and shape, if the array is strided
+    private func strideBy(_ stride: Int, axis: Int) {
+        strides[axis] *= stride
+        // integer ceiling division
+        shape[axis] = (shape[axis] - 1 + stride) / stride
     }
 }
