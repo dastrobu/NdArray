@@ -531,11 +531,11 @@ open class NdArray<T>:
     /// - Returns: true if data regions of this array overlap with data region of the other array
     public func overlaps(_ other: NdArray<T>) -> Bool {
         // check if other starts within our memory
-        if other.data > self.data && other.data < self.data + count {
+        if other.data >= self.data && other.data < self.data + self.count {
             return true
         }
         // check if our memory starts within other memory
-        if self.data > other.data && self.data < other.data + count {
+        if self.data >= other.data && self.data < other.data + other.count {
             return true
         }
         return false
