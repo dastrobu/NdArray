@@ -5,7 +5,11 @@ public extension NdArray {
     /// Copy the values from the array into another array. The destination array must have the same shape as the source
     /// array.
     func copyTo(_ out: NdArray<T>) {
-        assert(shape == out.shape, "\(shape) == \(out.shape)")
+        assert(shape == out.shape,
+            """
+            Cannot copy array with shape \(shape) to array with shape \(out.shape).
+            Assertion failed while trying to copy \(self.debugDescription) to \(out.debugDescription).
+            """)
         if count == 0 {
             // if there is nothing to copy, return
             return
