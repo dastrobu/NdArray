@@ -15,7 +15,11 @@ public class NdArraySlice<T>: NdArray<T> {
     internal init(_ a: NdArray<T>, sliced: Int = 0) {
         self.sliced = sliced
         super.init(a)
-        assert(sliced <= ndim, "\(sliced) <= \(ndim)")
+        assert(sliced <= ndim,
+            """
+            Cannot slice array with ndim \(ndim) more than \(ndim) times.
+            Assertion failed while trying to create slice \(self.debugDescription).
+            """)
     }
 
     /// construct an array slice from a starting at index start

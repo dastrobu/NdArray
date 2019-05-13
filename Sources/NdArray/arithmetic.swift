@@ -4,6 +4,7 @@
 
 import Accelerate
 
+/// Extension for arrays with elements that conform to the Comparable protocol.
 public extension NdArray where T: Comparable {
     /// - Returns: maximum element, nil for empty arrays
     func max() -> T? {
@@ -22,6 +23,7 @@ public extension NdArray where T: Comparable {
     }
 }
 
+/// Extension for arrays with elements that conform to the AdditiveArithmetic protocol.
 public extension NdArray where T: AdditiveArithmetic {
     /// in addition of a scalar
     func add(_ x: T) {
@@ -68,8 +70,7 @@ public extension NdArray where T: AdditiveArithmetic {
     }
 }
 
-/// Extension for NdArray<T> where T: Numeric arithmetic
-/// The logic is always implemented in the extension, operators are defined for convenience.
+/// Extension for arrays with elements that conform to the Numeric protocol.
 public extension NdArray where T: Numeric {
     /// in place multiplication by a scalar
     func multiplyBy(_ x: T) {
@@ -114,8 +115,7 @@ public extension NdArray where T: Numeric {
     }
 }
 
-/// Extension for NdArray<Double> arithmetic
-/// The logic is always implemented in the extension, operators are defined for convenience.
+/// Extension for arrays with Double elements.
 public extension NdArray where T == Double {
     /// - Returns: maximum element, nil for empty arrays
     func max() -> T? {
@@ -226,8 +226,7 @@ public extension NdArray where T == Double {
     }
 }
 
-/// Extension for NdArray<Float> arithmetic
-/// The logic is always implemented in the extension, operators are defined for convenience.
+/// Extension for arrays with Float elements.
 public extension NdArray where T == Float {
 
     /// - Returns: maximum element, nil for empty arrays

@@ -6,7 +6,6 @@ public enum Contiguous {
     case F
 }
 
-// TODO Equitable
 open class NdArray<T>:
     CustomDebugStringConvertible,
     CustomStringConvertible {
