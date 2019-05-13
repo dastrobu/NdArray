@@ -58,7 +58,7 @@ open class NdArray<T>:
     }
 
     /// create a new array without initializing any memory
-    public init(empty count: Int = 0) {
+    internal init(empty count: Int = 0) {
         self.count = count
         data = UnsafeMutablePointer<T>.allocate(capacity: count)
         if count == 0 {
@@ -67,6 +67,11 @@ open class NdArray<T>:
             shape = [count]
         }
         strides = [1]
+    }
+
+    internal convenience init(empty shape: [Int], order: Contiguous = .C) {
+        self.init(empty: shape.reduce(1, *))
+        reshape(shape, order: order)
     }
 
     /// creates a view on another array without copying any data
@@ -112,40 +117,9 @@ open class NdArray<T>:
         a.copyTo(self)
     }
 
-    convenience init(empty shape: [Int], order: Contiguous = .C) {
-        self.init(empty: shape.reduce(1, *))
-        reshape(shape, order: order)
-    }
-
-    /// init with constant value
-    convenience init(zeros count: Int) {
-        self.init(empty: count)
-        memset(data, 0, count * MemoryLayout<T>.stride)
-    }
-
-    /// init with zeros
-    convenience init(zeros shape: [Int], order: Contiguous = .C) {
-        self.init(zeros: shape.reduce(1, *))
-        self.reshape(shape, order: order)
-    }
-
-    /// init with constant value
-    convenience init(repeating x: T, count: Int) {
-        self.init(empty: count)
-        for i in 0..<count {
-            self.data[i] = x
-        }
-    }
-
-    /// init with constant value
-    convenience init(repeating x: T, shape: [Int], order: Contiguous = .C) {
-        self.init(repeating: x, count: shape.reduce(1, *))
-        self.reshape(shape, order: order)
-    }
-
     /// create a view or copy of the array with specified order. Only if a copy is required to get an array in the
     /// specific order, a copy is made.
-    convenience init(_ a: NdArray<T>, order: Contiguous) {
+    public convenience init(_ a: NdArray<T>, order: Contiguous) {
         switch order {
         case .C:
             if a.isCContiguous {
@@ -183,13 +157,13 @@ open class NdArray<T>:
     }
 
     /// create an 1D NdArray from a plain array
-    convenience init(_ a: [T]) {
+    public convenience init(_ a: [T]) {
         self.init(empty: a.count)
         data.initialize(from: a, count: a.count)
     }
 
     /// create an 2D NdArray from a plain array
-    convenience init(_ a: [[T]], order: Contiguous = .C) {
+    public convenience init(_ a: [[T]], order: Contiguous = .C) {
         guard let first = a.first else {
             self.init(empty: [1, 0], order: order)
             return
@@ -219,7 +193,7 @@ open class NdArray<T>:
     }
 
     /// create an 3D NdArray from a plain array
-    convenience init(_ a: [[[T]]], order: Contiguous = .C) {
+    public convenience init(_ a: [[[T]]], order: Contiguous = .C) {
         guard let first = a.first, let firstFirst = first.first else {
             self.init(empty: [1, 1, 0], order: order)
             return

@@ -425,13 +425,13 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenOverlap() {
         do {
-            let a = NdArray<Double>(rangeTo: 6)
+            let a = NdArray<Double>.range(to: 6)
             let b = a[..., 2]
             a[1..., 2] = b
             XCTAssertEqual(a.dataArray, [0, 0, 2, 2, 4, 4])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
+            let a = NdArray<Double>.range(to: 6)
             let b = a[1..<6]
             a[0..<5] = b
             XCTAssertEqual(a.dataArray, [1, 2, 3, 4, 5, 5])
@@ -440,28 +440,28 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenArrayIs1dContiguous() {
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2...4] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2...4] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2..<5] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2..<5] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[..<5] = NdArray<Double>(zeros: 5)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[..<5] = NdArray<Double>.zeros(5)[...]
             XCTAssertEqual(a.dataArray, [0, 0, 0, 0, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2...] = NdArray<Double>(zeros: 4)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2...] = NdArray<Double>.zeros(4)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 0])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[...2] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[...2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 0, 0, 3, 4, 5])
         }
     }
@@ -469,60 +469,60 @@ class NdArraySsubscriptTests: XCTestCase {
     func testSliceAssignmentWhenArrayIs1dNotContiguous() {
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...4] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...4] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..<5] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..<5] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[..<5] = NdArray<Double>(zeros: 5)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[..<5] = NdArray<Double>.zeros(5)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 0, 0, 0, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...] = NdArray<Double>(zeros: 4)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...] = NdArray<Double>.zeros(4)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 0])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[...2] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[...2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 0, 0, 3, 4, 5])
         }
     }
 
     func testSliceAssignmentWhenArrayIs1dContiguousWithStrides() {
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2...4, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2...4, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2..<5, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2..<5, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[..<5, 2] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[..<5, 2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[2..., 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[2..., 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6)
-            a[...2, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArray<Double>.range(to: 6)
+            a[...2, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 4, 5])
         }
     }
@@ -530,44 +530,44 @@ class NdArraySsubscriptTests: XCTestCase {
     func testSliceAssignmentWhenArrayIs1dNotContiguousWithStrides() {
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...4, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...4, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..<5, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..<5, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[..<5, 2] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[..<5, 2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..., 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..., 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArray(NdArray<Double>(empty: 12)[..., 2])
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[...2, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[...2, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 4, 5])
         }
     }
 
     func testSliceAssignmentWhenCopyFromSelfWithStrides() {
         do {
-            let a = NdArray<Double>(rangeTo: 12)
+            let a = NdArray<Double>.range(to: 12)
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(copy: a).dataArray, [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 6 * 3).reshaped([6, 3])
+            let a = NdArray<Double>.range(to: 6 * 3).reshaped([6, 3])
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(a[0]).dataArray, [3, 4, 5])
             XCTAssertEqual(NdArray(a[1]).dataArray, [3, 4, 5])
@@ -580,12 +580,12 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenArrayIsSlicedAndCopyFromSelfWithStrides() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 12), sliced: 0)
+            let a = NdArraySlice(NdArray<Double>.range(to: 12), sliced: 0)
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(copy: a).dataArray, [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11])
         }
         do {
-            let a = NdArray<Double>(rangeTo: 3 * 4).reshaped([3, 4])
+            let a = NdArray<Double>.range(to: 3 * 4).reshaped([3, 4])
             a[...][..., 2] = a[...][1..., 2]
             XCTAssertEqual(NdArray(a[0]).dataArray, [1, 1, 3, 3])
             XCTAssertEqual(NdArray(a[1]).dataArray, [5, 5, 7, 7])
@@ -595,57 +595,57 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAssignmentToRowOrCol() {
         do {
-            let a = NdArray<Double>(zeros: [2, 2])
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2])
+            let b = NdArray<Double>.ones([2, 2])
             a[0][...] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2])
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2])
+            let b = NdArray<Double>.ones([2, 2])
             a[0] = b[0]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2])
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2])
+            let b = NdArray<Double>.ones([2, 2])
             a[0] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2])
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2])
+            let b = NdArray<Double>.ones([2, 2])
             a[...][0] = b[...][0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
 
         do {
-            let a = NdArray<Double>(zeros: [2, 2], order: .F)
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2], order: .F)
+            let b = NdArray<Double>.ones([2, 2])
             a[0][...] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2], order: .F)
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2], order: .F)
+            let b = NdArray<Double>.ones([2, 2])
             a[0][...] = b[0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2], order: .F)
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2], order: .F)
+            let b = NdArray<Double>.ones([2, 2])
             a[0] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2], order: .F)
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2], order: .F)
+            let b = NdArray<Double>.ones([2, 2])
             a[0] = b[0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 2], order: .F)
-            let b = NdArray<Double>(ones: [2, 2])
+            let a = NdArray<Double>.zeros([2, 2], order: .F)
+            let b = NdArray<Double>.ones([2, 2])
             a[...][0] = b[...][0]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
@@ -653,14 +653,14 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAssignment3d() {
         do {
-            let a = NdArray<Double>(rangeTo: 3 * 4 * 5).reshaped([3, 4, 5])
-            let b = NdArray<Double>(ones: 3 * 4 * 5).reshaped([3, 4, 5])
+            let a = NdArray<Double>.range(to: 3 * 4 * 5).reshaped([3, 4, 5])
+            let b = NdArray<Double>.ones(3 * 4 * 5).reshaped([3, 4, 5])
             a[...][0][...] = b[...][1][...]
             XCTAssertEqual(NdArray(copy: a[...][0]).dataArray, NdArray(copy: b[...][1]).dataArray)
         }
         do {
-            let a = NdArray<Double>(rangeTo: 3 * 4 * 5).reshaped([3, 4, 5])
-            let b = NdArray<Double>(ones: 3 * 4 * 5).reshaped([3, 4, 5])
+            let a = NdArray<Double>.range(to: 3 * 4 * 5).reshaped([3, 4, 5])
+            let b = NdArray<Double>.ones(3 * 4 * 5).reshaped([3, 4, 5])
             a[...][..., 2][...] = b[...][..., 2][...]
             XCTAssertEqual(NdArray(copy: a[...][..., 2]).dataArray, NdArray(copy: b[...][..., 2]).dataArray)
         }
@@ -668,12 +668,12 @@ class NdArraySsubscriptTests: XCTestCase {
 
     func testSliceAccess3d() {
         do {
-            let a = NdArray<Int>(rangeTo: 2 * 2 * 3).reshaped([2, 2, 3])
+            let a = NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3])
             XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
 
         do {
-            let a = NdArray<Int>(NdArray<Int>(rangeTo: 2 * 2 * 3).reshaped([2, 2, 3]), order: .F)
+            let a = NdArray<Int>(NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3]), order: .F)
             XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
     }
@@ -683,13 +683,13 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenOverlap() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
             let b = a[..., 2]
             a[1..., 2] = b
             XCTAssertEqual(a.dataArray, [0, 0, 2, 2, 4, 4])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
             let b = a[1..<6]
             a[0..<5] = b
             XCTAssertEqual(a.dataArray, [1, 2, 3, 4, 5, 5])
@@ -698,28 +698,28 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenArrayIs1dContiguous() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2...4] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2...4] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2..<5] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2..<5] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[..<5] = NdArray<Double>(zeros: 5)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[..<5] = NdArray<Double>.zeros(5)[...]
             XCTAssertEqual(a.dataArray, [0, 0, 0, 0, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2...] = NdArray<Double>(zeros: 4)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2...] = NdArray<Double>.zeros(4)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 0, 0, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[...2] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[...2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 0, 0, 3, 4, 5])
         }
     }
@@ -727,60 +727,60 @@ class NdArraySliceSubscriptTests: XCTestCase {
     func testSliceAssignmentWhenArrayIs1dNotContiguous() {
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...4] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...4] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..<5] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..<5] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[..<5] = NdArray<Double>(zeros: 5)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[..<5] = NdArray<Double>.zeros(5)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 0, 0, 0, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...] = NdArray<Double>(zeros: 4)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...] = NdArray<Double>.zeros(4)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 0, 0, 0])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[...2] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[...2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 0, 0, 3, 4, 5])
         }
     }
 
     func testSliceAssignmentWhenArrayIs1dContiguousWithStrides() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2...4, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2...4, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2..<5, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2..<5, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[..<5, 2] = NdArray<Double>(zeros: 3)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[..<5, 2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[2..., 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[2..., 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6))
-            a[...2, 2] = NdArray<Double>(zeros: 2)[...]
+            let a = NdArraySlice(NdArray<Double>.range(to: 6))
+            a[...2, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(a.dataArray, [0, 1, 0, 3, 4, 5])
         }
     }
@@ -788,44 +788,44 @@ class NdArraySliceSubscriptTests: XCTestCase {
     func testSliceAssignmentWhenArrayIs1dNotContiguousWithStrides() {
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2...4, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2...4, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..<5, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..<5, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[..<5, 2] = NdArray<Double>(zeros: 3)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[..<5, 2] = NdArray<Double>.zeros(3)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[2..., 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[2..., 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 0, 5])
         }
         do {
             let a = NdArraySlice(NdArray(NdArray<Double>(empty: 12)[..., 2]))
-            a[...] = NdArray<Double>(rangeTo: 6)[...]
-            a[...2, 2] = NdArray<Double>(zeros: 2)[...]
+            a[...] = NdArray<Double>.range(to: 6)[...]
+            a[...2, 2] = NdArray<Double>.zeros(2)[...]
             XCTAssertEqual(NdArray(copy: a).dataArray, [0, 1, 0, 3, 4, 5])
         }
     }
 
     func testSliceAssignmentWhenCopyFromSelfWithStrides() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 12))
+            let a = NdArraySlice(NdArray<Double>.range(to: 12))
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(copy: a).dataArray, [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 6 * 3).reshaped([6, 3]))
+            let a = NdArraySlice(NdArray<Double>.range(to: 6 * 3).reshaped([6, 3]))
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(a[0]).dataArray, [3, 4, 5])
             XCTAssertEqual(NdArray(a[1]).dataArray, [3, 4, 5])
@@ -838,12 +838,12 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAssignmentWhenArrayIsSlicedAndCopyFromSelfWithStrides() {
         do {
-            let a = NdArraySlice(NdArraySlice(NdArray<Double>(rangeTo: 12), sliced: 0))
+            let a = NdArraySlice(NdArraySlice(NdArray<Double>.range(to: 12), sliced: 0))
             a[..., 2] = a[1..., 2]
             XCTAssertEqual(NdArray(copy: a).dataArray, [1, 1, 3, 3, 5, 5, 7, 7, 9, 9, 11, 11])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 3 * 4).reshaped([3, 4]))
+            let a = NdArraySlice(NdArray<Double>.range(to: 3 * 4).reshaped([3, 4]))
             a[...][..., 2] = a[...][1..., 2]
             XCTAssertEqual(NdArray(a[0]).dataArray, [1, 1, 3, 3])
             XCTAssertEqual(NdArray(a[1]).dataArray, [5, 5, 7, 7])
@@ -853,57 +853,57 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAssignmentToRowOrCol() {
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2]))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2]))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0][...] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2]))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2]))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0] = b[0]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2]))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2]))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2]))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2]))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[...][0] = b[...][0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
 
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2], order: .F))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2], order: .F))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0][...] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2], order: .F))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2], order: .F))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0][...] = b[0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2], order: .F))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2], order: .F))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0] = b[0][...]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2], order: .F))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2], order: .F))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[0] = b[0]
             XCTAssertEqual(a.dataArray, [1, 0, 1, 0])
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(zeros: [2, 2], order: .F))
-            let b = NdArraySlice(NdArray<Double>(ones: [2, 2]))
+            let a = NdArraySlice(NdArray<Double>.zeros([2, 2], order: .F))
+            let b = NdArraySlice(NdArray<Double>.ones([2, 2]))
             a[...][0] = b[...][0]
             XCTAssertEqual(a.dataArray, [1, 1, 0, 0])
         }
@@ -911,14 +911,14 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAssignment3d() {
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 3 * 4 * 5).reshaped([3, 4, 5]))
-            let b = NdArraySlice(NdArray<Double>(ones: 3 * 4 * 5).reshaped([3, 4, 5]))
+            let a = NdArraySlice(NdArray<Double>.range(to: 3 * 4 * 5).reshaped([3, 4, 5]))
+            let b = NdArraySlice(NdArray<Double>.ones(3 * 4 * 5).reshaped([3, 4, 5]))
             a[...][0][...] = b[...][1][...]
             XCTAssertEqual(NdArray(copy: a[...][0]).dataArray, NdArray(copy: b[...][1]).dataArray)
         }
         do {
-            let a = NdArraySlice(NdArray<Double>(rangeTo: 3 * 4 * 5).reshaped([3, 4, 5]))
-            let b = NdArraySlice(NdArray<Double>(ones: 3 * 4 * 5).reshaped([3, 4, 5]))
+            let a = NdArraySlice(NdArray<Double>.range(to: 3 * 4 * 5).reshaped([3, 4, 5]))
+            let b = NdArraySlice(NdArray<Double>.ones(3 * 4 * 5).reshaped([3, 4, 5]))
             a[...][..., 2][...] = b[...][..., 2][...]
             XCTAssertEqual(NdArray(copy: a[...][..., 2]).dataArray, NdArray(copy: b[...][..., 2]).dataArray)
         }
@@ -926,12 +926,12 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSliceAccess3d() {
         do {
-            let a = NdArraySlice(NdArray<Int>(rangeTo: 2 * 2 * 3).reshaped([2, 2, 3]))
+            let a = NdArraySlice(NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3]))
             XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
 
         do {
-            let a = NdArraySlice(NdArray<Int>(NdArray<Int>(rangeTo: 2 * 2 * 3).reshaped([2, 2, 3]), order: .F))
+            let a = NdArraySlice(NdArray<Int>(NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3]), order: .F))
             XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
     }

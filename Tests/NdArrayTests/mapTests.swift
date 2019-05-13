@@ -8,7 +8,7 @@ import XCTest
 class mapTests: XCTestCase {
     func testMap() {
         do {
-            let a = NdArray<Double>(zeros: [2, 3])
+            let a = NdArray<Double>.zeros([2, 3])
             let b = NdArray<Double>(copy: a)
             let c = a.map {
                 $0 * 2
@@ -17,7 +17,7 @@ class mapTests: XCTestCase {
             XCTAssertEqual(c.dataArray, b.dataArray)
         }
         do {
-            let a = NdArray<Double>(zeros: [2, 3])[..., 2]
+            let a = NdArray<Double>.zeros([2, 3])[..., 2]
             let b = NdArray<Double>(copy: a)
             let c: NdArraySlice<Double> = a.map {
                 $0 * 2

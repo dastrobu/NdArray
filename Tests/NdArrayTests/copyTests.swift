@@ -109,7 +109,7 @@ class copyTests: XCTestCase {
     }
 
     func testCopyToShouldCopyToFContiguousArrayWhenSrcIsNotContiguousAndOutIsFContiguous() {
-        let a = NdArray<Double>(rangeTo: 3 * 4).reshaped([3, 4], order: .F)
+        let a = NdArray<Double>.range(to: 3 * 4).reshaped([3, 4], order: .F)
         let a1 = a[...][..., 2]
         let a2 = a[...][2...]
         XCTAssertFalse(a1.isContiguous)

@@ -8,7 +8,7 @@ import XCTest
 class NdArraySliceTests: XCTestCase {
 
     func testDebugDescription() {
-        let a = NdArraySlice(NdArray<Double>(zeros: [2, 3, 4]), sliced: 0)
+        let a = NdArraySlice(NdArray<Double>.zeros([2, 3, 4]), sliced: 0)
         XCTAssert(a.debugDescription.contains("NdArraySlice(-, "))
 
         // 1d

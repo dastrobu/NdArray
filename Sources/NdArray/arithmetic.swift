@@ -73,7 +73,7 @@ public extension NdArray where T: AdditiveArithmetic {
 /// Extension for arrays with elements that conform to the Numeric protocol.
 public extension NdArray where T: Numeric {
     /// in place multiplication by a scalar
-    func multiplyBy(_ x: T) {
+    func multiply(by x: T) {
         let n = Int32(shape.reduce(1, *))
         if n == 0 {
             return
@@ -172,7 +172,7 @@ public extension NdArray where T == Double {
     }
 
     /// in place multiplication by a scalar
-    func multiplyBy(_ x: T) {
+    func multiply(by x: T) {
         let n = Int32(shape.reduce(1, *))
         if n == 0 {
             return
@@ -195,8 +195,8 @@ public extension NdArray where T == Double {
         }
     }
 
-    func divideBy(_ x: T) {
-        multiplyBy(1 / x)
+    func divide(by x: T) {
+        multiply(by: 1 / x)
     }
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
@@ -284,7 +284,7 @@ public extension NdArray where T == Float {
     }
 
     /// in place multiplication by a scalar
-    func multiplyBy(_ x: T) {
+    func multiply(by x: T) {
         let n = Int32(shape.reduce(1, *))
         if n == 0 {
             return
@@ -307,8 +307,8 @@ public extension NdArray where T == Float {
         }
     }
 
-    func divideBy(_ x: T) {
-        multiplyBy(1 / x)
+    func divide(by x: T) {
+        multiply(by: 1 / x)
     }
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
@@ -369,7 +369,7 @@ public func *<K: Numeric, T: NdArray<K>>(a: T, x: K) -> T {
 }
 
 public func *=<K: Numeric, T: NdArray<K>>(a: T, x: K) {
-    a.multiplyBy(x)
+    a.multiply(by: x)
 }
 
 // Double operators
@@ -387,13 +387,16 @@ public func /<T: NdArray<Double>>(a: T, x: Double) -> T {
 }
 
 public func *=<T: NdArray<Double>>(a: T, x: Double) {
-    a.multiplyBy(x)
+    a.multiply(by: x)
 }
 
 
 public func /=<T: NdArray<Double>>(a: T, x: Double) {
-    a.divideBy(x)
+    a.divide(by: x)
 }
+
+// TODO + and - elementwise, methods add, subtract -> daxpy
+// TODO * and / elementwise only as methods multiply(elementwiseBy, divide(elementwiseBy)
 
 
 // Float operators
@@ -411,12 +414,12 @@ public func /<T: NdArray<Float>>(a: T, x: Float) -> T {
 }
 
 public func *=<T: NdArray<Float>>(a: T, x: Float) {
-    a.multiplyBy(x)
+    a.multiply(by: x)
 }
 
 
 public func /=<T: NdArray<Float>>(a: T, x: Float) {
-    a.divideBy(x)
+    a.divide(by: x)
 }
 
 

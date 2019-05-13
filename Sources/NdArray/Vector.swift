@@ -7,13 +7,14 @@ import Accelerate
 
 // TODO sort, norm2, dot
 public class Vector<T>: NdArray<T> {
-    /// create a Vector from a plain array
-    init(_ a: [T]) {
-        super.init(empty: 0)
+    internal override init(empty count: Int) {
+        super.init(empty: count)
     }
 
-    public override init(empty count: Int) {
-        super.init(empty: count)
+    /// create an 1D NdArray from a plain array
+    public convenience init(_ a: [T]) {
+        self.init(empty: a.count)
+        data.initialize(from: a, count: a.count)
     }
 
     public required init(copy a: NdArray<T>) {
@@ -33,6 +34,10 @@ public class Vector<T>: NdArray<T> {
         a.copyTo(self)
     }
 
+    /// creates a view on another array without copying any data
+    public init(_ a: Vector<T>) {
+        super.init(a)
+    }
 }
 
 public extension Vector where T == Double {

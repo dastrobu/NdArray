@@ -8,7 +8,7 @@ import XCTest
 class reshapeTests: XCTestCase {
 
     func testReshapeShouldComputeStridesWhen_6_ReshapedTo_2_3() {
-        let a = NdArray<Double>(rangeTo: 6)
+        let a = NdArray<Double>.range(to: 6)
         XCTAssertEqual(a.shape, [6])
         XCTAssertEqual(a.strides, [1])
         a.reshape([2, 3])
@@ -19,7 +19,7 @@ class reshapeTests: XCTestCase {
     }
 
     func testReshapeShouldComputeStridesWhen_6_ReshapedTo_3_2() {
-        let a = NdArray<Double>(rangeTo: 6)
+        let a = NdArray<Double>.range(to: 6)
         XCTAssertEqual(a.shape, [6])
         XCTAssertEqual(a.strides, [1])
         a.reshape([3, 2])
@@ -30,7 +30,7 @@ class reshapeTests: XCTestCase {
     }
 
     func testReshapeShouldComputeStridesWhen_6_ReshapedTo_3_2_1() {
-        let a = NdArray<Double>(rangeTo: 6)
+        let a = NdArray<Double>.range(to: 6)
         XCTAssertEqual(a.shape, [6])
         XCTAssertEqual(a.strides, [1])
         a.reshape([3, 2, 1])
@@ -41,7 +41,7 @@ class reshapeTests: XCTestCase {
     }
 
     func testReshapeShouldComputeStridesWhen_9_ReshapedTo_3_3_3() {
-        let a = NdArray<Double>(rangeTo: 3 * 3 * 3)
+        let a = NdArray<Double>.range(to: 3 * 3 * 3)
         XCTAssertEqual(a.shape, [3 * 3 * 3])
         XCTAssertEqual(a.strides, [1])
         a.reshape([3, 3, 3])
@@ -53,7 +53,7 @@ class reshapeTests: XCTestCase {
     }
 
     func testFlattenedShouldFlattenArray() {
-        let a = NdArray<Double>(rangeTo: 3 * 3 * 3)
+        let a = NdArray<Double>.range(to: 3 * 3 * 3)
         a.reshape([3, 3, 3])
         let b = a.flattened()
         XCTAssertEqual(a.shape, [3, 3, 3])

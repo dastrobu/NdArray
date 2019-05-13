@@ -15,6 +15,11 @@ public class Matrix<T>: NdArray<T> {
         reshape(shape, order: order)
     }
 
+    /// creates a view on another array without copying any data
+    public init(_ a: Matrix<T>) {
+        super.init(a)
+    }
+
     public required init(copy a: NdArray<T>) {
         let n = a.shape.reduce(1, *)
         super.init(empty: n)

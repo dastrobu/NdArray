@@ -9,9 +9,9 @@ class EquitableTests: XCTestCase {
     func testEquals() {
         // empty
         do{
-            let a = NdArray<Double>(zeros: [])
-            let b = NdArray<Double>(zeros: [1, 0])
-            let c = NdArray<Double>(zeros: [0, 1])
+            let a = NdArray<Double>.zeros([])
+            let b = NdArray<Double>.zeros([1, 0])
+            let c = NdArray<Double>.zeros([0, 1])
             XCTAssertEqual(a, a)
             XCTAssertNotEqual(a, b)
             XCTAssertNotEqual(a, c)
@@ -19,9 +19,9 @@ class EquitableTests: XCTestCase {
         }
         // 1d contiguous
         do{
-            let a = NdArray<Double>(zeros: [2])
-            let b = NdArray<Double>(zeros: [2])
-            let c = NdArray<Double>(ones: [2])
+            let a = NdArray<Double>.zeros([2])
+            let b = NdArray<Double>.zeros([2])
+            let c = NdArray<Double>.ones([2])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertEqual(a, a)
@@ -30,9 +30,9 @@ class EquitableTests: XCTestCase {
         }
         // 1d not contiguous
         do{
-            let a = NdArray<Double>(zeros: [3])
-            let b = NdArray<Double>(NdArray<Double>(zeros: [6])[...,2])
-            let c = NdArray<Double>(NdArray<Double>(ones: [6])[...,2])
+            let a = NdArray<Double>.zeros([3])
+            let b = NdArray<Double>(NdArray<Double>.zeros([6])[...,2])
+            let c = NdArray<Double>(NdArray<Double>.ones([6])[...,2])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertNotEqual(a, c)
@@ -40,9 +40,9 @@ class EquitableTests: XCTestCase {
         }
         // 2d contiguous
         do{
-            let a = NdArray<Double>(zeros: [2, 3])
-            let b = NdArray<Double>(zeros: [2, 3])
-            let c = NdArray<Double>(ones: [2, 3])
+            let a = NdArray<Double>.zeros([2, 3])
+            let b = NdArray<Double>.zeros([2, 3])
+            let c = NdArray<Double>.ones([2, 3])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertEqual(a, a)
@@ -51,9 +51,9 @@ class EquitableTests: XCTestCase {
         }
         // 2d not contiguous
         do{
-            let a = NdArray<Double>(zeros: [2, 3])
-            let b = NdArray<Double>(NdArray<Double>(zeros: [2, 6])[...][...,2])
-            let c = NdArray<Double>(NdArray<Double>(ones: [2, 6])[...][...,2])
+            let a = NdArray<Double>.zeros([2, 3])
+            let b = NdArray<Double>(NdArray<Double>.zeros([2, 6])[...][...,2])
+            let c = NdArray<Double>(NdArray<Double>.ones([2, 6])[...][...,2])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertNotEqual(a, c)
@@ -61,8 +61,8 @@ class EquitableTests: XCTestCase {
         }
         // different types
         do {
-            let a = NdArray<Double>(zeros: [2, 3])
-            let b = NdArray<Double>(zeros: [2, 3])
+            let a = NdArray<Double>.zeros([2, 3])
+            let b = NdArray<Double>.zeros([2, 3])
             XCTAssertEqual(a, b)
             XCTAssertNotEqual(a, b[...])
             XCTAssertEqual(a[...], b[...])
