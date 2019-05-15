@@ -19,6 +19,7 @@ extension NdArray: Equatable where T: Equatable {
         if n == 0 {
             return true
         }
+
         switch lhs.ndim {
         case 0:
             return true

@@ -25,38 +25,90 @@ public extension NdArray where T: Comparable {
 
 /// Extension for arrays with elements that conform to the AdditiveArithmetic protocol.
 public extension NdArray where T: AdditiveArithmetic {
-    /// in addition of a scalar
+    /// in place addition of a scalar
     func add(_ x: T) {
-        let n = Int32(shape.reduce(1, *))
-        if n == 0 {
-            return
-        }
-        switch ndim {
-        case 0:
-            return
-        case 1:
+        apply1d(f1d: {
+            n in
             let s = strides[0]
             var p = data
             for _ in 0..<n {
                 p.initialize(to: p.pointee + x)
                 p += s
             }
-        default:
-            if isContiguous {
-                var p = data
-                for _ in 0..<n {
-                    p.initialize(to: p.pointee + x)
-                    p += 1
-                }
-                return
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    a[i] += x
-                }
+        }, fContiguous: {
+            n in
+            var p = data
+            for _ in 0..<n {
+                p.initialize(to: p.pointee + x)
+                p += 1
             }
-        }
+        }, fSlice: { s in
+            s += x
+        })
+    }
+
+    /// in place addition of a vector,
+    func add(_ x: NdArray<T>) {
+        assert(shape == x.shape,
+            """
+            Cannot add arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            var p = data
+            var px = x.data
+            let s = strides[0]
+            let sx = x.strides[0]
+            for _ in 0..<n {
+                p.initialize(to: p.pointee + px.pointee)
+                p += s
+                px += sx
+            }
+        }, fContiguous: {
+            n in
+            var p = data
+            var px = x.data
+            for _ in 0..<n {
+                p.initialize(to: p.pointee + px.pointee)
+                p += 1
+                px += 1
+            }
+        }, fSlice: { ai, bi in
+            ai.add(bi)
+        })
+    }
+
+    /// in place subtraction of a vector,
+    func subtract(_ x: NdArray<T>) {
+        assert(shape == x.shape,
+            """
+            Cannot subtract arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            var p = data
+            var px = x.data
+            let s = strides[0]
+            let sx = x.strides[0]
+            for _ in 0..<n {
+                p.initialize(to: p.pointee - px.pointee)
+                p += s
+                px += sx
+            }
+        }, fContiguous: {
+            n in
+            var p = data
+            var px = x.data
+            for _ in 0..<n {
+                p.initialize(to: p.pointee - px.pointee)
+                p += 1
+                px += 1
+            }
+        }, fSlice: { ai, bi in
+            ai.subtract(bi)
+        })
     }
 
     /// in subtraction of a scalar
@@ -74,36 +126,24 @@ public extension NdArray where T: AdditiveArithmetic {
 public extension NdArray where T: Numeric {
     /// in place multiplication by a scalar
     func multiply(by x: T) {
-        let n = Int32(shape.reduce(1, *))
-        if n == 0 {
-            return
-        }
-        switch ndim {
-        case 0:
-            return
-        case 1:
+        apply1d(f1d: {
+            n in
             let s = strides[0]
             var p = data
             for _ in 0..<n {
                 p.initialize(to: p.pointee * x)
                 p += s
             }
-        default:
-            if isContiguous {
-                var p = data
-                for _ in 0..<n {
-                    p.initialize(to: p.pointee * x)
-                    p += 1
-                }
-                return
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    a[i] *= x
-                }
+        }, fContiguous: {
+            n in
+            var p = data
+            for _ in 0..<n {
+                p.initialize(to: p.pointee * x)
+                p += 1
             }
-        }
+        }, fSlice: { s in
+            s *= x
+        })
     }
 
     /// - Returns: 0 if array is empty, the product of all elements otherwise
@@ -119,80 +159,89 @@ public extension NdArray where T: Numeric {
 public extension NdArray where T == Double {
     /// - Returns: maximum element, nil for empty arrays
     func max() -> T? {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
+        if isEmpty {
             return nil
         }
         var r = data[0]
-        switch ndim {
-        case 0:
-            return nil
-        case 1:
-            vDSP_maxvD(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_maxvD(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                r = a.data[0]
-                for i in 0..<shape[0] {
-                    r = Swift.max(r, a[i].max()!)
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_maxvD(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_maxvD(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r = Swift.max(r, s.max()!)
+        })
         return r
     }
 
     /// - Returns: maximum element, nil for empty arrays
     func min() -> T? {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
+        if isEmpty {
             return nil
         }
         var r = data[0]
-        switch ndim {
-        case 0:
-            return nil
-        case 1:
-            vDSP_minvD(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_minvD(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                r = a.data[0]
-                for i in 0..<shape[0] {
-                    r = Swift.min(r, a[i].max()!)
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_minvD(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_minvD(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r = Swift.min(r, s.min()!)
+        })
         return r
+    }
+
+    /// in place addition of a scaled vector,
+    /// uses BLAS daxpy operation: self = alpha * x + self
+    func add(_ alpha: T, _ x: NdArray<T>) {
+        assert(shape == x.shape,
+            """
+            Cannot add arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            cblas_daxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            cblas_daxpy(Int32(n), alpha, x.data, 1, data, 1)
+        }, fSlice: { s, o in
+            s.add(alpha, o)
+        })
+    }
+
+    /// in place addition of a scaled vector,
+    /// uses ATLAS daxpyb operation: self = alpha * x + beta * self
+    func add(_ alpha: T, _ x: NdArray<T>, _ beta: T) {
+        assert(shape == x.shape,
+            """
+            Cannot add arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            catlas_daxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            catlas_daxpby(Int32(n), alpha, x.data, 1, beta, data, 1)
+        }, fSlice: { s, o in
+            s.add(alpha, o, beta)
+        })
     }
 
     /// in place multiplication by a scalar
     func multiply(by x: T) {
-        let n = Int32(shape.reduce(1, *))
-        if n == 0 {
-            return
-        }
-        switch ndim {
-        case 0:
-            return
-        case 1:
-            cblas_dscal(n, x, data, Int32(strides[0]))
-        default:
-            if isContiguous {
-                cblas_dscal(n, x, data, 1)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    a[i] *= x
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            cblas_dscal(Int32(n), x, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            cblas_dscal(Int32(n), x, data, 1)
+        }, fSlice: { s in
+            s *= x
+        })
     }
 
     func divide(by x: T) {
@@ -201,110 +250,107 @@ public extension NdArray where T == Double {
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
     func sum() -> T {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
-            return 0
-        }
         var r = T.zero
-        switch ndim {
-        case 0:
-            return 0
-        case 1:
-            vDSP_sveD(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_sveD(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    r += a[i].sum()
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_sveD(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_sveD(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r += s.sum()
+        })
         return r
     }
 }
 
 /// Extension for arrays with Float elements.
 public extension NdArray where T == Float {
-
     /// - Returns: maximum element, nil for empty arrays
     func max() -> T? {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
+        if isEmpty {
             return nil
         }
         var r = data[0]
-        switch ndim {
-        case 0:
-            return nil
-        case 1:
-            vDSP_maxv(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_maxv(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                r = a.data[0]
-                for i in 0..<shape[0] {
-                    r = Swift.max(r, a[i].max()!)
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_maxv(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_maxv(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r = Swift.max(r, s.max()!)
+        })
         return r
     }
 
     /// - Returns: maximum element, nil for empty arrays
     func min() -> T? {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
+        if isEmpty {
             return nil
         }
         var r = data[0]
-        switch ndim {
-        case 0:
-            return nil
-        case 1:
-            vDSP_minv(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_minv(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                r = a.data[0]
-                for i in 0..<shape[0] {
-                    r = Swift.min(r, a[i].max()!)
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_minv(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_minv(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r = Swift.min(r, s.min()!)
+        })
         return r
+    }
+
+    /// in place addition of a scaled vector,
+    /// uses BLAS saxpy operation: self = alpha * x + self
+    func add(_ alpha: T, _ x: NdArray<T>) {
+        assert(shape == x.shape,
+            """
+            Cannot add arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            cblas_saxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            cblas_saxpy(Int32(n), alpha, x.data, 1, data, 1)
+        }, fSlice: { s, o in
+            s.add(alpha, o)
+        })
+    }
+
+    /// in place addition of a scaled vector,
+    /// uses ATLAS saxpyb operation: self = alpha * x + beta * self
+    func add(_ alpha: T, _ x: NdArray<T>, _ beta: T) {
+        assert(shape == x.shape,
+            """
+            Cannot add arrays with shape \(x.shape) and \(shape).
+            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            """)
+        apply1d(other: x, f1d: {
+            n in
+            catlas_saxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            catlas_saxpby(Int32(n), alpha, x.data, 1, beta, data, 1)
+        }, fSlice: { s, o in
+            s.add(alpha, o, beta)
+        })
     }
 
     /// in place multiplication by a scalar
     func multiply(by x: T) {
-        let n = Int32(shape.reduce(1, *))
-        if n == 0 {
-            return
-        }
-        switch ndim {
-        case 0:
-            return
-        case 1:
-            cblas_sscal(n, x, data, Int32(strides[0]))
-        default:
-            if isContiguous {
-                cblas_sscal(n, x, data, 1)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    a[i] *= x
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            cblas_sscal(Int32(n), x, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            cblas_sscal(Int32(n), x, data, 1)
+        }, fSlice: { s in
+            s *= x
+        })
     }
 
     func divide(by x: T) {
@@ -313,27 +359,16 @@ public extension NdArray where T == Float {
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
     func sum() -> T {
-        let n = vDSP_Length(shape.reduce(1, *))
-        if n == 0 {
-            return 0
-        }
         var r = T.zero
-        switch ndim {
-        case 0:
-            return 0
-        case 1:
-            vDSP_sve(data, strides[0], &r, vDSP_Length(shape[0]))
-        default:
-            if isContiguous {
-                vDSP_sve(data, 1, &r, n)
-            } else {
-                // make sure the array is not sliced
-                let a = NdArray(self)
-                for i in 0..<shape[0] {
-                    r += a[i].sum()
-                }
-            }
-        }
+        apply1d(f1d: {
+            n in
+            vDSP_sve(data, strides[0], &r, vDSP_Length(n))
+        }, fContiguous: {
+            n in
+            vDSP_sve(data, 1, &r, vDSP_Length(n))
+        }, fSlice: { s in
+            r += s.sum()
+        })
         return r
     }
 }
@@ -344,6 +379,20 @@ public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
     let b = T(copy: a)
     b += x
     return b
+}
+
+public func +<K: AdditiveArithmetic, T: NdArray<K>>(x: K, a: T) -> T {
+    return a + x
+}
+
+public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c += b
+    return c
+}
+
+public func +=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
+    a.add(b)
 }
 
 public func -<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
@@ -360,7 +409,22 @@ public func -=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) {
     a.subtract(x)
 }
 
+public func -<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c -= b
+    return c
+}
+
+public func -=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
+    a.subtract(b)
+}
+
 // Numeric operators
+public prefix func -<K: Numeric, T: NdArray<K>>(a: T) -> T {
+    let b = T(copy: a)
+    b *= -1
+    return b
+}
 
 public func *<K: Numeric, T: NdArray<K>>(a: T, x: K) -> T {
     let b = T(copy: a)
@@ -372,7 +436,16 @@ public func *=<K: Numeric, T: NdArray<K>>(a: T, x: K) {
     a.multiply(by: x)
 }
 
+public func *<K: Numeric, T: NdArray<K>>(x: K, a: T) -> T {
+    return a * x
+}
+
 // Double operators
+public prefix func -<T: NdArray<Double>>(a: T) -> T {
+    let b = T(copy: a)
+    b *= -1
+    return b
+}
 
 public func *<T: NdArray<Double>>(a: T, x: Double) -> T {
     let b = T(copy: a)
@@ -390,16 +463,45 @@ public func *=<T: NdArray<Double>>(a: T, x: Double) {
     a.multiply(by: x)
 }
 
+public func *<T: NdArray<Double>>(x: Double, a: T) -> T {
+    return a * x
+}
 
 public func /=<T: NdArray<Double>>(a: T, x: Double) {
     a.divide(by: x)
 }
 
-// TODO + and - elementwise, methods add, subtract -> daxpy
-// TODO * and / elementwise only as methods multiply(elementwiseBy, divide(elementwiseBy)
+public func +<T: NdArray<Double>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c += b
+    return c
+}
+
+public func +=<T: NdArray<Double>>(a: T, b: T) {
+    a.add(1, b)
+}
+
+public func +<T: NdArray<Double>>(x: Double, a: T) -> T {
+    return a + x
+}
+
+public func -<T: NdArray<Double>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c -= b
+    return c
+}
+
+public func -=<T: NdArray<Double>>(a: T, b: T) {
+    a.add(-1, b)
+}
 
 
 // Float operators
+public prefix func -<T: NdArray<Float>>(a: T) -> T {
+    let b = T(copy: a)
+    b *= -1
+    return b
+}
 
 public func *<T: NdArray<Float>>(a: T, x: Float) -> T {
     let b = T(copy: a)
@@ -417,9 +519,35 @@ public func *=<T: NdArray<Float>>(a: T, x: Float) {
     a.multiply(by: x)
 }
 
+public func *<T: NdArray<Float>>(x: Float, a: T) -> T {
+    return a * x
+}
 
 public func /=<T: NdArray<Float>>(a: T, x: Float) {
     a.divide(by: x)
 }
 
+public func +<T: NdArray<Float>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c += b
+    return c
+}
+
+public func +=<T: NdArray<Float>>(a: T, b: T) {
+    a.add(1, b)
+}
+
+public func +<T: NdArray<Float>>(x: Float, a: T) -> T {
+    return a + x
+}
+
+public func -<T: NdArray<Float>>(a: T, b: T) -> T {
+    let c = T(copy: a)
+    c -= b
+    return c
+}
+
+public func -=<T: NdArray<Float>>(a: T, b: T) {
+    a.add(-1, b)
+}
 

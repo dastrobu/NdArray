@@ -573,5 +573,339 @@ class arithmeticTestsDouble: XCTestCase {
             XCTAssertEqual(a.product(), 158400)
         }
     }
+
+    func testAddArrayInPlace() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            a += a
+            XCTAssertEqual(a.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            a += a
+            XCTAssertEqual(a.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a += a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).dataArray.map({ $0 * 2 }))
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a[..., 2] += a[1..., 2]
+            XCTAssertEqual(a.dataArray, [1, 1, 5, 3, 9, 5])
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            a += a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C).dataArray.map({ $0 * 2 }))
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            a += a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F).dataArray.map({ $0 * 2 }))
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            a[..., 2] += a[1..., 2]
+            XCTAssertEqual(a.dataArray, [3, 5, 7, 3, 4, 5, 15, 17, 19, 9, 10, 11])
+        }
+
+    }
+
+    func testSubtractArrayInPlace() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            a -= a
+            XCTAssertEqual(a.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            a -= a
+            XCTAssertEqual(a.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a -= a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.zeros(6).dataArray)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a[..., 2] -= a[1..., 2]
+            XCTAssertEqual(a.dataArray, [-1, 1, -1, 3, -1, 5])
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            a -= a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.zeros(6).reshaped([2, 3], order: .C).dataArray)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            a -= a
+            XCTAssertEqual(a.dataArray, NdArray<Double>.zeros(6).reshaped([2, 3], order: .F).dataArray)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            a[..., 2] -= a[1..., 2]
+            XCTAssertEqual(a.dataArray, [-3, -3, -3, 3, 4, 5, -3, -3, -3, 9, 10, 11])
+        }
+    }
+
+    func testAddArray() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            let b = a + a
+            XCTAssertEqual(b.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            let b = a + a
+            XCTAssertEqual(b.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = a + a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.range(to: 6).dataArray.map({ $0 * 2 }))
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = a[..., 2] + a[1..., 2]
+            XCTAssertEqual(b.dataArray, [1, 5, 9])
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            let b = a + a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C).dataArray.map({ $0 * 2 }))
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            let b = a + a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F).dataArray.map({ $0 * 2 }))
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            let b = a[..., 2] + a[1..., 2]
+            XCTAssertEqual(b.dataArray, [3, 5, 7, 15, 17, 19])
+        }
+    }
+
+    func testSubtractArray() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            let b = a - a
+            XCTAssertEqual(b.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            let b = a - a
+            XCTAssertEqual(b.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = a - a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.zeros(6).dataArray)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = a[..., 2] - a[1..., 2]
+            XCTAssertEqual(b.dataArray, [-1, -1, -1])
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            let b = a - a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.zeros(6).reshaped([2, 3], order: .C).dataArray)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            let b = a - a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.zeros(6).reshaped([2, 3], order: .F).dataArray)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            let b = a[..., 2] - a[1..., 2]
+            XCTAssertEqual(b.dataArray, [-3, -3, -3, -3, -3, -3])
+        }
+    }
+
+    func testAxpy() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            a.add(3, a)
+            XCTAssertEqual(a.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            a.add(3, a)
+            XCTAssertEqual(a.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a.add(3, a)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).dataArray.map({ $0 + 3 * $0 }))
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = NdArray<Double>.range(to: 6)
+            a[..., 2].add(3, a[1..., 2])
+            b[..., 2] = b[..., 2] + 3 * a[1..., 2]
+            XCTAssertEqual(a.dataArray, b.dataArray)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            a.add(3, a)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C).dataArray.map({ $0 + 3 * $0 }))
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            a.add(3, a)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F).dataArray.map({ $0 + 3 * $0 }))
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            let b = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            a[..., 2].add(3, a[1..., 2])
+            b[..., 2] = b[..., 2] + 3 * a[1..., 2]
+            XCTAssertEqual(a.dataArray, b.dataArray)
+        }
+    }
+
+    func testAxpyb() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            a.add(3, a, 5)
+            XCTAssertEqual(a.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            a.add(3, a, 5)
+            XCTAssertEqual(a.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a.add(3, a, 5)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).dataArray.map({ $0 * 3 + $0 * 5 }))
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = NdArray<Double>.range(to: 6)
+            a[..., 2].add(3, a[1..., 2], 5)
+            b[..., 2] = 5 * b[..., 2] + 3 * a[1..., 2]
+            XCTAssertEqual(a.dataArray, b.dataArray)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            a.add(3, a, 5)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C).dataArray.map({ $0 * 3 + $0 * 5 }))
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            a.add(3, a, 5)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F).dataArray.map({ $0 * 3 + $0 * 5 }))
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            let b = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            a[..., 2].add(3, a[1..., 2], 5)
+            b[..., 2] = 5 * b[..., 2] + 3 * a[1..., 2]
+            XCTAssertEqual(a.dataArray, b.dataArray)
+        }
+    }
+
+    func testNegate() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            let b = -a
+            XCTAssertEqual(b.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            let b = -a
+            XCTAssertEqual(b.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = -a
+            XCTAssertEqual(b.dataArray, NdArray<Double>.range(to: 6).dataArray.map({ -$0 }))
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            let b = -a[..., 2]
+            XCTAssertEqual(b.dataArray, NdArray<Double>(copy: a[..., 2]).map({ -$0 }).dataArray)
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            let b = -a
+            XCTAssertEqual(b.dataArray, a.dataArray.map({ -$0 }))
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            let b = -a
+            XCTAssertEqual(b.dataArray, a.dataArray.map({ -$0 }))
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            let b = -a[..., 2]
+            XCTAssertEqual(b.dataArray, NdArray<Double>(copy: a[..., 2]).map({ -$0 }).dataArray)
+        }
+    }
+
+    func testAddScalarToArray() {
+        let a = NdArray<Double>.range(to: 6)
+        XCTAssertEqual((3 + a).dataArray, (a + 3).dataArray)
+    }
+
+    func testMultiplyScalarWithArray() {
+        let a = NdArray<Double>.range(to: 6)
+        XCTAssertEqual((3 * a).dataArray, (a * 3).dataArray)
+    }
 }
 

@@ -15,26 +15,13 @@ public func abs<K: SignedNumeric, T: NdArray<K>>(_ a: T) -> T where K: Comparabl
 // Double
 
 public func abs<T: NdArray<Double>>(_ a: T, out b: T) {
-    let n = vDSP_Length(a.shape.reduce(1, *))
-    if n == 0 {
-        return
-    }
-    switch a.ndim {
-    case 0:
-        return
-    case 1:
+    a.apply1d(other: b, f1d: { n in
         vDSP_vabsD(a.data, a.strides[0], b.data, b.strides[0], vDSP_Length(a.shape[0]))
-    default:
-        if (a.isCContiguous && b.isCContiguous) || (a.isFContiguous && b.isFContiguous) {
-            vDSP_vabsD(a.data, 1, b.data, 1, n)
-        } else {
-            // make sure the array is not sliced
-            let a = NdArray(a)
-            for i in 0..<a.shape[0] {
-                abs(a[i], out: b[i])
-            }
-        }
-    }
+    }, fContiguous: { n in
+        vDSP_vabsD(a.data, 1, b.data, 1, vDSP_Length(n))
+    }, fSlice: { ai, bi in
+        abs(ai, out: bi)
+    })
 }
 
 public func abs<T: NdArray<Double>>(_ a: T) -> T {
@@ -46,26 +33,13 @@ public func abs<T: NdArray<Double>>(_ a: T) -> T {
 // Float
 
 public func abs<T: NdArray<Float>>(_ a: T, out b: T) {
-    let n = vDSP_Length(a.shape.reduce(1, *))
-    if n == 0 {
-        return
-    }
-    switch a.ndim {
-    case 0:
-        return
-    case 1:
+    a.apply1d(other: b, f1d: { n in
         vDSP_vabs(a.data, a.strides[0], b.data, b.strides[0], vDSP_Length(a.shape[0]))
-    default:
-        if (a.isCContiguous && b.isCContiguous) || (a.isFContiguous && b.isFContiguous) {
-            vDSP_vabs(a.data, 1, b.data, 1, n)
-        } else {
-            // make sure the array is not sliced
-            let a = NdArray(a)
-            for i in 0..<a.shape[0] {
-                abs(a[i], out: b[i])
-            }
-        }
-    }
+    }, fContiguous: { n in
+        vDSP_vabs(a.data, 1, b.data, 1, vDSP_Length(n))
+    }, fSlice: { ai, bi in
+        abs(ai, out: bi)
+    })
 }
 
 public func abs<T: NdArray<Float>>(_ a: T) -> T {
