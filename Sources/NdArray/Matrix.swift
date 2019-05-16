@@ -3,6 +3,7 @@
 //
 
 import Darwin
+import Accelerate
 
 public class Matrix<T>: NdArray<T> {
     /// create an 2D NdArray from a plain array
@@ -36,7 +37,11 @@ public class Matrix<T>: NdArray<T> {
     }
 
     public init(empty shape: [Int], order: Contiguous = .C) {
-        super.init(empty: shape.reduce(1, *))
+        assert(shape.count == 2,
+            """
+            Cannot create matrix with shape \(shape). Matrix must have two dimensions.
+            """)
+        super.init(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
         reshape(shape, order: order)
     }
 
@@ -45,20 +50,17 @@ public class Matrix<T>: NdArray<T> {
         super.init(a)
     }
 
-    public required init(copy a: NdArray<T>) {
-        let n = a.shape.reduce(1, *)
-        super.init(empty: n)
+    internal required init(empty count: Int) {
+        super.init(empty: count)
+    }
 
-        // check if the entire data buffer can be simply copied
-        if a.isContiguous {
-            memcpy(data, a.data, a.count * MemoryLayout<T>.stride)
-            self.shape = a.shape
-            self.strides = a.strides
-            return
-        }
-
-        // reshape the new array
-        self.reshape(a.shape)
+    public required convenience init(copy a: NdArray<T>) {
+        assert(a.shape.count == 2,
+            """
+            Cannot create matrix with shape \(a.shape). Matrix must have two dimensions.
+            Assertion failed while trying to copy \(a.debugDescription).
+            """)
+        self.init(empty: a.shape, order: a.isFContiguous ? .F : .C)
         a.copyTo(self)
     }
 
@@ -71,12 +73,20 @@ public extension Matrix where T == Double {
         }
     }
 
-    func transpose() {
+    func transposed() -> Matrix<T> {
+        let out = Matrix<T>(empty: shape.reversed())
+        transposed(out: out)
+        return out
     }
 
-    func transposed() -> Matrix<T> {
-        // TODO
-        return self
+    func transposed(out: Matrix<T>) {
+        assert(shape == shape.reversed(),
+            """
+            Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
+            Assertion failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
+            """)
+        // TODO test strides carefully
+        vDSP_mtransD(data, strides[0], out.data, out.strides[0], vDSP_Length(shape[1]), vDSP_Length(shape[0]))
     }
 
     func solve(_ x: Vector<T>, out: Vector<T>? = nil) throws -> Vector<T> {

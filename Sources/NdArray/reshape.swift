@@ -12,7 +12,7 @@ public extension NdArray {
     /// Code is a port of numpys reshape algorithm in numpy/core/src/multiarray/shape.c
     @discardableResult
     internal func reshape(_ shape: [Int], order: Contiguous = .C) -> Bool {
-        assert(shape.reduce(1, *) == count, "data with \(count) elements cannot be reshaped to new shape \(shape)")
+        assert((shape.isEmpty ? 0 : shape.reduce(1, *)) == count, "data with \(count) elements cannot be reshaped to new shape \(shape)")
 
         if count == 0 {
             self.shape = shape

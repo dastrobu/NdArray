@@ -6,7 +6,7 @@ public enum Contiguous {
     case F
 }
 
-open class NdArray<T>:
+public class NdArray<T>:
     CustomDebugStringConvertible,
     CustomStringConvertible {
 
@@ -58,7 +58,7 @@ open class NdArray<T>:
     }
 
     /// create a new array without initializing any memory
-    internal init(empty count: Int = 0) {
+    internal required init(empty count: Int = 0) {
         self.count = count
         data = UnsafeMutablePointer<T>.allocate(capacity: count)
         if count == 0 {
@@ -70,7 +70,7 @@ open class NdArray<T>:
     }
 
     internal convenience init(empty shape: [Int], order: Contiguous = .C) {
-        self.init(empty: shape.reduce(1, *))
+        self.init(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
         reshape(shape, order: order)
     }
 
@@ -100,20 +100,7 @@ open class NdArray<T>:
     ///
     /// - SeeAlso: init(copy: NdArray<T>, order: Contiguous)
     public required convenience init(copy a: NdArray<T>) {
-
-        let n = a.shape.reduce(1, *)
-        self.init(empty: n)
-
-        // check if the entire data buffer can be simply copied
-        if a.isContiguous {
-            memcpy(data, a.data, a.count * MemoryLayout<T>.stride)
-            self.shape = a.shape
-            self.strides = a.strides
-            return
-        }
-
-        // reshape the new array
-        self.reshape(a.shape)
+        self.init(empty: a.shape, order: a.isFContiguous ? .F : .C)
         a.copyTo(self)
     }
 
@@ -140,7 +127,6 @@ open class NdArray<T>:
     ///
     /// - SeeAlso: init(copy: NdArray<T>, order: Contiguous)
     public convenience init(copy a: NdArray<T>, order: Contiguous = .C) {
-        let n = a.shape.reduce(1, *)
         switch order {
         case .C:
             if a.isCContiguous {
@@ -151,8 +137,7 @@ open class NdArray<T>:
                 self.init(copy: a)
             }
         }
-        self.init(empty: n)
-        self.reshape(a.shape, order: order)
+        self.init(empty: a.shape, order: order)
         a.copyTo(self)
     }
 
@@ -490,3 +475,5 @@ internal extension NdArray {
         return flatIndex(lastIndex) + 1
     }
 }
+
+// TODO set all values Double/Float

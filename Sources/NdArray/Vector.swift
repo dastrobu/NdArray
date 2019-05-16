@@ -11,7 +11,7 @@ public enum SortOrder {
 }
 
 public class Vector<T>: NdArray<T> {
-    internal override init(empty count: Int) {
+    internal required init(empty count: Int) {
         super.init(empty: count)
     }
 
@@ -21,36 +21,39 @@ public class Vector<T>: NdArray<T> {
         data.initialize(from: a, count: a.count)
     }
 
-    public required init(copy a: NdArray<T>) {
-        let n = a.shape.reduce(1, *)
-        super.init(empty: n)
-
-        // check if the entire data buffer can be simply copied
-        if a.isContiguous {
-            memcpy(data, a.data, a.count * MemoryLayout<T>.stride)
-            self.shape = a.shape
-            self.strides = a.strides
-            return
-        }
-
-        // reshape the new array
-        self.reshape(a.shape)
+    public required convenience init(copy a: NdArray<T>) {
+        assert(a.shape.count == 1,
+            """
+            Cannot create vector with shape \(a.shape). Vector must have one dimension.
+            Assertion failed while trying to copy \(a.debugDescription).
+            """)
+        self.init(empty: a.shape, order: a.isFContiguous ? .F : .C)
         a.copyTo(self)
     }
 
     /// creates a view on another array without copying any data
-    public init(_ a: Vector<T>) {
+    public override init(_ a: NdArray<T>) {
+        assert(a.shape.count == 1,
+            """
+            Cannot create vector with shape \(a.shape). Vector must have one dimension.
+            Assertion failed while trying to create vector from \(a.debugDescription).
+            """)
         super.init(a)
     }
 }
 
 public extension Vector where T == Double {
     func dot(_ y: Vector<T>) -> T {
+        assert(shape == y.shape,
+            """
+            Cannot compute dot product of vectors with shape \(shape) and \(y.shape). 
+            Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
+            """)
         let n = Int32(shape[0])
         return cblas_ddot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))
     }
 
-    func norm2(_ y: Vector<T>) -> T {
+    func norm2() -> T {
         let n = Int32(shape[0])
         return cblas_dnrm2(n, data, Int32(strides[0]))
     }
@@ -62,7 +65,7 @@ public extension Vector where T == Double {
         case .ascending:
             sortOrder = 1
         case .descending:
-            sortOrder = 2
+            sortOrder = -1
         }
 
         if isContiguous {
@@ -75,7 +78,7 @@ public extension Vector where T == Double {
         }
     }
 
-    func revert() {
+    func reverse() {
         let n = vDSP_Length(shape[0])
         vDSP_vrvrsD(data, strides[0], n)
     }
@@ -83,11 +86,16 @@ public extension Vector where T == Double {
 
 public extension Vector where T == Float {
     func dot(_ y: Vector<T>) -> T {
+        assert(shape == y.shape,
+            """
+            Cannot compute dot product of vectors with shape \(shape) and \(y.shape). 
+            Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
+            """)
         let n = Int32(shape[0])
         return cblas_sdot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))
     }
 
-    func norm2(_ y: Vector<T>) -> T {
+    func norm2() -> T {
         let n = Int32(shape[0])
         return cblas_snrm2(n, data, Int32(strides[0]))
     }
@@ -99,7 +107,7 @@ public extension Vector where T == Float {
         case .ascending:
             sortOrder = 1
         case .descending:
-            sortOrder = 2
+            sortOrder = -1
         }
 
         if isContiguous {
@@ -112,7 +120,7 @@ public extension Vector where T == Float {
         }
     }
 
-    func revert() {
+    func reverse() {
         let n = vDSP_Length(shape[0])
         vDSP_vrvrs(data, strides[0], n)
     }

@@ -33,19 +33,15 @@ fileprivate func arange<T>(start: T, stop: T, step: T) -> Int where T: BinaryFlo
 }
 
 public extension NdArray {
-    static func empty(count: Int) -> NdArray<T> {
-        return NdArray(empty: count)
-    }
-
-    static func empty(shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        let a = NdArray(empty: shape.reduce(1, *))
+    static func empty(shape: [Int], order: Contiguous = .C) -> Self {
+        let a = self.init(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
         return a
     }
 
     /// init with constant value
-    static func repeating(_ x: T, count: Int) -> NdArray<T> {
-        let a = NdArray(empty: count)
+    static func repeating(_ x: T, count: Int) -> Self {
+        let a = self.init(empty: count)
         for i in 0..<count {
             a.data[i] = x
         }
@@ -53,65 +49,64 @@ public extension NdArray {
     }
 
     /// init with constant value
-    static func repeating(_ x: T, shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        let a = NdArray.repeating(x, count: shape.reduce(1, *))
+    static func repeating(_ x: T, shape: [Int], order: Contiguous = .C) -> Self {
+        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
         return a
     }
 }
 
 public extension NdArray where T: AdditiveArithmetic {
-
     /// init with constant value
-    static func zeros(_ count: Int) -> NdArray<T> {
-        return NdArray.repeating(T.zero, count: count)
+    static func zeros(_ count: Int) -> Self {
+        return repeating(T.zero, count: count)
     }
 
     /// init with zeros
-    static func zeros(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        return NdArray.repeating(T.zero, shape: shape, order: order)
+    static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
+        return repeating(T.zero, shape: shape, order: order)
     }
 
 }
 
 public extension NdArray where T == Double {
     /// Generate values within an half-open interval [0, rangeTo)
-    static func range(to stop: T, by step: T = 1) -> NdArray<T> {
-        return NdArray.range(from: 0, to: stop, by: step)
+    static func range(to stop: T, by step: T = 1) -> Self {
+        return self.range(from: 0, to: stop, by: step)
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
-    static func range(from start: T, to stop: T, by step: T = 1) -> NdArray<T> {
+    static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
-        let a = NdArray<T>(empty: n)
+        let a = self.init(empty: n)
         vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vrampD)
         return a
     }
 
-    static func ones(_ count: Int) -> NdArray<T> {
-        return NdArray.repeating(1, count: count)
+    static func ones(_ count: Int) -> Self {
+        return repeating(1, count: count)
     }
 
-    static func ones(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        return NdArray.repeating(1, shape: shape, order: order)
+    static func ones(_ shape: [Int], order: Contiguous = .C) -> Self {
+        return repeating(1, shape: shape, order: order)
     }
 
-    static func zeros(_ count: Int) -> NdArray<T> {
-        return NdArray.repeating(0, count: count)
+    static func zeros(_ count: Int) -> Self {
+        return repeating(0, count: count)
     }
 
-    static func zeros(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        return NdArray.repeating(0, shape: shape, order: order)
+    static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
+        return repeating(0, shape: shape, order: order)
     }
 
-    static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        let a = NdArray.repeating(x, count: shape.reduce(1, *))
+    static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> Self {
+        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
         return a
     }
 
-    static func repeating(_ x: T, count: Int) -> NdArray<T> {
-        let a = NdArray(empty: count)
+    static func repeating(_ x: T, count: Int) -> Self {
+        let a = self.init(empty: count)
         catlas_dset(Int32(count), x, a.data, 1)
         return a
     }
@@ -119,42 +114,42 @@ public extension NdArray where T == Double {
 
 public extension NdArray where T == Float {
     /// Generate values within an half-open interval [0, rangeTo)
-    static func range(to stop: T, by step: T = 1) -> NdArray<T> {
-        return NdArray.range(from: 0, to: stop, by: step)
+    static func range(to stop: T, by step: T = 1) -> Self {
+        return self.range(from: 0, to: stop, by: step)
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
-    static func range(from start: T, to stop: T, by step: T = 1) -> NdArray<T> {
+    static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
-        let a = NdArray<T>(empty: n)
+        let a = self.init(empty: n)
         vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vramp)
         return a
     }
 
-    static func ones(_ count: Int) -> NdArray<T> {
-        return NdArray.repeating(1, count: count)
+    static func ones(_ count: Int) -> Self {
+        return repeating(1, count: count)
     }
 
-    static func ones(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        return NdArray.repeating(1, shape: shape, order: order)
+    static func ones(_ shape: [Int], order: Contiguous = .C) -> Self {
+        return repeating(1, shape: shape, order: order)
     }
 
-    static func zeros(_ count: Int) -> NdArray<T> {
-        return NdArray.repeating(0, count: count)
+    static func zeros(_ count: Int) -> Self {
+        return repeating(0, count: count)
     }
 
-    static func zeros(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        return NdArray.repeating(0, shape: shape, order: order)
+    static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
+        return repeating(0, shape: shape, order: order)
     }
 
-    static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        let a = NdArray.repeating(x, count: shape.reduce(1, *))
+    static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> Self {
+        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
         return a
     }
 
-    static func repeating(_ x: T, count: Int) -> NdArray<T> {
-        let a = NdArray(empty: count)
+    static func repeating(_ x: T, count: Int) -> Self {
+        let a = self.init(empty: count)
         catlas_sset(Int32(count), x, a.data, 1)
         return a
     }
@@ -163,14 +158,14 @@ public extension NdArray where T == Float {
 /// Generate values within an half-open interval [start, stop)
 public extension NdArray where T == Int {
     /// initializer an array with a range of number starting from 0 upto (but excluding) rangeTo.
-    static func range(to stop: T, by step: T = 1) -> NdArray<T> {
-        return NdArray.range(from: 0, to: stop, by: step)
+    static func range(to stop: T, by step: T = 1) -> Self {
+        return range(from: 0, to: stop, by: step)
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
-    static func range(from start: T, to stop: T, by step: T = 1) -> NdArray<T> {
+    static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: Double(start), stop: Double(stop), step: Double(step))
-        let a = NdArray<T>(empty: n)
+        let a = self.init(empty: n)
         var p = a.data
         for i in stride(from: start, to: stop, by: step) {
             p.initialize(to: i)
@@ -179,14 +174,14 @@ public extension NdArray where T == Int {
         return a
     }
 
-    static func zeros(_ count: Int) -> NdArray<T> {
-        let a = NdArray.empty(count: count)
+    static func zeros(_ count: Int) -> Self {
+        let a = self.init(empty: count)
         memset(a.data, 0, count * MemoryLayout<Int>.stride)
         return a
     }
 
-    static func zeros(_ shape: [Int], order: Contiguous = .C) -> NdArray<T> {
-        let a = NdArray.zeros(shape.reduce(1, *))
+    static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
+        let a = self.zeros(shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
         return a
     }

@@ -32,6 +32,11 @@ public class NdArraySlice<T>: NdArray<T> {
         self.count = a.len
     }
 
+    internal required init(empty count: Int) {
+        self.sliced = 0
+        super.init(empty: count)
+    }
+
     /// creates a copy of the array and defines a full slice of the copied array
     public required convenience init(copy a: NdArray<T>) {
         self.init(NdArray(copy: a), sliced: 0)
