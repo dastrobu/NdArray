@@ -124,3 +124,4 @@ public func *(A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
 
 // TODO override for band/tridiag matrix
 
+// TODO Float
