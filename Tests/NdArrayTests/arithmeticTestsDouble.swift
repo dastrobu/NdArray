@@ -907,5 +907,50 @@ class arithmeticTestsDouble: XCTestCase {
         let a = NdArray<Double>.range(to: 6)
         XCTAssertEqual((3 * a).dataArray, (a * 3).dataArray)
     }
+
+    func testSetScalarDoubleInPlace() {
+        // 0d
+        do {
+            let a = NdArray<Double>.zeros([])
+            a.set(1)
+            XCTAssertEqual(a.shape, [])
+        }
+        // 2d effective 0d
+        do {
+            let a = NdArray<Double>.zeros([1, 0])
+            a.set(1)
+            XCTAssertEqual(a.shape, [1, 0])
+        }
+        // 1d contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a.set(1)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.ones(6).dataArray)
+        }
+        // 1d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 6)
+            a[..., 2].set(1)
+            XCTAssertEqual(a.dataArray, [1, 1, 1, 3, 1, 5])
+        }
+        // 2d C contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .C)
+            a.set(1)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.ones([2, 3], order: .C).dataArray)
+        }
+        // 2d F contiguous
+        do {
+            let a = NdArray<Double>.range(to: 6).reshaped([2, 3], order: .F)
+            a.set(1)
+            XCTAssertEqual(a.dataArray, NdArray<Double>.ones([2, 3], order: .C).dataArray)
+        }
+        // 2d not aligned
+        do {
+            let a = NdArray<Double>.range(to: 4 * 3).reshaped([4, 3], order: .C)
+            a[..., 2].set(1)
+            XCTAssertEqual(a.dataArray, [1, 1, 1, 3, 4, 5, 1, 1, 1, 9, 10, 11])
+        }
+    }
 }
 

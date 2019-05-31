@@ -475,5 +475,3 @@ internal extension NdArray {
         return flatIndex(lastIndex) + 1
     }
 }
-
-// TODO set all values Double/Float

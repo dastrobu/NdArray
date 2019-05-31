@@ -248,6 +248,19 @@ public extension NdArray where T == Double {
         multiply(by: 1 / x)
     }
 
+    /// set all values to a new constant value
+    func set(_ alpha: T) {
+        apply1d(f1d: {
+            n in
+            catlas_dset(Int32(n), alpha, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            catlas_dset(Int32(n), alpha, data, 1)
+        }, fSlice: { s in
+            s.set(alpha)
+        })
+    }
+
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
     func sum() -> T {
         var r = T.zero
@@ -355,6 +368,19 @@ public extension NdArray where T == Float {
 
     func divide(by x: T) {
         multiply(by: 1 / x)
+    }
+
+    /// set all values to a new constant value
+    func set(_ alpha: T) {
+        apply1d(f1d: {
+            n in
+            catlas_sset(Int32(n), alpha, data, Int32(strides[0]))
+        }, fContiguous: {
+            n in
+            catlas_sset(Int32(n), alpha, data, 1)
+        }, fSlice: { s in
+            s.set(alpha)
+        })
     }
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
