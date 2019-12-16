@@ -5,6 +5,7 @@
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_name
 class mapTests: XCTestCase {
     func testMap() {
         do {

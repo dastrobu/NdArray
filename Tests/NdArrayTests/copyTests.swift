@@ -1,7 +1,7 @@
 import XCTest
 @testable import NdArray
 
-
+// swiftlint:disable:next type_name
 class copyTests: XCTestCase {
 
     func testInitCopyShouldCopyContiguousArray() {
@@ -119,5 +119,3 @@ class copyTests: XCTestCase {
     }
 
 }
-
-

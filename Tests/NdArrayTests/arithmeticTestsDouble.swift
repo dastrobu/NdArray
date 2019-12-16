@@ -5,6 +5,7 @@
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_body_length type_name
 class arithmeticTestsDouble: XCTestCase {
     func testMulNdArrayScalarDouble() {
         // 0d
@@ -953,4 +954,3 @@ class arithmeticTestsDouble: XCTestCase {
         }
     }
 }
-

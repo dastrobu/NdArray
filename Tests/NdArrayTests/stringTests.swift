@@ -5,6 +5,7 @@
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_name
 class stringTests: XCTestCase {
     func testStringInterpolationWhenFormatIsMultiLine() {
         XCTAssertEqual("\(NdArray<Int>.zeros(0), style: .multiLine)",

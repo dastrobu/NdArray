@@ -2,14 +2,13 @@ import XCTest
 import Foundation
 @testable import NdArray
 
-fileprivate func address<T>(_ p: UnsafeBufferPointer<T>) -> String {
+private func address<T>(_ p: UnsafeBufferPointer<T>) -> String {
     return String(format: "%x", Int(bitPattern: p.baseAddress))
 }
 
-fileprivate func address<T>(_ p: UnsafePointer<T>) -> String {
+private func address<T>(_ p: UnsafePointer<T>) -> String {
     return String(format: "%x", Int(bitPattern: p))
 }
-
 
 final class NdArrayTests: XCTestCase {
     func testInitEmptyShouldCreateEmptyArrayWhenEmptyElementsIsZero() {
@@ -37,6 +36,7 @@ final class NdArrayTests: XCTestCase {
     }
 
     func testNdArrayShouldCopyCorrectlyWhenStrideIsNotSizeOfT() {
+        // swiftlint:disable:next nesting type_name
         struct S: Equatable {
             let i: Int
             let b: Bool

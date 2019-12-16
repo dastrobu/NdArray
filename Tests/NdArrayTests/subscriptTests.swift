@@ -5,6 +5,7 @@
 @testable import NdArray
 import XCTest
 
+// swiftlint:disable:next type_body_length
 class NdArraySsubscriptTests: XCTestCase {
     func testSubscriptShouldReturnElementWhenIndexed() {
         let a = NdArray<Double>([1, 2, 3])
@@ -402,7 +403,6 @@ class NdArraySsubscriptTests: XCTestCase {
         XCTAssertEqual(a[2...7, 3][[0]], 3)
         XCTAssertEqual(a[2...7, 3][[1]], 6)
     }
-
 
     func testStridesSliceAccessWhenRangeIsPartialFromAndArray1d() {
         let a = NdArray<Double>([1, 2, 3, 4, 5, 6])

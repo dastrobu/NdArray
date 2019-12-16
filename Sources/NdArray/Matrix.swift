@@ -50,8 +50,20 @@ public class Matrix<T>: NdArray<T> {
         super.init(a)
     }
 
+    /// creates a view on another array without copying any data
+    public required init(_ a: NdArray<T>) {
+        assert(a.shape.count == 2,
+            """
+            Cannot create matrix with shape \(a.shape). Matrix must have two dimensions.
+            Assertion failed while trying to init matrix from \(a.debugDescription).
+            """)
+        super.init(a)
+    }
+
     internal required init(empty count: Int) {
         super.init(empty: count)
+        // make pseudo 2d
+        self.reshape([1] + shape)
     }
 
     public required convenience init(copy a: NdArray<T>) {
@@ -64,29 +76,47 @@ public class Matrix<T>: NdArray<T> {
         a.copyTo(self)
     }
 
+    /// returns a transposed array view.
+    /// Note: if the matrix has an effective dimension of 0, transposition has no effect.
+    public func transposed() -> Matrix<T> {
+        let a = Matrix<T>(self)
+        if effectiveNdim > 0 {
+            a.shape = self.shape.reversed()
+            a.strides = self.strides.reversed()
+        }
+        return a
+    }
+
+    /// transposes the array into another array.
+    /// Note: if the matrix has an effective dimension of 0, transposition has no effect.
+    public func transposed(out: Matrix<T>) {
+        if effectiveNdim > 0 {
+            assert(shape == out.shape.reversed(),
+                """
+                Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
+                Assertion failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
+                """)
+            out[...][...] = self.transposed()[...][...]
+        }
+    }
 }
 
 public extension Matrix where T == Double {
     var T: Matrix<T> {
-        get {
-            return transposed()
-        }
+        return transposed()
     }
 
-    func transposed() -> Matrix<T> {
-        let out = Matrix<T>(empty: shape.reversed())
-        transposed(out: out)
-        return out
-    }
-
+    /// transposes the array into another array.
+    /// Note: if the matrix has an effective dimension of 0, transposition has no effect.
     func transposed(out: Matrix<T>) {
-        assert(shape == shape.reversed(),
-            """
-            Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
-            Assertion failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
-            """)
-        // TODO test strides carefully
-        vDSP_mtransD(data, strides[0], out.data, out.strides[0], vDSP_Length(shape[1]), vDSP_Length(shape[0]))
+        if effectiveNdim > 0 {
+            assert(shape == out.shape.reversed(),
+                """
+                Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
+                Assertion failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
+                """)
+            vDSP_mtransD(data, strides[0], out.data, out.strides[0], vDSP_Length(shape[1]), vDSP_Length(shape[0]))
+        }
     }
 
     func solve(_ x: Vector<T>, out: Vector<T>? = nil) throws -> Vector<T> {
@@ -109,13 +139,14 @@ public extension Matrix where T == Double {
 
 }
 
-
+// swiftlint:disable:next operator_whitespace
 public func *(A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
     // TODO
     let y = Vector<Double>(empty: x.shape[0])
     return y
 }
 
+// swiftlint:disable:next operator_whitespace
 public func *(A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
     // TODO
     let y = Matrix<Double>(empty: B.shape)

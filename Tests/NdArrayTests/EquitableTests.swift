@@ -8,7 +8,7 @@ import XCTest
 class EquitableTests: XCTestCase {
     func testEquals() {
         // empty
-        do{
+        do {
             let a = NdArray<Double>.zeros([])
             let b = NdArray<Double>.zeros([1, 0])
             let c = NdArray<Double>.zeros([0, 1])
@@ -18,7 +18,7 @@ class EquitableTests: XCTestCase {
             XCTAssertNotEqual(b, c)
         }
         // 1d contiguous
-        do{
+        do {
             let a = NdArray<Double>.zeros([2])
             let b = NdArray<Double>.zeros([2])
             let c = NdArray<Double>.ones([2])
@@ -29,17 +29,17 @@ class EquitableTests: XCTestCase {
             XCTAssertNotEqual(b, c)
         }
         // 1d not contiguous
-        do{
+        do {
             let a = NdArray<Double>.zeros([3])
-            let b = NdArray<Double>(NdArray<Double>.zeros([6])[...,2])
-            let c = NdArray<Double>(NdArray<Double>.ones([6])[...,2])
+            let b = NdArray<Double>(NdArray<Double>.zeros([6])[..., 2])
+            let c = NdArray<Double>(NdArray<Double>.ones([6])[..., 2])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertNotEqual(a, c)
             XCTAssertNotEqual(b, c)
         }
         // 2d contiguous
-        do{
+        do {
             let a = NdArray<Double>.zeros([2, 3])
             let b = NdArray<Double>.zeros([2, 3])
             let c = NdArray<Double>.ones([2, 3])
@@ -50,10 +50,10 @@ class EquitableTests: XCTestCase {
             XCTAssertNotEqual(b, c)
         }
         // 2d not contiguous
-        do{
+        do {
             let a = NdArray<Double>.zeros([2, 3])
-            let b = NdArray<Double>(NdArray<Double>.zeros([2, 6])[...][...,2])
-            let c = NdArray<Double>(NdArray<Double>.ones([2, 6])[...][...,2])
+            let b = NdArray<Double>(NdArray<Double>.zeros([2, 6])[...][..., 2])
+            let c = NdArray<Double>(NdArray<Double>.ones([2, 6])[...][..., 2])
             XCTAssertEqual(a, a)
             XCTAssertEqual(a, b)
             XCTAssertNotEqual(a, c)

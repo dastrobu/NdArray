@@ -4,8 +4,8 @@
 
 import Accelerate
 
-fileprivate func vramp<T>(start: T, step: T, data: UnsafeMutablePointer<T>, n: Int,
-                          vramp: (UnsafePointer<T>, UnsafePointer<T>, UnsafeMutablePointer<T>, vDSP_Stride, vDSP_Length) -> Void) {
+private func vramp<T>(start: T, step: T, data: UnsafeMutablePointer<T>, n: Int,
+                      vramp: (UnsafePointer<T>, UnsafePointer<T>, UnsafeMutablePointer<T>, vDSP_Stride, vDSP_Length) -> Void) {
     if n > 0 {
         var a = start
         var b = step
@@ -13,7 +13,7 @@ fileprivate func vramp<T>(start: T, step: T, data: UnsafeMutablePointer<T>, n: I
     }
 }
 
-fileprivate func arange<T>(start: T, stop: T, step: T) -> Int where T: BinaryFloatingPoint {
+private func arange<T>(start: T, stop: T, step: T) -> Int where T: BinaryFloatingPoint {
     let n: Int
     if start <= stop {
         if step > 0 {
@@ -34,37 +34,49 @@ fileprivate func arange<T>(start: T, stop: T, step: T) -> Int where T: BinaryFlo
 
 public extension NdArray {
     static func empty(shape: [Int], order: Contiguous = .C) -> Self {
-        let a = self.init(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
+        let a = NdArray(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// init with constant value
     static func repeating(_ x: T, count: Int) -> Self {
-        let a = self.init(empty: count)
+        let a = NdArray(empty: count)
         for i in 0..<count {
             a.data[i] = x
         }
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// init with constant value
     static func repeating(_ x: T, shape: [Int], order: Contiguous = .C) -> Self {
-        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
+        let a = NdArray.repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 }
 
 public extension NdArray where T: AdditiveArithmetic {
     /// init with constant value
     static func zeros(_ count: Int) -> Self {
-        return repeating(T.zero, count: count)
+        let a = NdArray.repeating(T.zero, count: count)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// init with zeros
     static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
-        return repeating(T.zero, shape: shape, order: order)
+        let a = NdArray.repeating(T.zero, shape: shape, order: order)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
 }
@@ -72,86 +84,128 @@ public extension NdArray where T: AdditiveArithmetic {
 public extension NdArray where T == Double {
     /// Generate values within an half-open interval [0, rangeTo)
     static func range(to stop: T, by step: T = 1) -> Self {
-        return self.range(from: 0, to: stop, by: step)
+        let a = NdArray.range(from: 0, to: stop, by: step)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
     static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
-        let a = self.init(empty: n)
+        let a = NdArray(empty: n)
         vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vrampD)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func ones(_ count: Int) -> Self {
-        return repeating(1, count: count)
+        let a = NdArray.repeating(1, count: count)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func ones(_ shape: [Int], order: Contiguous = .C) -> Self {
-        return repeating(1, shape: shape, order: order)
+        let a = NdArray.repeating(1, shape: shape, order: order)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ count: Int) -> Self {
-        return repeating(0, count: count)
+        let a = NdArray.repeating(0, count: count)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
-        return repeating(0, shape: shape, order: order)
+        let a = NdArray.repeating(0, shape: shape, order: order)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> Self {
-        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
+        let a = NdArray.repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func repeating(_ x: T, count: Int) -> Self {
-        let a = self.init(empty: count)
+        let a = NdArray(empty: count)
         catlas_dset(Int32(count), x, a.data, 1)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 }
 
 public extension NdArray where T == Float {
     /// Generate values within an half-open interval [0, rangeTo)
     static func range(to stop: T, by step: T = 1) -> Self {
-        return self.range(from: 0, to: stop, by: step)
+        let a = NdArray.range(from: 0, to: stop, by: step)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
     static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
-        let a = self.init(empty: n)
+        let a = NdArray(empty: n)
         vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vramp)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func ones(_ count: Int) -> Self {
-        return repeating(1, count: count)
+        let a = NdArray.repeating(1, count: count)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func ones(_ shape: [Int], order: Contiguous = .C) -> Self {
-        return repeating(1, shape: shape, order: order)
+        let a = NdArray.repeating(1, shape: shape, order: order)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ count: Int) -> Self {
-        return repeating(0, count: count)
+        let a = NdArray.repeating(0, count: count)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
-        return repeating(0, shape: shape, order: order)
+        let a = NdArray.repeating(0, shape: shape, order: order)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func repeating(_  x: T, shape: [Int], order: Contiguous = .C) -> Self {
-        let a = repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
+        let a = NdArray.repeating(x, count: shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func repeating(_ x: T, count: Int) -> Self {
-        let a = self.init(empty: count)
+        let a = NdArray(empty: count)
         catlas_sset(Int32(count), x, a.data, 1)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 }
 
@@ -159,7 +213,10 @@ public extension NdArray where T == Float {
 public extension NdArray where T == Int {
     /// initializer an array with a range of number starting from 0 upto (but excluding) rangeTo.
     static func range(to stop: T, by step: T = 1) -> Self {
-        return range(from: 0, to: stop, by: step)
+        let a = NdArray.range(from: 0, to: stop, by: step)
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     /// Generate values within an half-open interval [rangeFrom, rangeTo) with step size by
@@ -171,19 +228,24 @@ public extension NdArray where T == Int {
             p.initialize(to: i)
             p += 1
         }
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ count: Int) -> Self {
         let a = self.init(empty: count)
         memset(a.data, 0, count * MemoryLayout<Int>.stride)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 
     static func zeros(_ shape: [Int], order: Contiguous = .C) -> Self {
         let a = self.zeros(shape.isEmpty ? 0 : shape.reduce(1, *))
         a.reshape(shape, order: order)
-        return a
+        let r = self.init(a)
+        r.stealOwnership()
+        return r
     }
 }
-

@@ -1,6 +1,7 @@
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_name
 class initTests: XCTestCase {
     func testInitShouldConstructContiguousArrayWhenInitializedFrom2dArrays() {
         do {
@@ -72,13 +73,13 @@ class initTests: XCTestCase {
 
     func testInit3dShouldCreateCContiguousArray() {
         let a = NdArray<Double>(
-            [[[ 0,  1,  2],
-              [ 3,  4,  5]],
+            [[[ 0, 1, 2],
+              [ 3, 4, 5]],
 
-            [[ 6,  7,  8],
+            [[ 6, 07, 08],
              [ 9, 10, 11]]])
         XCTAssert(a.ownsData)
-        XCTAssertEqual(a.dataArray, [ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11])
+        XCTAssertEqual(a.dataArray, [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
         XCTAssertEqual(a.shape, [2, 2, 3])
         XCTAssertEqual(a.strides, [6, 3, 1])
         XCTAssert(a.isCContiguous)
@@ -87,13 +88,13 @@ class initTests: XCTestCase {
 
     func testInit3dShouldCreateFContiguousArray() {
         let a = NdArray<Double>(
-            [[[ 0,  1,  2],
-              [ 3,  4,  5]],
+            [[[ 0, 1, 2],
+              [ 3, 4, 5]],
 
-                [[ 6,  7,  8],
+                [[ 6, 07, 08],
                  [ 9, 10, 11]]], order: .F)
         XCTAssert(a.ownsData)
-        XCTAssertEqual(a.dataArray, [ 0,  6,  3,  9,  1,  7,  4, 10,  2,  8,  5, 11])
+        XCTAssertEqual(a.dataArray, [ 0, 6, 3, 9, 1, 7, 4, 10, 2, 8, 5, 11])
         XCTAssertEqual(a.shape, [2, 2, 3])
         XCTAssertEqual(a.strides, [1, 2, 4])
         XCTAssertFalse(a.isCContiguous)
@@ -256,7 +257,7 @@ class initTests: XCTestCase {
     }
 
     func testInitShouldCreateCContiguousViewWhenSourceIsNotCContiguous() {
-        let a = NdArray<Double>.range(to: 5)[...,2]
+        let a = NdArray<Double>.range(to: 5)[..., 2]
         let b = NdArray<Double>(a, order: .C)
         XCTAssert(b.ownsData)
         XCTAssert(b.ownsData)
@@ -275,7 +276,7 @@ class initTests: XCTestCase {
     }
 
     func testInitShouldCreateFContiguousViewWhenSourceIsNotCContiguous() {
-        let a = NdArray<Double>.range(to: 5)[...,2]
+        let a = NdArray<Double>.range(to: 5)[..., 2]
         let b = NdArray<Double>(a, order: .F)
         XCTAssert(b.ownsData)
         XCTAssert(b.ownsData)
@@ -294,7 +295,7 @@ class initTests: XCTestCase {
     }
 
     func testInitShouldCreateCContiguousCopyWhenSourceIsNotCContiguous() {
-        let a = NdArray<Double>.range(to: 5)[...,2]
+        let a = NdArray<Double>.range(to: 5)[..., 2]
         let b = NdArray<Double>(copy: a, order: .C)
         XCTAssert(b.ownsData)
         XCTAssert(b.ownsData)
@@ -313,7 +314,7 @@ class initTests: XCTestCase {
     }
 
     func testInitShouldCreateFContiguousCopyWhenSourceIsNotCContiguous() {
-        let a = NdArray<Double>.range(to: 5)[...,2]
+        let a = NdArray<Double>.range(to: 5)[..., 2]
         let b = NdArray<Double>(copy: a, order: .F)
         XCTAssert(b.ownsData)
         XCTAssert(b.ownsData)

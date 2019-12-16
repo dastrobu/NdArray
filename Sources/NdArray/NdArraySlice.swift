@@ -12,7 +12,7 @@ public class NdArraySlice<T>: NdArray<T> {
     private var sliceDescription: [String] = []
 
     /// creates a view on another array without copying any data
-    internal init(_ a: NdArray<T>, sliced: Int = 0) {
+    internal init(_ a: NdArray<T>, sliced: Int) {
         self.sliced = sliced
         super.init(a)
         assert(sliced <= ndim,
@@ -35,6 +35,11 @@ public class NdArraySlice<T>: NdArray<T> {
     internal required init(empty count: Int) {
         self.sliced = 0
         super.init(empty: count)
+    }
+
+    /// create a new array stealing ownership from the passed array
+    public required convenience init(_ a: NdArray<T>) {
+        self.init(a, sliced: 0)
     }
 
     /// creates a copy of the array and defines a full slice of the copied array
@@ -115,14 +120,14 @@ public class NdArraySlice<T>: NdArray<T> {
 
             // check for empty range
             if r.lowerBound >= r.upperBound {
-                let slice = NdArraySlice(self, startIndex: Array<Int>(repeating: 0, count: ndim), sliced: sliced + 1)
+                let slice = NdArraySlice(self, startIndex: [Int](repeating: 0, count: ndim), sliced: sliced + 1)
                 slice.shape[sliced] = 0
                 slice.count = slice.len
                 return slice
             }
 
             let upperBound = Swift.min(r.upperBound, shape[sliced])
-            var startIndex = Array<Int>(repeating: 0, count: ndim)
+            var startIndex = [Int](repeating: 0, count: ndim)
             startIndex[sliced] = r.lowerBound
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)
             slice.shape[sliced] = upperBound - r.lowerBound
@@ -240,7 +245,7 @@ public class NdArraySlice<T>: NdArray<T> {
             assert(!isEmpty)
 
             // set the index on the sliced dimension
-            var startIndex = Array<Int>(repeating: 0, count: ndim)
+            var startIndex = [Int](repeating: 0, count: ndim)
             startIndex[sliced] = i
 
             // here we reduce the shape, hence sliced stays the same

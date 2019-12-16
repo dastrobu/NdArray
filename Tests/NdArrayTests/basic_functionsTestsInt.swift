@@ -5,7 +5,8 @@
 import XCTest
 @testable import NdArray
 
-class basic_functionsTestsInt: XCTestCase{
+// swiftlint:disable:next type_name
+class basic_functionsTestsInt: XCTestCase {
 
     func testAbs() {
         // 0d
@@ -45,4 +46,3 @@ class basic_functionsTestsInt: XCTestCase{
         }
     }
 }
-

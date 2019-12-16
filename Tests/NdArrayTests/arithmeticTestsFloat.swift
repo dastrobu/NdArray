@@ -5,6 +5,7 @@
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_body_length type_name
 class arithmeticTestsFloat: XCTestCase {
     func testMulNdArrayScalarFloat() {
         // 0d
@@ -953,5 +954,3 @@ class arithmeticTestsFloat: XCTestCase {
         }
     }
 }
-
-

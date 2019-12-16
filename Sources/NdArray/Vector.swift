@@ -32,7 +32,7 @@ public class Vector<T>: NdArray<T> {
     }
 
     /// creates a view on another array without copying any data
-    public override init(_ a: NdArray<T>) {
+    public required init(_ a: NdArray<T>) {
         assert(a.shape.count == 1,
             """
             Cannot create vector with shape \(a.shape). Vector must have one dimension.
@@ -46,7 +46,7 @@ public extension Vector where T == Double {
     func dot(_ y: Vector<T>) -> T {
         assert(shape == y.shape,
             """
-            Cannot compute dot product of vectors with shape \(shape) and \(y.shape). 
+            Cannot compute dot product of vectors with shape \(shape) and \(y.shape).
             Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
@@ -88,7 +88,7 @@ public extension Vector where T == Float {
     func dot(_ y: Vector<T>) -> T {
         assert(shape == y.shape,
             """
-            Cannot compute dot product of vectors with shape \(shape) and \(y.shape). 
+            Cannot compute dot product of vectors with shape \(shape) and \(y.shape).
             Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
@@ -126,11 +126,12 @@ public extension Vector where T == Float {
     }
 }
 
+// swiftlint:disable:next operator_whitespace
 public func *(a: Vector<Double>, b: Vector<Double>) -> Double {
     return a.dot(b)
 }
 
+// swiftlint:disable:next operator_whitespace
 public func *(a: Vector<Float>, b: Vector<Float>) -> Float {
     return a.dot(b)
 }
-

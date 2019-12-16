@@ -5,7 +5,8 @@
 import XCTest
 @testable import NdArray
 
-class applyTests: XCTestCase{
+// swiftlint:disable:next type_name
+class applyTests: XCTestCase {
 
     func testApply() {
         // 0d

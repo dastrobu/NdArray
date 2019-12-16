@@ -6,8 +6,7 @@ public enum Contiguous {
     case F
 }
 
-public class NdArray<T>:
-    CustomDebugStringConvertible,
+public class NdArray<T>: CustomDebugStringConvertible,
     CustomStringConvertible {
 
     /// data buffer
@@ -24,32 +23,26 @@ public class NdArray<T>:
 
     /// owner of the data, if nil self is the owner and must deallocate the data buffer on destruction
     /// if self is just a view on a buffer, this reference to the owner prevents the data from being deallocated
-    private var owner: NdArray<T>? = nil
+    private var owner: NdArray<T>?
 
     /// dimension of the array, i.e. the length of the shape
     /// - SeeAlso: effectiveNdim
     var ndim: Int {
-        get {
-            return shape.count
-        }
+        return shape.count
     }
 
     /// the effective ndim is the number of dimensions, the array actually has, if any size is 0, the elemnent
     /// has an element ndim of 0 since it has no elements.
     var effectiveNdim: Int {
-        get {
-            if shape.isEmpty || shape.reduce(1, *) == 0 {
-                return 0
-            }
-            return ndim
+        if shape.isEmpty || shape.reduce(1, *) == 0 {
+            return 0
         }
+        return ndim
     }
 
     /// an array is considered empty if it has no items, i.e. if the effectiveNdim is 0.
     var isEmpty: Bool {
-        get {
-            return effectiveNdim == 0
-        }
+        return effectiveNdim == 0
     }
 
     /// flag indicating if this ndarray owns its data
@@ -74,8 +67,25 @@ public class NdArray<T>:
         reshape(shape, order: order)
     }
 
+    internal func stealOwnership() {
+        guard let owner = owner else {
+            fatalError(
+                """
+                Cannot steal ownership if array is already owning data.
+                Assertion failed while trying stealing ownership from owner of \(debugDescription).
+                """)
+        }
+        assert(owner.ownsData,
+            """
+            Cannot steal from array not owning its data
+            Assertion failed while trying to init stealing from \(owner.debugDescription).
+            """)
+        owner.owner = self
+        self.owner = nil
+    }
+
     /// creates a view on another array without copying any data
-    public init(_ a: NdArray<T>) {
+    public required init(_ a: NdArray<T>) {
         if a.ownsData {
             self.owner = a
         } else {
@@ -365,7 +375,7 @@ public class NdArray<T>:
     public subscript(i: Int) -> NdArraySlice<T> {
         get {
             assert(!isEmpty)
-            var startIndex = Array<Int>(repeating: 0, count: ndim)
+            var startIndex = [Int](repeating: 0, count: ndim)
             startIndex[0] = i
             // here we reduce the shape, hence slice = 0
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: 0)
@@ -424,7 +434,7 @@ extension NdArray {
         if ndim == 1 {
             return [1]
         }
-        var strides = Array<Int>(repeating: 1, count: ndim)
+        var strides = [Int](repeating: 1, count: ndim)
         switch order {
         case .C:
             for i in (0..<ndim - 1).reversed() {
@@ -464,9 +474,9 @@ internal extension NdArray {
     /// basically the length is the last valid flat index of the array + 1
     var len: Int {
         // check if there is any shape set to 0
-        if let _ = shape.first(where: {
+        if shape.first(where: {
             $0 == 0
-        }) {
+        }) != nil {
             return 0
         }
         let lastIndex = shape.map {

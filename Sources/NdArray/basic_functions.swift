@@ -47,4 +47,3 @@ public func abs<T: NdArray<Float>>(_ a: T) -> T {
     abs(a, out: b)
     return b
 }
-

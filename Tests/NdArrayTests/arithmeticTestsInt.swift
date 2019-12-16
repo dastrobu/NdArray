@@ -1,10 +1,7 @@
-//
-// Created by Daniel Strobusch on 2019-05-08.
-//
-
 import XCTest
 @testable import NdArray
 
+// swiftlint:disable:next type_name
 class arithmeticTestsInt: XCTestCase {
     func testMulNdArrayScalarInt() {
         // 0d
@@ -706,6 +703,3 @@ class arithmeticTestsInt: XCTestCase {
         XCTAssertEqual((3 * a).dataArray, (a * 3).dataArray)
     }
 }
-
-
-

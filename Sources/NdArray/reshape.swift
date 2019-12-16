@@ -27,26 +27,26 @@ public extension NdArray {
         let newDim = newShape.count
 
         let oldStrides = self.strides
-        var newStrides = Array<Int>(repeating: 0, count: newDim)
+        var newStrides = [Int](repeating: 0, count: newDim)
 
         /* oi to oj and ni to nj give the axis ranges currently worked with */
-        var oi = 0;
-        var oj = 1;
-        var ni = 0;
-        var nj = 1;
-        while (ni < newDim && oi < oldDim) {
+        var oi = 0
+        var oj = 1
+        var ni = 0
+        var nj = 1
+        while ni < newDim && oi < oldDim {
             // new and old dim on axis i
             do {
-                var osi = oldShape[oi];
-                var nsi = newShape[ni];
+                var osi = oldShape[oi]
+                var nsi = newShape[ni]
 
-                while (nsi != osi) {
-                    if (nsi < osi) {
+                while nsi != osi {
+                    if nsi < osi {
                         /* Misses trailing 1s, these are handled later */
-                        nsi *= newShape[nj];
+                        nsi *= newShape[nj]
                         nj += 1
                     } else {
-                        osi *= oldShape[oj];
+                        osi *= oldShape[oj]
                         oj += 1
                     }
                 }
@@ -57,12 +57,12 @@ public extension NdArray {
                 for ok in oi..<oj - 1 {
                     switch order {
                     case .F:
-                        if (oldStrides[ok + 1] != oldShape[ok] * oldStrides[ok]) {
+                        if oldStrides[ok + 1] != oldShape[ok] * oldStrides[ok] {
                             /* not contiguous enough */
                             return false
                         }
                     case .C:
-                        if (oldStrides[ok] != oldShape[ok + 1] * oldStrides[ok + 1]) {
+                        if oldStrides[ok] != oldShape[ok + 1] * oldStrides[ok + 1] {
                             /* not contiguous enough */
                             return false
                         }
@@ -73,38 +73,38 @@ public extension NdArray {
             /* Calculate new strides for all axes currently worked with */
             switch order {
             case .F:
-                newStrides[ni] = oldStrides[oi];
+                newStrides[ni] = oldStrides[oi]
                 for nk in ni + 1..<nj {
-                    newStrides[nk] = newStrides[nk - 1] * newShape[nk - 1];
+                    newStrides[nk] = newStrides[nk - 1] * newShape[nk - 1]
                 }
             case .C:
-                newStrides[nj - 1] = oldStrides[oj - 1];
+                newStrides[nj - 1] = oldStrides[oj - 1]
                 var nk = nj - 1
                 while nk > ni {
-                    newStrides[nk - 1] = newStrides[nk] * newShape[nk];
+                    newStrides[nk - 1] = newStrides[nk] * newShape[nk]
                     nk -= 1
                 }
             }
-            ni = nj;
+            ni = nj
             nj += 1
-            oi = oj;
+            oi = oj
             oj += 1
         }
 
         // Set strides corresponding to trailing 1s of the new shape.
         do {
             var last_stride: Int
-            if (ni >= 1) {
-                last_stride = newStrides[ni - 1];
+            if ni >= 1 {
+                last_stride = newStrides[ni - 1]
             } else {
                 last_stride = 1
             }
-            if (order == .F) {
-                last_stride *= newShape[ni - 1];
+            if order == .F {
+                last_stride *= newShape[ni - 1]
             }
 
             for nk in ni..<newDim {
-                newStrides[nk] = last_stride;
+                newStrides[nk] = last_stride
             }
         }
 

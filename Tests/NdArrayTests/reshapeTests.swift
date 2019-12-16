@@ -5,6 +5,7 @@
 @testable import NdArray
 import XCTest
 
+// swiftlint:disable:next type_name
 class reshapeTests: XCTestCase {
 
     func testReshapeShouldComputeStridesWhen_6_ReshapedTo_2_3() {
