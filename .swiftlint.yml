@@ -1,0 +1,14 @@
+disabled_rules: # rule identifiers to exclude from running
+  - trailing_comma
+  - identifier_name
+  - force_try
+  - line_length
+  - file_length
+function_body_length:
+  - 100
+cyclomatic_complexity:
+  - 20
+type_body_length:
+  - 500
+excluded:
+  - .build
