@@ -63,8 +63,12 @@ public class NdArray<T>: CustomDebugStringConvertible,
     }
 
     internal convenience init(empty shape: [Int], order: Contiguous = .C) {
-        self.init(empty: shape.isEmpty ? 0 : shape.reduce(1, *))
-        reshape(shape, order: order)
+        let n = shape.isEmpty ? 0 : shape.reduce(1, *)
+        self.init(empty: n)
+        var success  = reshape([n])
+        assert(success, "could not reshape from [\(self.shape)] to \(n)")
+        success = reshape(shape, order: order)
+        assert(success, "could not reshape form [\(self.shape)] to \(shape)")
     }
 
     internal func stealOwnership() {
@@ -141,10 +145,12 @@ public class NdArray<T>: CustomDebugStringConvertible,
         case .C:
             if a.isCContiguous {
                 self.init(copy: a)
+                return
             }
         case .F:
             if a.isFContiguous {
                 self.init(copy: a)
+                return
             }
         }
         self.init(empty: a.shape, order: order)
