@@ -13,6 +13,7 @@ to enable fast and simple handling of multidimensional data.
  * Linear algebra operations for `Double` and `Float` arrays.
 
 ## Numerical Backend
+
 Numerical operations are performed using [BLAS](http://www.netlib.org/blas), see also 
 [BLAS cheat sheet](http://www.netlib.org/blas/blasqr.pdf) for an overview and [LAPACK](http://www.netlib.org/lapack). 
 The functions of these libraries are provided by the 
