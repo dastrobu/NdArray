@@ -17,17 +17,20 @@ to enable fast and simple handling of multidimensional data.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 (generated with [DocToc](https://github.com/thlorenz/doctoc))
 
-- [Features](#features)
+- [Multiple Views on Underlying Data.](#multiple-views-on-underlying-data)
+- [Sliced and Strided Access](#sliced-and-strided-access)
+  - [`UnboundedRange` Slices](#unboundedrange-slices)
+  - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
+  - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+- [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
+- [Pretty Printing](#pretty-printing)
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-(generated with [DocToc](https://github.com/thlorenz/doctoc))
 
-## Features
-
-### Multiple Views on Underlying Data.
+## Multiple Views on Underlying Data
 
 Two arrays can easily point to the same data and data can be modified through both views. This is significantly 
 different from the Swift internal array object, which has copy on wrie semantics, meaning you cannot pass around 
@@ -44,7 +47,7 @@ print(a.ownsData) // true
 print(b.ownsData) // false
 ``` 
 
-### Sliced and Strided Access
+## Sliced and Strided Access
 
 Like NumPy's ndarray, slices and strides can be created. 
 ```swift
@@ -59,7 +62,7 @@ print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
 ``` 
 This creates an array first, then a strided view on the data, making it easy to set every second element to 0. 
 
-#### `UnboundedRange` Slices
+### `UnboundedRange` Slices
 
 Unbound ranges select all elements, this is helpful to access lower dimensions of a multidimensional array
 ```swift
@@ -90,16 +93,17 @@ print(a)
 //  [0.0, 0.0]]
 ``` 
 
-#### `Range` and `ClosdeRange` Slices
+### `Range` and `ClosdeRange` Slices
 
 Ranges `n..<m` and closed ranges `n...m` allow to select certain sub arrays.
 ```swift
 let a = NdArray<Double>.range(to: 10)
 print(a[2..<4]) // [2.0, 3.0]
 print(a[2...4]) // [2.0, 3.0, 4.0]
+print(a[2...4, 2]) // [2.0, 4.0]
 ``` 
 
-#### `PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices
+### `PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices
 
 Partial ranges `...<m`, `...m` and `n...` define only one bound.
 ```swift
@@ -107,9 +111,10 @@ let a = NdArray<Double>.range(to: 10)
 print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
 print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
 print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+print(a[4..., 2]) // [4.0, 6.0, 8.0]
 ``` 
 
-### Linear algebra operations for `Double` and `Float` arrays.
+## Linear Algebra Operations for `Double` and `Float` NdArrays.
 
 Linear algebra support is currently very basic.
 // TODO 
@@ -119,7 +124,7 @@ let x = Vector<Double>.ones(2)
 print(A * x) // [2.0, 2.0]
 ```
 
-### Pretty Printing
+## Pretty Printing
 
 Multi dimensional arrays can be printed in a human friendly way.
 ```swift

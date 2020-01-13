@@ -61,6 +61,7 @@ class ReadmeExamples: XCTestCase {
         let a = NdArray<Double>.range(to: 10)
         print(a[2..<4]) // [2.0, 3.0]
         print(a[2...4]) // [2.0, 3.0, 4.0]
+        print(a[2...4, 2]) // [2.0, 4.0]
     }
 
     func testPartialRanges() {
@@ -68,6 +69,7 @@ class ReadmeExamples: XCTestCase {
         print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
         print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
         print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+        print(a[4..., 2]) // [4.0, 6.0, 8.0]
     }
 
     func testLinearAlgebra() {
