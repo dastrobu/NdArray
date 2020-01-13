@@ -4,7 +4,7 @@
 
 import Foundation
 
-/// extension implementing the map
+/// extension implementing map
 public extension NdArray {
 
     /// map a scalar function to all array elements
