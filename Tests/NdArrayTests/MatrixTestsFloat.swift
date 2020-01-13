@@ -152,7 +152,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let x2 = Ai * b
-            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-6)
         }
         // F contiguous
         do {
@@ -162,7 +162,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let x2 = Ai * b
-            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-6)
         }
         // not aligned
         do {
@@ -172,7 +172,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let x2 = Ai * b
-            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(x1.dataArray, x2.dataArray, accuracy: 1e-6)
         }
 
         // multiple rhs C contiguous
@@ -185,7 +185,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let X2 = Ai * B
-            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-6)
         }
         // multiple rhs F contiguous
         do {
@@ -197,7 +197,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let X2 = Ai * B
-            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-6)
         }
         // multiple rhs not aligned
         do {
@@ -208,7 +208,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let X2 = Ai * B
-            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-6)
         }
         // C contiguous -> out F contiguous
         do {
@@ -221,7 +221,7 @@ class MatrixTestsFloat: XCTestCase {
 
             let Ai = try A.inverted()
             let X2 = Ai * B
-            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-15)
+            XCTAssertEqual(X1.dataArray, X2.dataArray, accuracy: 1e-6)
         }
     }
 }

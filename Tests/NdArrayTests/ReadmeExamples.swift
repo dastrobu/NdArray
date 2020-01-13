@@ -76,7 +76,7 @@ class ReadmeExamples: XCTestCase {
         print(A * x) // [2.0, 2.0]
     }
 
-    func testPreetyPrinting() {
+    func testPrettyPrinting() {
         print(NdArray<Double>.ones([2, 3, 4]))
         // [[[1.0, 1.0, 1.0, 1.0],
         //  [1.0, 1.0, 1.0, 1.0],
