@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Matrix Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Matrix" class="dashAnchor"></a>
+    <a title="Matrix Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">NdArray Docs</a> (48% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">NdArray Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Matrix Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/Matrix.html">Matrix</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/NdArray.html">NdArray</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/NdArraySlice.html">NdArraySlice</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Vector.html">Vector</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Contiguous.html">Contiguous</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/LapackError.html">LapackError</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SortOrder.html">SortOrder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/StringFormat.html">StringFormat</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String/StringInterpolation.html">– StringInterpolation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Functions.html">Functions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyAA6MatrixCySdGAE_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyAA6MatrixCySfGAE_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyAA6VectorCySdGAA6MatrixCySdG_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyAA6VectorCySfGAA6MatrixCySfG_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiySdAA6VectorCySdG_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiySfAA6VectorCySfG_AEtF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyq_q__xtSjRzA2ACyxGRb_r0_lF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyq_x_q_tSjRzA2ACyxGRb_r0_lF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyxSd_xtA2ACySdGRbzlF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyxSf_xtA2ACySfGRbzlF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyxx_SdtA2ACySdGRbzlF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1moiyxx_SftA2ACySfGRbzlF">*(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2meoiyyq__xtSjRzA2ACyxGRb_r0_lF">*=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2meoiyyx_SdtA2ACySdGRbzlF">*=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2meoiyyx_SftA2ACySfGRbzlF">*=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyq_q__q_ts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyq_q__xts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyq_x_q_ts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyxSd_xtA2ACySdGRbzlF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyxSf_xtA2ACySfGRbzlF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyxx_xtA2ACySdGRbzlF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1poiyxx_xtA2ACySfGRbzlF">+(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2peoiyyq__q_ts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2peoiyyq__xts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2peoiyyx_xtA2ACySdGRbzlF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2peoiyyx_xtA2ACySfGRbzlF">+=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1sopyq_q_SjRzA2ACyxGRb_r0_lF">-(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1sopyxxA2ACySdGRbzlF">-(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1sopyxxA2ACySfGRbzlF">-(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1soiyq_q__q_ts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">-(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1soiyq_q__xts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">-(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1soiyxx_xtA2ACySdGRbzlF">-(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1soiyxx_xtA2ACySfGRbzlF">-(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2seoiyyq__q_ts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">-=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2seoiyyq__xts18AdditiveArithmeticRzA2ACyxGRb_r0_lF">-=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2seoiyyx_xtA2ACySdGRbzlF">-=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2seoiyyx_xtA2ACySfGRbzlF">-=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1doiyxx_SdtA2ACySdGRbzlF">/(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray1doiyxx_SftA2ACySfGRbzlF">/(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2deoiyyx_SdtA2ACySdGRbzlF">/=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray2deoiyyx_SftA2ACySfGRbzlF">/=(_:_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray3absyq_q_SLRzs13SignedNumericRzA2ACyxGRb_r0_lF">abs(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray3absyxxA2ACySdGRbzlF">abs(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray3absyxxA2ACySfGRbzlF">abs(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySdGRbzlF">abs(_:out:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySfGRbzlF">abs(_:out:)</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Matrix</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>Undocumented</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixC_5orderACyxGSaySayxGG_AA10ContiguousOtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:order:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixC_5orderACyxGSaySayxGG_AA10ContiguousOtcfc">init(_:order:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>create an 2D NdArray from a plain array</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="p">[[</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="p">]],</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">C</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixC5empty5orderACyxGSaySiG_AA10ContiguousOtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(empty:order:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixC5empty5orderACyxGSaySiG_AA10ContiguousOtcfc">init(empty:order:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">empty</span> <span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">C</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCyACyxGADcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCyACyxGADcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>creates a view on another array without copying any data</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCyACyxGA2ACyxGcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCyACyxGA2ACyxGcfc">init(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>creates a view on another array without copying any data</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(copy:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc">init(copy:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">copy</span> <span class="nv">a</span><span class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixC10transposedACyxGyF"></a>
+                    <a name="//apple_ref/swift/Method/transposed()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixC10transposedACyxGyF">transposed()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>returns a transposed array view.
+Note: if the matrix has an effective dimension of 0, transposition has no effect.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">transposed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixC10transposed3outyACyxG_tF"></a>
+                    <a name="//apple_ref/swift/Method/transposed(out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixC10transposed3outyACyxG_tF">transposed(out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>transposes the array into another array.
+Note: if the matrix has an effective dimension of 0, transposition has no effect.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">transposed</span><span class="p">(</span><span class="nv">out</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASdRszlE1TACySdGvp"></a>
+                    <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>short hand form for <code><a href="../Classes/Matrix.html#/s:7NdArray6MatrixC10transposedACyxGyF">transposed()</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">T</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASdRszlE5solve_3outAA6VectorCySdGAH_AHSgtKF"></a>
+                    <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outAA6VectorCySdGAH_AHSgtKF">solve(_:out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>solve a system of linear equations</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <ul>
+<li><code>solve(x: Matrix&lt;T&gt;, out: Matrix&lt;T&gt;? = nil) throws -&gt; Matrix&lt;T&gt;</code></li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">solve</span><span class="p">(</span><span class="n">_</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">out</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASdRszlE5solve_3outACySdGAF_AFSgtKF"></a>
+                    <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outACySdGAF_AFSgtKF">solve(_:out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>solve a system of linear equations</p>
+
+<p>Solution is computed by LAPACKs DGESV methos which computes the solution to a real system of linear equations
+   A * X = B,
+where A is an N-by-N matrix and X and B are N-by-NRHS matrices.</p>
+
+<p>The LU decomposition with partial pivoting and row interchanges is
+used to factor A as
+   A = P * L * U,
+where P is a permutation matrix, L is unit lower triangular, and U is
+upper triangular.  The factored form of A is then used to solve the
+system of equations A * X = B.</p>
+
+<p>This array must be in column major storage.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">solve</span><span class="p">(</span><span class="n">_</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">out</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASdRszlE8inverted3outACySdGAFSg_tKF"></a>
+                    <a name="//apple_ref/swift/Method/inverted(out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE8inverted3outACySdGAFSg_tKF">inverted(out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invert the matrix</p>
+
+<p>Inverse of the matrix is computed by LAPACKs SGETRI method which computes the inverse of a matrix using the
+LU factorization computed by DGETRF.</p>
+
+<p>This method inverts U and then computes inv(A) by solving the system
+inv(A)*L = inv(U) for inv(A).</p>
+
+<p>If an error occurred, the data in out may have been changed to any data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">inverted</span><span class="p">(</span><span class="nv">out</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASfRszlE1TACySfGvp"></a>
+                    <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE1TACySfGvp">T</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>short hand form for <code><a href="../Classes/Matrix.html#/s:7NdArray6MatrixC10transposedACyxGyF">transposed()</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">T</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASfRszlE5solve_3outAA6VectorCySfGAH_AHSgtKF"></a>
+                    <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outAA6VectorCySfGAH_AHSgtKF">solve(_:out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>solve a system of linear equations</p>
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    <ul>
+<li><code>solve(x: Matrix&lt;T&gt;, out: Matrix&lt;T&gt;? = nil) throws -&gt; Matrix&lt;T&gt;</code></li>
+</ul>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">solve</span><span class="p">(</span><span class="n">_</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">out</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASfRszlE5solve_3outACySfGAF_AFSgtKF"></a>
+                    <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outACySfGAF_AFSgtKF">solve(_:out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>solve a system of linear equations</p>
+
+<p>Solution is computed by LAPACKs DGESV methos which computes the solution to a real system of linear equations
+   A * X = B,
+where A is an N-by-N matrix and X and B are N-by-NRHS matrices.</p>
+
+<p>The LU decomposition with partial pivoting and row interchanges is
+used to factor A as
+   A = P * L * U,
+where P is a permutation matrix, L is unit lower triangular, and U is
+upper triangular.  The factored form of A is then used to solve the
+system of equations A * X = B.</p>
+
+<p>This array must be in column major storage.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">solve</span><span class="p">(</span><span class="n">_</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">out</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7NdArray6MatrixCAASfRszlE8inverted3outACySfGAFSg_tKF"></a>
+                    <a name="//apple_ref/swift/Method/inverted(out:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE8inverted3outACySfGAFSg_tKF">inverted(out:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invert the matrix</p>
+
+<p>Inverse of the matrix is computed by LAPACKs SGETRI method which computes the inverse of a matrix using the
+LU factorization computed by DGETRF.</p>
+
+<p>This method inverts U and then computes inv(A) by solving the system
+inv(A)*L = inv(U) for inv(A).</p>
+
+<p>If an error occurred, the data in out may have been changed to any data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">func</span> <span class="nf">inverted</span><span class="p">(</span><span class="nv">out</span><span class="p">:</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-01-13)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
