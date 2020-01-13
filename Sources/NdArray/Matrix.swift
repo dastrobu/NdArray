@@ -121,7 +121,7 @@ public extension Matrix where T == Double {
         let n: Int = rhs.shape[0]
         let b = out ?? Vector(empty: n)
         try solve(Matrix(rhs.reshaped([n, 1], order: .F)), out: Matrix(b.reshaped([n, 1], order: .F), order: .F))
-        return b;
+        return b
     }
 
     /// solve a system of linear equations
@@ -280,7 +280,7 @@ public extension Matrix where T == Float {
         let n: Int = rhs.shape[0]
         let b = out ?? Vector(empty: n)
         try solve(Matrix(rhs.reshaped([n, 1], order: .F)), out: Matrix(b.reshaped([n, 1], order: .F), order: .F))
-        return b;
+        return b
     }
 
     /// solve a system of linear equations

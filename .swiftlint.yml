@@ -4,6 +4,7 @@ disabled_rules: # rule identifiers to exclude from running
   - force_try
   - line_length
   - file_length
+  - todo
 function_body_length:
   - 100
 cyclomatic_complexity:

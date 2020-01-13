@@ -87,9 +87,9 @@ class ReadmeExamples: XCTestCase {
         // [[1.0, 1.0, 1.0, 1.0],
         //  [1.0, 1.0, 1.0, 1.0],
         //  [1.0, 1.0, 1.0, 1.0]]]
-        print("this is a 2d array in one line \(NdArray<Double>.zeros([2, 2]), style: .singleLine)");
+        print("this is a 2d array in one line \(NdArray<Double>.zeros([2, 2]), style: .singleLine)")
         // this is a 2d array in one line [[0.0, 0.0], [0.0, 0.0]]
-        print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2, 2]), style: .multiLine)");
+        print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2, 2]), style: .multiLine)")
         // this is a 2d array in multi line format line
         // [[0.0, 0.0],
         //  [0.0, 0.0]]
