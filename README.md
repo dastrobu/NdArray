@@ -136,9 +136,9 @@ print(NdArray<Double>.ones([2, 3, 4]))
 // [[1.0, 1.0, 1.0, 1.0],
 //  [1.0, 1.0, 1.0, 1.0],
 //  [1.0, 1.0, 1.0, 1.0]]]
-print("this is a 2d array in one line \(NdArray<Double>.zeros([2, 2]), style: .singleLine)");
+print("this is a 2d array in one line \(NdArray<Double>.zeros([2, 2]), style: .singleLine)")
 // this is a 2d array in one line [[0.0, 0.0], [0.0, 0.0]]
-print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2, 2]), style: .multiLine)");
+print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2, 2]), style: .multiLine)")
 // this is a 2d array in multi line format line
 // [[0.0, 0.0],
 //  [0.0, 0.0]]
@@ -156,6 +156,7 @@ The functions of these libraries are provided by the
 Some features are not implemented yet, but are planned for the near future.
  * Trigonometric functions
  * Elementwise multiplication of Double and Float arrays. Planned as `multiply(elementwiseBy, divide(elementwiseBy)` employing `vDSP_vmulD`
+   Note that this can be done with help of `map` currently.
 
 ## Out of Scope 
 
