@@ -441,7 +441,7 @@ public func *(A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
 
     let m: Int32 = Int32(a.shape[0])
     let n: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.strides[1])
+    let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
     cblas_dgemv(order, CblasNoTrans, m, n, 1, a.data, lda, x.data, incX, 0, y.data, incY)
