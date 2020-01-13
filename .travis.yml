@@ -9,9 +9,6 @@ compiler:
 jobs:
   include:
     - os: osx
-      osx_image: xcode10.2
-      env: SWIFT_VERSION=4.1
-    - os: osx
       osx_image: xcode11.2
       env: SWIFT_VERSION=5.0
     - os: osx
