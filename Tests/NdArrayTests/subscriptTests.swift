@@ -935,4 +935,12 @@ class NdArraySliceSubscriptTests: XCTestCase {
             XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
     }
+
+    func testSingleElementSlice1d() {
+        let a = NdArray<Double>.range(to: 4)
+        let s: NdArraySlice<Double> = a[2]
+        XCTAssertEqual(s.shape, [1])
+        XCTAssertEqual(s.dataArray, [2])
+    }
+
 }
