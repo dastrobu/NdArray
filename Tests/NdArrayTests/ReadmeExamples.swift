@@ -72,10 +72,38 @@ class ReadmeExamples: XCTestCase {
         print(a[4..., 2]) // [4.0, 6.0, 8.0]
     }
 
-    func testLinearAlgebra() {
-        let A = Matrix<Double>.ones([2, 2])
-        let x = Vector<Double>.ones(2)
-        print(A * x) // [2.0, 2.0]
+    func testLinearAlgebra() throws {
+        do {
+            let A = Matrix<Double>.ones([2, 2])
+            let x = Vector<Double>.ones(2)
+            print(A * x) // [2.0, 2.0]
+        }
+
+        do {
+            let A = Matrix<Double>.ones([2, 2])
+            let x = Matrix<Double>.ones([2, 2])
+            print(A * x)
+            // [[2.0, 2.0],
+            //  [2.0, 2.0]]
+        }
+        do {
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            print(try A.inverted())
+            // [[-1.5,  0.5],
+            //  [ 1.0,  0.0]]
+        }
+        do {
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            let x = Vector<Double>.ones(2)
+            print(try A.solve(x)) // [-1.0,  1.0]
+        }
+        do {
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            let x = Matrix<Double>.ones([2, 2])
+            print(try A.solve(x))
+            // [[-1.0, -1.0],
+            //  [ 1.0,  1.0]]
+        }
     }
 
     func testPrettyPrinting() {

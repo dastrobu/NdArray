@@ -17,12 +17,16 @@ to enable fast and simple handling of multidimensional data.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 (generated with [DocToc](https://github.com/thlorenz/doctoc))
 
-- [Multiple Views on Underlying Data.](#multiple-views-on-underlying-data)
+- [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
   - [`UnboundedRange` Slices](#unboundedrange-slices)
   - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
   - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
+  - [Matrix Vector Multiplication](#matrix-vector-multiplication)
+  - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+  - [Matrix Inversion](#matrix-inversion)
+  - [Solve Linear System of Equations](#solve-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
@@ -117,11 +121,50 @@ print(a[4..., 2]) // [4.0, 6.0, 8.0]
 ## Linear Algebra Operations for `Double` and `Float` NdArrays.
 
 Linear algebra support is currently very basic.
-// TODO 
+
+### Matrix Vector Multiplication
+
 ```swift
 let A = Matrix<Double>.ones([2, 2])
 let x = Vector<Double>.ones(2)
 print(A * x) // [2.0, 2.0]
+```
+
+### Matrix Matrix Multiplication
+
+```swift
+let A = Matrix<Double>.ones([2, 2])
+let x = Matrix<Double>.ones([2, 2])
+print(A * x)
+// [[2.0, 2.0],
+//  [2.0, 2.0]]
+```
+
+### Matrix Inversion
+
+```swift
+let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+print(try A.inverted())
+// [[-1.5,  0.5],
+//  [ 1.0,  0.0]]
+```
+
+### Solve Linear System of Equations
+
+with single right hand side
+```swift
+let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+let x = Vector<Double>.ones(2)
+print(try A.solve(x)) // [-1.0,  1.0]
+```
+
+with multiple right hand sides
+```swift
+let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+let x = Matrix<Double>.ones([2, 2])
+print(try A.solve(x))
+// [[-1.0, -1.0],
+//  [ 1.0,  1.0]]
 ```
 
 ## Pretty Printing
