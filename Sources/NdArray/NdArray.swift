@@ -6,7 +6,7 @@ public enum Contiguous {
     case F
 }
 
-public class NdArray<T>: CustomDebugStringConvertible,
+open class NdArray<T>: CustomDebugStringConvertible,
     CustomStringConvertible {
 
     /// data buffer
@@ -51,7 +51,7 @@ public class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// create a new array without initializing any memory
-    internal required init(empty count: Int = 0) {
+    public required init(empty count: Int = 0) {
         self.count = count
         data = UnsafeMutablePointer<T>.allocate(capacity: count)
         if count == 0 {

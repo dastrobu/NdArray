@@ -5,7 +5,7 @@
 import Darwin
 import Accelerate
 
-public class Matrix<T>: NdArray<T> {
+open class Matrix<T>: NdArray<T> {
 
     /// flag to indicate if this matrix is a square matrix
     var isSquare: Bool {
@@ -66,7 +66,7 @@ public class Matrix<T>: NdArray<T> {
         super.init(a)
     }
 
-    internal required init(empty count: Int) {
+    public required init(empty count: Int) {
         super.init(empty: count)
         // make pseudo 2d
         self.reshape([1] + shape)
