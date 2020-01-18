@@ -127,6 +127,38 @@ print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 print(a[4..., 2]) // [4.0, 6.0, 8.0]
 ``` 
 
+## Array Reshaping
+
+Like in NumPy, and array can be reshaped to any compatible shape without modifying the data. That means the 
+shape and strides are recomputed to re-interpret the data. 
+
+```swift
+        let a = ndarray<double>.range(to: 12)
+        print(a.reshaped([2, 6]))
+        // [[ 0.0,  1.0,  2.0,  3.0,  4.0,  5.0],
+        //  [ 6.0,  7.0,  8.0,  9.0, 10.0, 11.0]]
+        print(a.reshaped([2, 6], order: .f))
+        // [[ 0.0,  2.0,  4.0,  6.0,  8.0, 10.0],
+        //  [ 1.0,  3.0,  5.0,  7.0,  9.0, 11.0]]
+        print(a.reshaped([3, 4]))
+        // [[ 0.0,  1.0,  2.0,  3.0],
+        //  [ 4.0,  5.0,  6.0,  7.0],
+        //  [ 8.0,  9.0, 10.0, 11.0]]
+        print(a.reshaped([4, 3]))
+        // [[ 0.0,  1.0,  2.0],
+        //  [ 3.0,  4.0,  5.0],
+        //  [ 6.0,  7.0,  8.0],
+        //  [ 9.0, 10.0, 11.0]]
+        print(a.reshaped([2, 2, 3]))
+        // [[[ 0.0,  1.0,  2.0],
+        //   [ 3.0,  4.0,  5.0]],
+        //
+        //  [[ 6.0,  7.0,  8.0],
+        //   [ 9.0, 10.0, 11.0]]]
+```
+
+A copy will only be made if required to create an array with the specified order.
+
 ## Linear Algebra Operations for `Double` and `Float` NdArrays.
 
 Linear algebra support is currently very basic.
