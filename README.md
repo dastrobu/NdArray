@@ -17,11 +17,14 @@ to enable fast and simple handling of multidimensional data.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 (generated with [DocToc](https://github.com/thlorenz/doctoc))
 
+- [Installation](#installation)
+  - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
   - [`UnboundedRange` Slices](#unboundedrange-slices)
   - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
   - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+- [Array Reshaping](#array-reshaping)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
   - [Matrix Vector Multiplication](#matrix-vector-multiplication)
   - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
