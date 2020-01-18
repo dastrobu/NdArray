@@ -251,7 +251,7 @@ class ReadmeExamples: XCTestCase {
             let a = NdArray<Double>.ones([4, 3])
             for i in 0..<a.shape[0] {
                 let ai = Vector(a[i])
-                for j in stride(from: 0, to: a.shape[1], by: 2){
+                for j in stride(from: 0, to: a.shape[1], by: 2) {
                     ai[j] *= Double(i)
                 }
             }
