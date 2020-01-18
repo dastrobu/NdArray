@@ -36,6 +36,13 @@ to enable fast and simple handling of multidimensional data.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## Installation
+
+### Swift Package Manager
+    dependencies: [
+            .package(url: "https://github.com/dastrobu/NdArrays.git", from: "0.1.0"),
+        ],
+
 ## Multiple Views on Underlying Data
 
 Two arrays can easily point to the same data and data can be modified through both views. This is significantly 
