@@ -28,6 +28,8 @@ to enable fast and simple handling of multidimensional data.
   - [Matrix Inversion](#matrix-inversion)
   - [Solve Linear System of Equations](#solve-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
+- [Type Concept](#type-concept)
+  - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
@@ -185,6 +187,68 @@ print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2
 // this is a 2d array in multi line format line
 // [[0.0, 0.0],
 //  [0.0, 0.0]]
+```
+
+## Type Concept 
+
+The idea is to have basic `NdArray` type, which keeps a pointer to data and stores shape and stride information. 
+Since there can be multiple `NdArray` objects referring to the same data, ownership is tracked explicitly. 
+If an array owns its data is stored in the `ownsData` flag (similar to NumPy's ndarray)
+When creating a new array from an existing one, no copy is made unless necessary. Here are a few examples
+```swift
+let A = NdArray<Double>.ones(5)
+var B = NdArray(A) // no copy
+B = NdArray(copy: A) // copy explicitly required
+B = NdArray(A[..., 2]) // no copy, but B will not be contiguous
+B = NdArray(A[..., 2], order: .C) // copy, because otherwise new array will not have C ordering
+```
+
+When using slices on an `NdArray` it returns a `NdArraySlice` object. This slice object is similar to an array but 
+keeps track how deeply its sliced.  
+```swift
+let A = NdArray<Double>.ones([2, 2, 2])
+var B = A[...] // NdArraySlice withe sliced = 1, i.e. one dimension has been sliced
+B = A[...][..., 2] // NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
+B = A[...][..., 2][..<1] // NdArraySlice withe sliced = 3, i.e. one dimension has been sliced
+B = A[...][..., 2][..<1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
+```
+So it is recommended to convert to an `NdArray` after slicing before continuing to work with the data.
+```swift
+let A = NdArray<Double>.ones([2, 2, 2])
+var B = NdArray(A[...]) // B has shape [2, 2, 2]
+B = NdArray(A[...][..., 2]) // B has shape [2, 1, 2]
+B = NdArray(A[...][..., 2][..<1]) // B has shape [2, 1, 1]
+```
+
+When using slices to assign data, no type conversion is required.
+```swift
+let A = NdArray<Double>.ones([2, 2])
+let B = NdArray<Double>.zeros(2)
+A[...][0] = B[...]
+print(A)
+// [[0.0, 1.0],
+//  [0.0, 1.0]]
+```
+### Subtypes
+
+To be able to define operators for matrix vector multiplication and matrix matrix multiplication, sub types like 
+`Matrix` and `Vector` are defined. Since no data is copied when creating a matrix or vector from an array, they
+can be converted anytime, thereby making sure the shapes match requirements of the sub type.
+
+```swift
+let a = NdArray<Double>.ones([2, 2])
+let b = NdArray<Double>.zeros(2)
+let A = Matrix<Double>(a) // matrix from array without copy
+let x = Vector<Double>(b) // vector from array without copy
+let Ax = A * x; // matrix vector multiplication is defined
+let _ = Vector<Double>(a) // Assertion failed: Cannot create vector with shape [2, 2]. Vector must have one dimension.
+````
+
+Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype, e.g. `sovle`
+```swift
+let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+let x = Vector<Double>.ones(2)
+print(try A.solve(x)) // [-1.0,  1.0]
 ```
 
 ## Numerical Backend

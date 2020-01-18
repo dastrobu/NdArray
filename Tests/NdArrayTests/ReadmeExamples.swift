@@ -122,4 +122,46 @@ class ReadmeExamples: XCTestCase {
         // [[0.0, 0.0],
         //  [0.0, 0.0]]
     }
+
+    func testTypes() {
+        do {
+            let A = NdArray<Double>.ones(5)
+            var B = NdArray(A) // no copy
+            B = NdArray(copy: A) // copy explicitly required
+            B = NdArray(A[..., 2]) // no copy, but B will not be contiguous
+            B = NdArray(A[..., 2], order: .C) // copy, because otherwise new array will not have C ordering
+        }
+        do {
+            let A = NdArray<Double>.ones([2, 2, 2])
+            var B = A[...] // return NdArraySlice withe sliced = 1, i.e. one dimension has been sliced
+            B = A[...][..., 2] // return NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
+            B = A[...][..., 2][...1] // return NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
+            // B = A[...][..., 2][...1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
+        }
+        do {
+            let A = NdArray<Double>.ones([2, 2, 2])
+            var B = NdArray(A[...]) // B has shape [2, 2, 2]
+            print(B.shape)
+            B = NdArray(A[...][..., 2]) // B has shape [2, 1, 2]
+            print(B.shape)
+            B = NdArray(A[...][..., 2][..<1]) // B has shape [2, 1, 1]
+            print(B.shape)
+        }
+        do {
+            let A = NdArray<Double>.ones([2, 2])
+            let B = NdArray<Double>.zeros(2)
+            A[...][0] = B[...]
+            print(A)
+            // [[0.0, 1.0],
+            //  [0.0, 1.0]]
+        }
+        do {
+            let a = NdArray<Double>.ones([2, 2])
+            let b = NdArray<Double>.zeros(2)
+            let A = Matrix<Double>(a) // matrix from array without copy
+            let x = Vector<Double>(b) // vector from array without copy
+            let Ax = A * x; // matrix vector multiplication is defined
+            // let _ = Vector<Double>(a) // fails
+        }
+    }
 }
