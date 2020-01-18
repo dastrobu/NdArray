@@ -24,7 +24,7 @@ to enable fast and simple handling of multidimensional data.
   - [`UnboundedRange` Slices](#unboundedrange-slices)
   - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
   - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
-- [Array Reshaping](#array-reshaping)
+- [Reshaping](#reshaping)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
   - [Matrix Vector Multiplication](#matrix-vector-multiplication)
   - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
