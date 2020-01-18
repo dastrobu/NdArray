@@ -21,9 +21,11 @@ to enable fast and simple handling of multidimensional data.
   - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
+  - [Single Slice](#single-slice)
   - [`UnboundedRange` Slices](#unboundedrange-slices)
   - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
   - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+- [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
   - [Matrix Vector Multiplication](#matrix-vector-multiplication)
@@ -78,6 +80,33 @@ print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
 ``` 
 This creates an array first, then a strided view on the data, making it easy to set every second element to 0. 
 
+### Single Slice
+
+A single slice e.g. a row of a matrix is indexed by simple integer
+```swift
+let a = NdArray<Double>.ones([2, 2])
+print(a) 
+// [[1.0, 1.0],
+//  [1.0, 1.0]]
+a[1].set(0.0)
+print(a) 
+// [[1.0, 1.0],
+//  [0.0, 0.0]]
+a[...][1].set(2.0)
+print(a) 
+// [[1.0, 2.0],
+//  [0.0, 2.0]]
+``` 
+Note, using element index on a one dimensional array will not access the element, use [element indexing](#element-manipulation) instead or use the `Vector` subtype which supports element indexing.
+```swift
+let a = NdArray<Double>.range(to: 4)
+print(a[0]) // [0.0]
+print(a[[0]]) // 0.0
+let v = Vector(a)
+print(v[0] as Double) // 0.0
+print(v[[0]]) // 0.0
+```
+
 ### `UnboundedRange` Slices
 
 Unbound ranges select all elements, this is helpful to access lower dimensions of a multidimensional array
@@ -129,6 +158,65 @@ print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
 print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 print(a[4..., 2]) // [4.0, 6.0, 8.0]
 ``` 
+
+## Element Manipulation
+
+The syntax for indexing individual elements is by passing an (Swift) array as index. 
+Passing indices individually cannot be implemented, since Swift does not support varargs on subscript.
+```swift
+let a = NdArray<Double>.range(to: 12).reshaped([2, 2, 3])
+a[[0, 1, 2]]
+a[0, 1, 2]  // does not work with Swift
+```
+For efficient iteration of all indices consider using e.g. `apply`, `map` or `reduce`.
+```swift
+let a = NdArray<Double>.ones(4).reshaped([2, 2])
+let b = a.map {
+    $0 * 2
+} // map to new array
+print(b)
+// [[2.0, 2.0],
+//  [2.0, 2.0]]
+a.apply {
+    $0 * 3
+} // in place
+print(a)
+// [[3.0, 3.0],
+//  [3.0, 3.0]]
+print(a.reduce(0) {
+    $0 + $1
+}) // 12.0
+```
+
+Scaling every second element in a matrix by its row index could be done in the following way
+```swift
+let a = NdArray<Double>.ones([4, 3])
+for i in 0..<a.shape[0] {
+    a[i][..., 2].apply {
+        $0 * Double(i)
+    }
+}
+print(a)
+// [[0.0, 1.0, 0.0],
+//  [1.0, 1.0, 1.0],
+//  [2.0, 1.0, 2.0],
+//  [3.0, 1.0, 3.0]]
+```
+Alternatively one can use classical loops and convert each row to a vector for efficient element indexing
+```swift
+let a = NdArray<Double>.ones([4, 3])
+for i in 0..<a.shape[0] {
+    let ai = Vector(a[i])
+    for j in stride(from: 0, to: a.shape[1], by: 2){
+        ai[j] *= Double(i)
+    }
+}
+print(a)
+// [[0.0, 1.0, 0.0],
+//  [1.0, 1.0, 1.0],
+//  [2.0, 1.0, 2.0],
+//  [3.0, 1.0, 3.0]]
+```
 
 ## Reshaping
 

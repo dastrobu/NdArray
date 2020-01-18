@@ -31,6 +31,20 @@ open class Vector<T>: NdArray<T> {
         a.copyTo(self)
     }
 
+    /// element access
+    public subscript(i: Int) -> T {
+        get {
+            let k = i * strides[0]
+            assert(k < strides[0] * shape[0])
+            return data[k]
+        }
+        set {
+            let k = i * strides[0]
+            assert(k < strides[0] * shape[0])
+            return data[k] = newValue
+        }
+    }
+
     /// creates a view on another array without copying any data
     public required init(_ a: NdArray<T>) {
         assert(a.shape.count == 1,

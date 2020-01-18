@@ -27,6 +27,31 @@ class ReadmeExamples: XCTestCase {
         print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
     }
 
+    func testSingleSlice() {
+        do {
+            let a = NdArray<Double>.ones([2, 2])
+            print(a)
+            // [[1.0, 1.0],
+            //  [1.0, 1.0]]
+            a[1].set(0.0)
+            print(a)
+            // [[1.0, 1.0],
+            //  [0.0, 0.0]]
+            a[...][1].set(2.0)
+            print(a)
+            // [[1.0, 2.0],
+            //  [0.0, 2.0]]
+        }
+        do {
+            let a = NdArray<Double>.range(to: 4)
+            print(a[0]) // [0.0]
+            print(a[[0]]) // 0.0
+            let v = Vector(a)
+            print(v[0] as Double) // 0.0
+            print(v[[0]]) // 0.0
+        }
+    }
+
     func testUnboundRange() {
         do {
 
@@ -106,7 +131,7 @@ class ReadmeExamples: XCTestCase {
         }
     }
 
-    func testReshape(){
+    func testReshape() {
         let a = NdArray<Double>.range(to: 12)
         print(a.reshaped([2, 6]))
         // [[ 0.0,  1.0,  2.0,  3.0,  4.0,  5.0],
@@ -187,6 +212,54 @@ class ReadmeExamples: XCTestCase {
             let x = Vector<Double>(b) // vector from array without copy
             let Ax = A * x; // matrix vector multiplication is defined
             // let _ = Vector<Double>(a) // fails
+        }
+    }
+
+    func testElementIndexing() {
+        do {
+            let a = NdArray<Double>.ones(4).reshaped([2, 2])
+            let b = a.map {
+                $0 * 2
+            } // map to new array
+            print(b)
+            // [[2.0, 2.0],
+            //  [2.0, 2.0]]
+            a.apply {
+                $0 * 3
+            } // in place
+            print(a)
+            // [[3.0, 3.0],
+            //  [3.0, 3.0]]
+            print(a.reduce(0) {
+                $0 + $1
+            }) // 12.0
+        }
+        do {
+            let a = NdArray<Double>.ones([4, 3])
+            for i in 0..<a.shape[0] {
+                a[i][..., 2].apply {
+                    $0 * Double(i)
+                }
+            }
+            print(a)
+            // [[0.0, 1.0, 0.0],
+            //  [1.0, 1.0, 1.0],
+            //  [2.0, 1.0, 2.0],
+            //  [3.0, 1.0, 3.0]]
+        }
+        do {
+            let a = NdArray<Double>.ones([4, 3])
+            for i in 0..<a.shape[0] {
+                let ai = Vector(a[i])
+                for j in stride(from: 0, to: a.shape[1], by: 2){
+                    ai[j] *= Double(i)
+                }
+            }
+            print(a)
+            // [[0.0, 1.0, 0.0],
+            //  [1.0, 1.0, 1.0],
+            //  [2.0, 1.0, 2.0],
+            //  [3.0, 1.0, 3.0]]
         }
     }
 }
