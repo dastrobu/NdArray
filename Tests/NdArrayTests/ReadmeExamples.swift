@@ -21,7 +21,7 @@ class ReadmeExamples: XCTestCase {
         let b = NdArray(a[..., 2])
         print(a) // [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
         print(b) // [0.0, 2.0, 4.0, 6.0, 8.0]
-        print(b.strides) //
+        print(b.strides) // [2]
         b[...].set(0)
         print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
         print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
