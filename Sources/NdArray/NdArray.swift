@@ -65,7 +65,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     internal convenience init(empty shape: [Int], order: Contiguous = .C) {
         let n = shape.isEmpty ? 0 : shape.reduce(1, *)
         self.init(empty: n)
-        var success  = reshape([n])
+        var success = reshape([n])
         assert(success, "could not reshape from [\(self.shape)] to \(n)")
         success = reshape(shape, order: order)
         assert(success, "could not reshape form [\(self.shape)] to \(shape)")
@@ -386,9 +386,16 @@ open class NdArray<T>: CustomDebugStringConvertible,
             // here we reduce the shape, hence slice = 0
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: 0)
             // drop leading shape 1
-            slice.shape = Array(slice.shape[1...])
-            slice.strides = Array(slice.strides[1...])
-            slice.count = slice.len
+            let shape = [Int](slice.shape[1...])
+            if shape.isEmpty {
+                slice.shape = [1]
+                slice.strides = [1]
+                slice.count = 1
+            } else {
+                slice.shape = shape
+                slice.strides = Array(slice.strides[1...])
+                slice.count = slice.len
+            }
             return slice
         }
         set {
