@@ -62,4 +62,15 @@ class reshapeTests: XCTestCase {
         XCTAssertEqual(b.shape, [3 * 3 * 3])
         XCTAssertEqual(b.strides, [1])
     }
+
+    func testFlattenedShouldFlattenArrayWhenStrided() {
+        var a = NdArray<Double>.range(to: 3 * 4)
+        a.reshape([3, 4])
+        a = NdArray(a[...][..., 3])
+        let b = a.flattened()
+        XCTAssertEqual(a.shape, [3, 2])
+        XCTAssertEqual(a.strides, [4, 3])
+        XCTAssertEqual(b.shape, [3 * 2])
+        XCTAssertEqual(b.strides, [1])
+    }
 }

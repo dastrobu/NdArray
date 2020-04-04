@@ -146,11 +146,12 @@ public extension NdArray {
     /// - Returns: A flattened array view or copy if the array could not be reshaped to a flattened array
     func flattened() -> NdArray<T> {
         var a = NdArray(self)
-        if a.reshape([count]) {
+        let n = a.shape.reduce(1, *)
+        if n == a.count && a.reshape([n]) {
             return a
         }
         a = NdArray(copy: self)
-        a.reshape([count])
+        a.reshape([n])
         return a
     }
 }
