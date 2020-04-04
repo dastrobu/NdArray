@@ -45,7 +45,7 @@ to enable fast and simple handling of multidimensional data.
 
 ### Swift Package Manager
     dependencies: [
-            .package(url: "https://github.com/dastrobu/NdArrays.git", from: "0.1.0"),
+            .package(url: "https://github.com/dastrobu/NdArrays.git", from: "0.1.2"),
         ],
 
 ## Multiple Views on Underlying Data
