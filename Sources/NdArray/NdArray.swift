@@ -27,13 +27,13 @@ open class NdArray<T>: CustomDebugStringConvertible,
 
     /// dimension of the array, i.e. the length of the shape
     /// - SeeAlso: effectiveNdim
-    var ndim: Int {
+    public var ndim: Int {
         return shape.count
     }
 
-    /// the effective ndim is the number of dimensions, the array actually has, if any size is 0, the elemnent
+    /// the effective ndim is the number of dimensions, the array actually has, if any size is 0, the element
     /// has an element ndim of 0 since it has no elements.
-    var effectiveNdim: Int {
+    public var effectiveNdim: Int {
         if shape.isEmpty || shape.reduce(1, *) == 0 {
             return 0
         }
