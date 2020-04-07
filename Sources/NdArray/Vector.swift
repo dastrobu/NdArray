@@ -10,7 +10,7 @@ public enum SortOrder {
     case descending
 }
 
-open class Vector<T>: NdArray<T> {
+open class Vector<T>: NdArray<T>, Sequence {
     public required init(empty count: Int) {
         super.init(empty: count)
     }
