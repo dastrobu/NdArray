@@ -5,7 +5,7 @@
 import XCTest
 import NdArray
 
-class VectorTests: XCTestCase {
+class VectorTestsFloat: XCTestCase {
     func testInit1dShouldCreateContiguousArray() {
         let a = Vector<Float>([1, 2, 3])
         XCTAssert(a.ownsData)
