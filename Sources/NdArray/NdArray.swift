@@ -41,7 +41,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// an array is considered empty if it has no items, i.e. if the effectiveNdim is 0.
-    var isEmpty: Bool {
+    public var isEmpty: Bool {
         return effectiveNdim == 0
     }
 
