@@ -14,6 +14,9 @@ jobs:
     - os: osx
       osx_image: xcode11.2
       env: SWIFT_VERSION=5.1
+    - os: osx
+      osx_image: xcode11.2
+      env: SWIFT_VERSION=5.2
 
 install:
   - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
