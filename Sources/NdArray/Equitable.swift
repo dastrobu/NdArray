@@ -6,8 +6,7 @@ extension NdArray: Equatable where T: Equatable {
 
     /// arrays are considered equal if they have the same type, the same shape and the same elements
     /// (not necessarily the same strides).
-    // swiftlint:disable:next operator_whitespace
-    public static func ==(lhs: NdArray<T>, rhs: NdArray<T>) -> Bool {
+    public static func == (lhs: NdArray<T>, rhs: NdArray<T>) -> Bool {
         if type(of: lhs) !== type(of: rhs) {
             return false
         }

@@ -140,12 +140,10 @@ public extension Vector where T == Float {
     }
 }
 
-// swiftlint:disable:next operator_whitespace
-public func *(a: Vector<Double>, b: Vector<Double>) -> Double {
+public func * (a: Vector<Double>, b: Vector<Double>) -> Double {
     return a.dot(b)
 }
 
-// swiftlint:disable:next operator_whitespace
-public func *(a: Vector<Float>, b: Vector<Float>) -> Float {
+public func * (a: Vector<Float>, b: Vector<Float>) -> Float {
     return a.dot(b)
 }
