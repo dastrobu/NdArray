@@ -424,8 +424,7 @@ public extension Matrix where T == Float {
     }
 }
 
-// swiftlint:disable:next operator_whitespace
-public func *(A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
+public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
     let y = Vector<Double>(empty: x.shape[0])
 
     let a: Matrix<Double>
@@ -448,8 +447,7 @@ public func *(A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
     return y
 }
 
-// swiftlint:disable:next operator_whitespace
-public func *(A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
+public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
     let a: Matrix<Double>
     let b: Matrix<Double>
     let c: Matrix<Double>
@@ -478,8 +476,7 @@ public func *(A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
 
 // TODO override for band/tridiag matrix
 
-// swiftlint:disable:next operator_whitespace
-public func *(A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
+public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
     let y = Vector<Float>(empty: x.shape[0])
 
     let a: Matrix<Float>
@@ -502,8 +499,7 @@ public func *(A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
     return y
 }
 
-// swiftlint:disable:next operator_whitespace
-public func *(A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
+public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
     let a: Matrix<Float>
     let b: Matrix<Float>
     let c: Matrix<Float>

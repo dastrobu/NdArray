@@ -5,7 +5,6 @@
 import XCTest
 import NdArray
 
-
 class VectorSequenceTests: XCTestCase {
 
     func testIteratorShouldIterateWhenEmpty() {
@@ -70,8 +69,7 @@ class VectorSequenceTests: XCTestCase {
     func testWithContiguousStorageIfAvailableShouldNotCallBodyWhenNotContiguous() {
         let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[..., 2])
         XCTAssertFalse(a.isContiguous)
-        let r: Int? = a.withContiguousStorageIfAvailable {
-            _ in
+        let r: Int? = a.withContiguousStorageIfAvailable { _ in
             // should not be called for non contiguous array
             42
         }
