@@ -422,7 +422,6 @@ public extension Matrix where T == Float {
         }
         return ipiv
     }
-
 }
 
 // swiftlint:disable:next operator_whitespace
