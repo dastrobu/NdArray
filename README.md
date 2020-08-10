@@ -51,7 +51,7 @@ to enable fast and simple handling of multidimensional data.
 ## Multiple Views on Underlying Data
 
 Two arrays can easily point to the same data and data can be modified through both views. This is significantly 
-different from the Swift internal array object, which has copy on wrie semantics, meaning you cannot pass around 
+different from the Swift internal array object, which has copy on write semantics, meaning you cannot pass around 
 pointers to the same data. Whereas this behaviour is very nice for small amounts of data, since it reduces side effects. 
 For numerical computation with huge arrays, it is preferable to let the programmer manage copies. 
 The behaviour of the NdArray is very similar to NumPy's ndarray object. Here is an example:
