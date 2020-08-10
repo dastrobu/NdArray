@@ -2,19 +2,27 @@
 <html lang="en">
   <head>
     <title>Matrix Class Reference</title>
-    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
-    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css"/>
     <meta charset='utf-8'>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
-    
+
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/Matrix" class="dashAnchor"></a>
     <a title="Matrix Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">NdArray Docs</a> (48% documented)</p>
+        <p><a href="../index.html">NdArray Docs</a> (51% documented)</p>
+        <p class="header-right">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+        </p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -215,6 +223,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/VectorIterator.html">VectorIterator</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -223,7 +239,11 @@
             <h1>Matrix</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span
+                          class="kt">Matrix</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span> <span
+                          class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span
+                          class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
 
                 </div>
               </div>
@@ -238,7 +258,11 @@
                     <code>
                     <a name="/s:7NdArray6MatrixC_5orderACyxGSaySayxGG_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixC_5orderACyxGSaySayxGG_AA10ContiguousOtcfc">init(_:order:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixC_5orderACyxGSaySayxGG_AA10ContiguousOtcfc">init(_:
+                        <wbr>
+                        order:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -265,7 +289,11 @@
                     <code>
                     <a name="/s:7NdArray6MatrixC5empty5orderACyxGSaySiG_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(empty:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixC5empty5orderACyxGSaySiG_AA10ContiguousOtcfc">init(empty:order:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixC5empty5orderACyxGSaySiG_AA10ContiguousOtcfc">init(empty:
+                        <wbr>
+                        order:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -292,7 +320,9 @@
                     <code>
                     <a name="/s:7NdArray6MatrixCyACyxGADcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCyACyxGADcfc">init(_:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCyACyxGADcfc">init(_:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -319,7 +349,9 @@
                     <code>
                     <a name="/s:7NdArray6MatrixCyACyxGA2ACyxGcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCyACyxGA2ACyxGcfc">init(_:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCyACyxGA2ACyxGcfc">init(_:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -334,7 +366,13 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt"><a href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span class="kt"><a href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span
+                                  class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span
+                                  class="n">_</span> <span class="nv">a</span><span class="p">:</span> <span class="kt"><a
+                                  href="../Classes/NdArray.html">NdArray</a></span><span class="o">&lt;</span><span
+                                  class="kt"><a
+                                  href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></span><span
+                                  class="o">&gt;</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -344,9 +382,42 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc"></a>
+                      <a name="/s:7NdArray6MatrixC5emptyACyxGSi_tcfc"></a>
+                      <a name="//apple_ref/swift/Method/init(empty:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7NdArray6MatrixC5emptyACyxGSi_tcfc">init(empty:
+                        <wbr>
+                        )</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span
+                                  class="kd">required</span> <span class="nf">init</span><span class="p">(</span><span
+                                  class="n">empty</span> <span class="nv">count</span><span class="p">:</span> <span
+                                  class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                      <a name="/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(copy:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc">init(copy:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixC4copyACyxGA2ACyxG_tcfc">init(copy:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -400,7 +471,9 @@ Note: if the matrix has an effective dimension of 0, transposition has no effect
                     <code>
                     <a name="/s:7NdArray6MatrixC10transposed3outyACyxG_tF"></a>
                     <a name="//apple_ref/swift/Method/transposed(out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixC10transposed3outyACyxG_tF">transposed(out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixC10transposed3outyACyxG_tF">transposed(out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -426,13 +499,22 @@ Note: if the matrix has an effective dimension of 0, transposition has no effect
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Double%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `T` == `Double`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Double%60"></a>
+                  <h3 class="section-name"><p>Available where <code>T</code> == <code>Double</code></p>
+                  </h3>
+                </div>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7NdArray6MatrixCAASdRszlE1TACySdGvp"></a>
-                    <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a>
+                      <a name="/s:7NdArray6MatrixCAASdRszlE1TACySdGvp"></a>
+                      <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -459,7 +541,11 @@ Note: if the matrix has an effective dimension of 0, transposition has no effect
                     <code>
                     <a name="/s:7NdArray6MatrixCAASdRszlE5solve_3outAA6VectorCySdGAH_AHSgtKF"></a>
                     <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outAA6VectorCySdGAH_AHSgtKF">solve(_:out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outAA6VectorCySdGAH_AHSgtKF">solve(_:
+                        <wbr>
+                        out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -494,7 +580,11 @@ Note: if the matrix has an effective dimension of 0, transposition has no effect
                     <code>
                     <a name="/s:7NdArray6MatrixCAASdRszlE5solve_3outACySdGAF_AFSgtKF"></a>
                     <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outACySdGAF_AFSgtKF">solve(_:out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE5solve_3outACySdGAF_AFSgtKF">solve(_:
+                        <wbr>
+                        out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -535,7 +625,9 @@ system of equations A * X = B.</p>
                     <code>
                     <a name="/s:7NdArray6MatrixCAASdRszlE8inverted3outACySdGAFSg_tKF"></a>
                     <a name="//apple_ref/swift/Method/inverted(out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE8inverted3outACySdGAFSg_tKF">inverted(out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASdRszlE8inverted3outACySdGAFSg_tKF">inverted(out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -569,13 +661,24 @@ inv(A)*L = inv(U) for inv(A).</p>
               </ul>
             </div>
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Float%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `T` == `Float`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Float%60"></a>
+                  <h3 class="section-name"><p>Available where <code><a
+                          href="../Classes/Matrix.html#/s:7NdArray6MatrixCAASdRszlE1TACySdGvp">T</a></code> == <code>Float</code>
+                  </p>
+                  </h3>
+                </div>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7NdArray6MatrixCAASfRszlE1TACySfGvp"></a>
-                    <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE1TACySfGvp">T</a>
+                      <a name="/s:7NdArray6MatrixCAASfRszlE1TACySfGvp"></a>
+                      <a name="//apple_ref/swift/Property/T" class="dashAnchor"></a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE1TACySfGvp">T</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -602,7 +705,11 @@ inv(A)*L = inv(U) for inv(A).</p>
                     <code>
                     <a name="/s:7NdArray6MatrixCAASfRszlE5solve_3outAA6VectorCySfGAH_AHSgtKF"></a>
                     <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outAA6VectorCySfGAH_AHSgtKF">solve(_:out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outAA6VectorCySfGAH_AHSgtKF">solve(_:
+                        <wbr>
+                        out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -637,7 +744,11 @@ inv(A)*L = inv(U) for inv(A).</p>
                     <code>
                     <a name="/s:7NdArray6MatrixCAASfRszlE5solve_3outACySfGAF_AFSgtKF"></a>
                     <a name="//apple_ref/swift/Method/solve(_:out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outACySfGAF_AFSgtKF">solve(_:out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE5solve_3outACySfGAF_AFSgtKF">solve(_:
+                        <wbr>
+                        out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -678,7 +789,9 @@ system of equations A * X = B.</p>
                     <code>
                     <a name="/s:7NdArray6MatrixCAASfRszlE8inverted3outACySfGAFSg_tKF"></a>
                     <a name="//apple_ref/swift/Method/inverted(out:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE8inverted3outACySfGAFSg_tKF">inverted(out:)</a>
+                      <a class="token" href="#/s:7NdArray6MatrixCAASfRszlE8inverted3outACySfGAFSg_tKF">inverted(out:
+                        <wbr>
+                        )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -714,8 +827,10 @@ inv(A)*L = inv(U) for inv(A).</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-01-13)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last
+            updated: 2020-08-10)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫
+            v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
