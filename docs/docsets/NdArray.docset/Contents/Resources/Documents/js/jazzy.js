@@ -23,7 +23,7 @@ function openCurrentItemIfClosed() {
   if (window.jazzy.docset) {
     return;
   }
-  var $link = $(`.token[href="${location.hash}"]`);
+  var $link = $(`a[name="${location.hash.substring(1)}"]`).nextAll('.token');
   $content = itemLinkToContent($link);
   if ($content.is(':hidden')) {
     toggleItem($link, $content);
@@ -48,12 +48,23 @@ $('.token').on('click', function(event) {
   } else {
     location.hash = href;
   }
-  event.preventDefault();
+    event.preventDefault();
 });
 
 // Clicks on links to the current, closed, item need to open the item
-$("a:not('.token')").on('click', function() {
-  if (location == this.href) {
-    openCurrentItemIfClosed();
-  }
+$("a:not('.token')").on('click', function () {
+    if (location == this.href) {
+        openCurrentItemIfClosed();
+    }
 });
+
+// KaTeX rendering
+if ("katex" in window) {
+    $($('.math').each((_, element) => {
+        katex.render(element.textContent, element, {
+            displayMode: $(element).hasClass('m-block'),
+            throwOnError: false,
+            trust: true
+        });
+    }))
+}

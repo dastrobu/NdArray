@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>NdArray Class Reference</title>
-    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
-    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
-    <meta charset='utf-8'>
-    <script src="../js/jquery.min.js" defer></script>
-    <script src="../js/jazzy.js" defer></script>
-    
+      <title>NdArray Class Reference</title>
+      <link rel="stylesheet" type="text/css" href="../css/jazzy.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/highlight.css"/>
+      <meta charset='utf-8'>
+      <script src="../js/jquery.min.js" defer></script>
+      <script src="../js/jazzy.js" defer></script>
+
+      <script src="../js/lunr.min.js" defer></script>
+      <script src="../js/typeahead.jquery.js" defer></script>
+      <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
     <a name="//apple_ref/swift/Class/NdArray" class="dashAnchor"></a>
     <a title="NdArray Class Reference"></a>
     <header>
-      <div class="content-wrapper">
-        <p><a href="../index.html">NdArray Docs</a> (48% documented)</p>
-      </div>
+        <div class="content-wrapper">
+            <p><a href="../index.html">NdArray Docs</a> (51% documented)</p>
+            <p class="header-right">
+            <form role="search" action="../search.json">
+                <input type="text" placeholder="Search documentation" data-typeahead>
+            </form>
+            </p>
+        </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
@@ -202,19 +210,27 @@
                 <a href="../Functions.html#/s:7NdArray3absyq_q_SLRzs13SignedNumericRzA2ACyxGRb_r0_lF">abs(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Functions.html#/s:7NdArray3absyxxA2ACySdGRbzlF">abs(_:)</a>
+                  <a href="../Functions.html#/s:7NdArray3absyxxA2ACySdGRbzlF">abs(_:)</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/s:7NdArray3absyxxA2ACySfGRbzlF">abs(_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySdGRbzlF">abs(_:out:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySfGRbzlF">abs(_:out:)</a>
-              </li>
+                <li class="nav-group-task">
+                    <a href="../Functions.html#/s:7NdArray3absyxxA2ACySfGRbzlF">abs(_:)</a>
+                </li>
+                <li class="nav-group-task">
+                    <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySdGRbzlF">abs(_:out:)</a>
+                </li>
+                <li class="nav-group-task">
+                    <a href="../Functions.html#/s:7NdArray3abs_3outyx_xtA2ACySfGRbzlF">abs(_:out:)</a>
+                </li>
             </ul>
           </li>
+            <li class="nav-group-name">
+                <a href="../Structs.html">Structures</a>
+                <ul class="nav-group-tasks">
+                    <li class="nav-group-task">
+                        <a href="../Structs/VectorIterator.html">VectorIterator</a>
+                    </li>
+                </ul>
+            </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -222,11 +238,18 @@
           <section class="section">
             <h1>NdArray</h1>
               <div class="declaration">
-                <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">CustomDebugStringConvertible</span><span class="p">,</span>
+                  <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span
+                          class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span
+                          class="p">:</span> <span class="kt">CustomDebugStringConvertible</span><span
+                          class="p">,</span>
     <span class="kt">CustomStringConvertible</span></code></pre>
+                      <pre class="highlight swift"><code><span class="kd">extension</span> <span
+                              class="kt">NdArray</span><span class="p">:</span> <span class="kt">Equatable</span> <span
+                              class="k">where</span> <span class="kt">T</span><span class="p">:</span> <span class="kt">Equatable</span></code></pre>
 
-                </div>
+                  </div>
               </div>
             <p>Undocumented</p>
 
@@ -254,7 +277,11 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
+                            <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span class="kd">public</span> <span
+                                    class="k">var</span> <span class="nv">data</span><span class="p">:</span> <span
+                                    class="kt">UnsafeMutablePointer</span><span class="o">&lt;</span><span
+                                    class="kt">T</span><span class="o">&gt;</span> <span class="p">{</span> <span
+                                    class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -281,7 +308,10 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span></code></pre>
+                            <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span class="kd">public</span> <span
+                                    class="k">var</span> <span class="nv">shape</span><span class="p">:</span> <span
+                                    class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span
+                                    class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -298,27 +328,129 @@
                   </div>
                   <div class="height-container">
                     <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>strides of the dimensions</p>
+                      <section class="section">
+                          <div class="pointer"></div>
+                          <div class="abstract">
+                              <p>strides of the dimensions</p>
 
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">strides</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span></code></pre>
+                          </div>
+                          <div class="declaration">
+                              <h4>Declaration</h4>
+                              <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight swift"><code><span class="kd">internal(set)</span> <span
+                                          class="kd">public</span> <span class="k">var</span> <span
+                                          class="nv">strides</span><span class="p">:</span> <span
+                                          class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span
+                                          class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
-                        </div>
-                      </div>
-                    </section>
+                              </div>
+                          </div>
+                      </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC8ownsDataSbvp"></a>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC4ndimSivp"></a>
+                              <a name="//apple_ref/swift/Property/ndim" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC4ndimSivp">ndim</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>dimension of the array, i.e. the length of the shape</p>
+                                  <div class="aside aside-see-also">
+                                      <p class="aside-title">See also</p>
+                                      effectiveNdim
+
+                                  </div>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span
+                                              class="nv">ndim</span><span class="p">:</span> <span class="kt">Int</span> <span
+                                              class="p">{</span> <span class="k">get</span> <span
+                                              class="p">}</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC13effectiveNdimSivp"></a>
+                              <a name="//apple_ref/swift/Property/effectiveNdim" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC13effectiveNdimSivp">effectiveNdim</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>the effective ndim is the number of dimensions, the array actually has, if any size
+                                      is 0, the element
+                                      has an element ndim of 0 since it has no elements.</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span
+                                              class="nv">effectiveNdim</span><span class="p">:</span> <span class="kt">Int</span> <span
+                                              class="p">{</span> <span class="k">get</span> <span
+                                              class="p">}</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC7isEmptySbvp"></a>
+                              <a name="//apple_ref/swift/Property/isEmpty" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC7isEmptySbvp">isEmpty</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>an array is considered empty if it has no items, i.e. if the effectiveNdim is
+                                      0.</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span
+                                              class="nv">isEmpty</span><span class="p">:</span> <span
+                                              class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span
+                                              class="p">}</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC8ownsDataSbvp"></a>
                     <a name="//apple_ref/swift/Property/ownsData" class="dashAnchor"></a>
                     <a class="token" href="#/s:7NdArrayAAC8ownsDataSbvp">ownsData</a>
                     </code>
@@ -327,27 +459,66 @@
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>flag indicating if this ndarray owns its data</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ownsData</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                        <div class="abstract">
+                            <p>flag indicating if this ndarray owns its data</p>
 
                         </div>
-                      </div>
+                        <div class="declaration">
+                            <h4>Declaration</h4>
+                            <div class="language">
+                                <p class="aside-title">Swift</p>
+                                <pre class="highlight swift"><code><span class="kd">public</span> <span
+                                        class="k">var</span> <span class="nv">ownsData</span><span
+                                        class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span
+                                        class="k">get</span> <span class="p">}</span></code></pre>
+
+                            </div>
+                        </div>
                     </section>
                   </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACyAByxGACcfc"></a>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC5emptyAByxGSi_tcfc"></a>
+                              <a name="//apple_ref/swift/Method/init(empty:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC5emptyAByxGSi_tcfc">init(empty:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>create a new array without initializing any memory</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">public</span> <span
+                                              class="kd">required</span> <span class="nf">init</span><span
+                                              class="p">(</span><span class="n">empty</span> <span
+                                              class="nv">count</span><span class="p">:</span> <span
+                                              class="kt">Int</span> <span class="o">=</span> <span
+                                              class="mi">0</span><span class="p">)</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAACyAByxGACcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAByxGACcfc">init(_:)</a>
+                              <a class="token" href="#/s:7NdArrayAACyAByxGACcfc">init(_:
+                                  <wbr>
+                                  )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -374,7 +545,9 @@
                     <code>
                     <a name="/s:7NdArrayAAC4copyAByxGAD_tcfc"></a>
                     <a name="//apple_ref/swift/Method/init(copy:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC4copyAByxGAD_tcfc">init(copy:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC4copyAByxGAD_tcfc">init(copy:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -408,7 +581,11 @@ if the array is not contiguous, a C ordered array will be created.</p>
                     <code>
                     <a name="/s:7NdArrayAAC_5orderAByxGAD_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC_5orderAByxGAD_AA10ContiguousOtcfc">init(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC_5orderAByxGAD_AA10ContiguousOtcfc">init(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -436,7 +613,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAAC4copy5orderAByxGAE_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(copy:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC4copy5orderAByxGAE_AA10ContiguousOtcfc">init(copy:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC4copy5orderAByxGAE_AA10ContiguousOtcfc">init(copy:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -468,7 +649,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAByxGSayxGcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAByxGSayxGcfc">init(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAByxGSayxGcfc">init(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -495,7 +678,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAAC_5orderAByxGSaySayxGG_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC_5orderAByxGSaySayxGG_AA10ContiguousOtcfc">init(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC_5orderAByxGSaySayxGG_AA10ContiguousOtcfc">init(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -522,7 +709,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAAC_5orderAByxGSaySaySayxGGG_AA10ContiguousOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC_5orderAByxGSaySaySayxGGG_AA10ContiguousOtcfc">init(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC_5orderAByxGSaySaySayxGGG_AA10ContiguousOtcfc">init(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -628,7 +819,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyxSaySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyxSaySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyxSaySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -655,7 +848,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXEcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXEcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXEcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -682,7 +877,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGSNySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSNySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSNySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -709,7 +906,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -736,7 +935,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -763,7 +964,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -790,7 +993,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGSnySiGcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSnySiGcip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSnySiGcip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -817,7 +1022,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGSnySiG_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSnySiG_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSnySiG_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -844,7 +1053,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGSNySiG_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSNySiG_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSNySiG_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -871,7 +1084,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiG_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiG_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeFromVySiG_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -898,7 +1115,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiG_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiG_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs19PartialRangeThroughVySiG_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -925,7 +1146,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiG_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiG_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGs16PartialRangeUpToVySiG_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -952,7 +1177,11 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXE_Sitcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXE_Sitcip">subscript(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGys15UnboundedRange_OXE_Sitcip">subscript(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -979,7 +1208,9 @@ specific order, a copy is made.</p>
                     <code>
                     <a name="/s:7NdArrayAACyAA0aB5SliceCyxGSicip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSicip">subscript(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACyAA0aB5SliceCyxGSicip">subscript(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1001,42 +1232,6 @@ specific order, a copy is made.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:SQ2eeoiySbx_xtFZ"></a>
-                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:SQ2eeoiySbx_xtFZ">==(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>arrays are considered equal if they have the same type, the same shape and the same elements
-(not necessarily the same strides).</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -1126,7 +1321,9 @@ order.</p>
                     <code>
                     <a name="/s:7NdArrayAAC8overlapsySbAByxGF"></a>
                     <a name="//apple_ref/swift/Method/overlaps(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC8overlapsySbAByxGF">overlaps(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC8overlapsySbAByxGF">overlaps(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1151,16 +1348,14 @@ order.</p>
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
                 <li class="item">
                   <div>
                     <code>
                     <a name="/s:7NdArrayAAC5applyyyxxKXEKF"></a>
                     <a name="//apple_ref/swift/Method/apply(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC5applyyyxxKXEKF">apply(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAAC5applyyyxxKXEKF">apply(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1189,11 +1384,11 @@ order.</p>
                                 <em>f</em>
                                 </code>
                               </td>
-                              <td>
-                                <div>
-                                  <p>closure to apply to each array element</p>
-                                </div>
-                              </td>
+                                <td>
+                                    <div>
+                                        <p>closure to apply to each array element</p>
+                                    </div>
+                                </td>
                             </tr>
                           </tbody>
                         </table>
@@ -1201,19 +1396,481 @@ order.</p>
                     </section>
                   </div>
                 </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC6copyToyyAByxGF"></a>
+                              <a name="//apple_ref/swift/Method/copyTo(_:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC6copyToyyAByxGF">copyTo(_:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>Copy the values from the array into another array. The destination array must have
+                                      the same shape as the source
+                                      array.</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">copyTo</span><span
+                                              class="p">(</span><span class="n">_</span> <span
+                                              class="nv">out</span><span class="p">:</span> <span
+                                              class="kt">NdArray</span><span class="o">&lt;</span><span
+                                              class="kt">T</span><span class="o">&gt;</span><span
+                                              class="p">)</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC5empty5shape5orderAByxGXDSaySiG_AA10ContiguousOtFZ"></a>
+                              <a name="//apple_ref/swift/Method/empty(shape:order:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC5empty5shape5orderAByxGXDSaySiG_AA10ContiguousOtFZ">empty(shape:
+                                  <wbr>
+                                  order:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>Undocumented</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">static</span> <span
+                                              class="kd">func</span> <span class="nf">empty</span><span
+                                              class="p">(</span><span class="nv">shape</span><span
+                                              class="p">:</span> <span class="p">[</span><span
+                                              class="kt">Int</span><span class="p">],</span> <span
+                                              class="nv">order</span><span class="p">:</span> <span class="kt"><a
+                                              href="../Enums/Contiguous.html">Contiguous</a></span> <span
+                                              class="o">=</span> <span class="o">.</span><span class="kt">C</span><span
+                                              class="p">)</span> <span class="o">-&gt;</span> <span
+                                              class="k">Self</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC9repeating_5countAByxGXDx_SitFZ"></a>
+                              <a name="//apple_ref/swift/Method/repeating(_:count:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC9repeating_5countAByxGXDx_SitFZ">repeating(_:
+                                  <wbr>
+                                  count:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>init with constant value</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">static</span> <span
+                                              class="kd">func</span> <span class="nf">repeating</span><span
+                                              class="p">(</span><span class="n">_</span> <span class="nv">x</span><span
+                                              class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span
+                                              class="nv">count</span><span class="p">:</span> <span
+                                              class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span
+                                              class="k">Self</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC9repeating_5shape5orderAByxGXDx_SaySiGAA10ContiguousOtFZ"></a>
+                              <a name="//apple_ref/swift/Method/repeating(_:shape:order:)" class="dashAnchor"></a>
+                              <a class="token"
+                                 href="#/s:7NdArrayAAC9repeating_5shape5orderAByxGXDx_SaySiGAA10ContiguousOtFZ">repeating(_:
+                                  <wbr>
+                                  shape:
+                                  <wbr>
+                                  order:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>init with constant value</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">static</span> <span
+                                              class="kd">func</span> <span class="nf">repeating</span><span
+                                              class="p">(</span><span class="n">_</span> <span class="nv">x</span><span
+                                              class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span
+                                              class="nv">shape</span><span class="p">:</span> <span
+                                              class="p">[</span><span class="kt">Int</span><span
+                                              class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span
+                                              class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span> <span
+                                              class="o">=</span> <span class="o">.</span><span class="kt">C</span><span
+                                              class="p">)</span> <span class="o">-&gt;</span> <span
+                                              class="k">Self</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC3mapyAByxGXDxxKXEKF"></a>
+                              <a name="//apple_ref/swift/Method/map(_:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC3mapyAByxGXDxxKXEKF">map(_:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>map a scalar function to all array elements</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">map</span><span
+                                              class="p">(</span><span class="n">_</span> <span class="nv">f</span><span
+                                              class="p">:</span> <span class="p">(</span><span class="kt">T</span><span
+                                              class="p">)</span> <span class="k">throws</span> <span
+                                              class="o">-&gt;</span> <span class="kt">T</span><span
+                                              class="p">)</span> <span class="k">rethrows</span> <span
+                                              class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC6reduceyqd__qd___qd__qd___xtKXEtKlF"></a>
+                              <a name="//apple_ref/swift/Method/reduce(_:_:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC6reduceyqd__qd___qd__qd___xtKXEtKlF">reduce(_:
+                                  <wbr>
+                                  _:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                  <p>reduce all elements of the array
+                                      if the array is empty, the initial result is returned</p>
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">reduce</span><span
+                                              class="o">&lt;</span><span class="kt">Result</span><span
+                                              class="o">&gt;</span><span class="p">(</span><span
+                                              class="n">_</span> <span class="nv">initialResult</span><span
+                                              class="p">:</span> <span class="kt">Result</span><span class="p">,</span>
+                    <span class="n">_</span> <span class="nv">nextPartialResult</span><span class="p">:</span> <span
+                                                  class="p">(</span><span class="kt">Result</span><span
+                                                  class="p">,</span> <span class="kt">T</span><span
+                                                  class="p">)</span> <span class="k">throws</span> <span
+                                                  class="o">-&gt;</span> <span class="kt">Result</span><span
+                                                  class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span
+                                                  class="kt">Result</span></code></pre>
+
+                                  </div>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC8reshapedyAByxGSaySiGF"></a>
+                              <a name="//apple_ref/swift/Method/reshaped(_:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC8reshapedyAByxGSaySiGF">reshaped(_:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">reshaped</span><span
+                                              class="p">(</span><span class="n">_</span> <span
+                                              class="nv">shape</span><span class="p">:</span> <span
+                                              class="p">[</span><span class="kt">Int</span><span
+                                              class="p">])</span> <span class="o">-&gt;</span> <span
+                                              class="kt">NdArray</span><span class="o">&lt;</span><span
+                                              class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                                  </div>
+                              </div>
+                              <div>
+                                  <h4>Parameters</h4>
+                                  <table class="graybox">
+                                      <tbody>
+                                      <tr>
+                                          <td>
+                                              <code>
+                                                  <em>shape</em>
+                                              </code>
+                                          </td>
+                                          <td>
+                                              <div>
+                                                  <p>shape of the reshaped array</p>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div>
+                                  <h4>Return Value</h4>
+                                  <p>A reshaped array view or copy if the array could not be reshaped in place</p>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC8reshaped_5orderAByxGSaySiG_AA10ContiguousOtF"></a>
+                              <a name="//apple_ref/swift/Method/reshaped(_:order:)" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC8reshaped_5orderAByxGSaySiG_AA10ContiguousOtF">reshaped(_:
+                                  <wbr>
+                                  order:
+                                  <wbr>
+                                  )</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">reshaped</span><span
+                                              class="p">(</span><span class="n">_</span> <span
+                                              class="nv">shape</span><span class="p">:</span> <span
+                                              class="p">[</span><span class="kt">Int</span><span
+                                              class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span
+                                              class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span><span
+                                              class="p">)</span> <span class="o">-&gt;</span> <span
+                                              class="kt">NdArray</span><span class="o">&lt;</span><span
+                                              class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                                  </div>
+                              </div>
+                              <div>
+                                  <h4>Parameters</h4>
+                                  <table class="graybox">
+                                      <tbody>
+                                      <tr>
+                                          <td>
+                                              <code>
+                                                  <em>shape</em>
+                                              </code>
+                                          </td>
+                                          <td>
+                                              <div>
+                                                  <p>shape of the reshaped array</p>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td>
+                                              <code>
+                                                  <em>order</em>
+                                              </code>
+                                          </td>
+                                          <td>
+                                              <div>
+                                                  <p>alignment of the reshaped array</p>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                              <div>
+                                  <h4>Return Value</h4>
+                                  <p>A reshaped array view or copy if the array could not be reshaped in place</p>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
+                  <li class="item">
+                      <div>
+                          <code>
+                              <a name="/s:7NdArrayAAC9flattenedAByxGyF"></a>
+                              <a name="//apple_ref/swift/Method/flattened()" class="dashAnchor"></a>
+                              <a class="token" href="#/s:7NdArrayAAC9flattenedAByxGyF">flattened()</a>
+                          </code>
+                      </div>
+                      <div class="height-container">
+                          <div class="pointer-container"></div>
+                          <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+
+                              </div>
+                              <div class="declaration">
+                                  <h4>Declaration</h4>
+                                  <div class="language">
+                                      <p class="aside-title">Swift</p>
+                                      <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">flattened</span><span
+                                              class="p">()</span> <span class="o">-&gt;</span> <span
+                                              class="kt">NdArray</span><span class="o">&lt;</span><span
+                                              class="kt">T</span><span class="o">&gt;</span></code></pre>
+
+                                  </div>
+                              </div>
+                              <div>
+                                  <h4>Return Value</h4>
+                                  <p>A flattened array view or copy if the array could not be reshaped to a flattened
+                                      array</p>
+                              </div>
+                          </section>
+                      </div>
+                  </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASLRzlE3maxxSgyF"></a>
-                    <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASLRzlE3maxxSgyF">max()</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%3A%20%60Equatable%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T`: `Equatable`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%3A%20%60Equatable%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code>: <code>Equatable</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASQRzlE2eeoiySbAByxG_ADtFZ"></a>
+                                  <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASQRzlE2eeoiySbAByxG_ADtFZ">==(_:
+                                      <wbr>
+                                      _:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
+                              <div class="pointer-container"></div>
+                              <section class="section">
+                                  <div class="pointer"></div>
+                                  <div class="abstract">
+                                      <p>arrays are considered equal if they have the same type, the same shape and the
+                                          same elements
+                                          (not necessarily the same strides).</p>
+
+                                  </div>
+                                  <div class="declaration">
+                                      <h4>Declaration</h4>
+                                      <div class="language">
+                                          <p class="aside-title">Swift</p>
+                                          <pre class="highlight swift"><code><span class="kd">public</span> <span
+                                                  class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span
+                                                  class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span
+                                                  class="kt">NdArray</span><span class="o">&lt;</span><span
+                                                  class="kt">T</span><span class="o">&gt;</span><span class="p">,</span> <span
+                                                  class="nv">rhs</span><span class="p">:</span> <span
+                                                  class="kt">NdArray</span><span class="o">&lt;</span><span
+                                                  class="kt">T</span><span class="o">&gt;</span><span class="p">)</span> <span
+                                                  class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                                      </div>
+                                  </div>
+                              </section>
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%3A%20%60Comparable%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T`: `Comparable`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%3A%20%60Comparable%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code>: <code>Comparable</code></p>
+                          </h3>
+                      </div>
+                  </div>
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASLRzlE3maxxSgyF"></a>
+                                  <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASLRzlE3maxxSgyF">max()</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -1267,17 +1924,31 @@ order.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyxF"></a>
-                    <a name="//apple_ref/swift/Method/add(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyxF">add(_:)</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%3A%20%60AdditiveArithmetic%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T`: `AdditiveArithmetic`"
+                         class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link"
+                             href="#/Available%20where%20%60T%60%3A%20%60AdditiveArithmetic%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code>: <code>AdditiveArithmetic</code>
+                          </p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyxF"></a>
+                                  <a name="//apple_ref/swift/Method/add(_:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyxF">add(_:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -1301,7 +1972,9 @@ order.</p>
                     <code>
                     <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyAByxGF"></a>
                     <a name="//apple_ref/swift/Method/add(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyAByxGF">add(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE3addyyAByxGF">add(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1328,7 +2001,9 @@ order.</p>
                     <code>
                     <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyAByxGF"></a>
                     <a name="//apple_ref/swift/Method/subtract(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyAByxGF">subtract(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyAByxGF">subtract(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1355,7 +2030,9 @@ order.</p>
                     <code>
                     <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyxF"></a>
                     <a name="//apple_ref/swift/Method/subtract(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyxF">subtract(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE8subtractyyxF">subtract(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1409,17 +2086,28 @@ order.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASjRzlE8multiply2byyx_tF"></a>
-                    <a name="//apple_ref/swift/Method/multiply(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASjRzlE8multiply2byyx_tF">multiply(by:)</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%3A%20%60Numeric%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T`: `Numeric`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%3A%20%60Numeric%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code>: <code>Numeric</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASjRzlE8multiply2byyx_tF"></a>
+                                  <a name="//apple_ref/swift/Method/multiply(by:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASjRzlE8multiply2byyx_tF">multiply(by:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -1470,17 +2158,26 @@ order.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASdRszlE3maxSdSgyF"></a>
-                    <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE3maxSdSgyF">max()</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Double%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T` == `Double`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Double%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code> == <code>Double</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASdRszlE3maxSdSgyF"></a>
+                                  <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASdRszlE3maxSdSgyF">max()</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -1537,7 +2234,11 @@ order.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE3addyySd_ABySdGtF"></a>
                     <a name="//apple_ref/swift/Method/add(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE3addyySd_ABySdGtF">add(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE3addyySd_ABySdGtF">add(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1565,7 +2266,13 @@ uses BLAS daxpy operation: self = alpha * x + self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE3addyySd_ABySdGSdtF"></a>
                     <a name="//apple_ref/swift/Method/add(_:_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE3addyySd_ABySdGSdtF">add(_:_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE3addyySd_ABySdGSdtF">add(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1593,7 +2300,9 @@ uses ATLAS daxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE8multiply2byySd_tF"></a>
                     <a name="//apple_ref/swift/Method/multiply(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE8multiply2byySd_tF">multiply(by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE8multiply2byySd_tF">multiply(by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1620,7 +2329,9 @@ uses ATLAS daxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE6divide2byySd_tF"></a>
                     <a name="//apple_ref/swift/Method/divide(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE6divide2byySd_tF">divide(by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE6divide2byySd_tF">divide(by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1647,7 +2358,9 @@ uses ATLAS daxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE3setyySdF"></a>
                     <a name="//apple_ref/swift/Method/set(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE3setyySdF">set(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE3setyySdF">set(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1701,17 +2414,26 @@ uses ATLAS daxpyb operation: self = alpha * x + beta * self</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASfRszlE3maxSfSgyF"></a>
-                    <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE3maxSfSgyF">max()</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Float%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T` == `Float`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Float%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code> == <code>Float</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASfRszlE3maxSfSgyF"></a>
+                                  <a name="//apple_ref/swift/Method/max()" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASfRszlE3maxSfSgyF">max()</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -1768,7 +2490,11 @@ uses ATLAS daxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE3addyySf_ABySfGtF"></a>
                     <a name="//apple_ref/swift/Method/add(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE3addyySf_ABySfGtF">add(_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE3addyySf_ABySfGtF">add(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1796,7 +2522,13 @@ uses BLAS saxpy operation: self = alpha * x + self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE3addyySf_ABySfGSftF"></a>
                     <a name="//apple_ref/swift/Method/add(_:_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE3addyySf_ABySfGSftF">add(_:_:_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE3addyySf_ABySfGSftF">add(_:
+                            <wbr>
+                            _:
+                            <wbr>
+                            _:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1824,7 +2556,9 @@ uses ATLAS saxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE8multiply2byySf_tF"></a>
                     <a name="//apple_ref/swift/Method/multiply(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE8multiply2byySf_tF">multiply(by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE8multiply2byySf_tF">multiply(by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1851,7 +2585,9 @@ uses ATLAS saxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE6divide2byySf_tF"></a>
                     <a name="//apple_ref/swift/Method/divide(by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE6divide2byySf_tF">divide(by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE6divide2byySf_tF">divide(by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1878,7 +2614,9 @@ uses ATLAS saxpyb operation: self = alpha * x + beta * self</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE3setyySfF"></a>
                     <a name="//apple_ref/swift/Method/set(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE3setyySfF">set(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE3setyySfF">set(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1932,134 +2670,31 @@ uses ATLAS saxpyb operation: self = alpha * x + beta * self</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC6copyToyyAByxGF"></a>
-                    <a name="//apple_ref/swift/Method/copyTo(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC6copyToyyAByxGF">copyTo(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Copy the values from the array into another array. The destination array must have the same shape as the source
-array.</p>
-
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%3A%20%60AdditiveArithmetic%602"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T`: `AdditiveArithmetic`"
+                         class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link"
+                             href="#/Available%20where%20%60T%60%3A%20%60AdditiveArithmetic%602"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code>: <code>AdditiveArithmetic</code>
+                          </p>
+                          </h3>
                       </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">copyTo</span><span class="p">(</span><span class="n">_</span> <span class="nv">out</span><span class="p">:</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
                   </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC5empty5shape5orderAByxGXDSaySiG_AA10ContiguousOtFZ"></a>
-                    <a name="//apple_ref/swift/Method/empty(shape:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC5empty5shape5orderAByxGXDSaySiG_AA10ContiguousOtFZ">empty(shape:order:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">empty</span><span class="p">(</span><span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC9repeating_5countAByxGXDx_SitFZ"></a>
-                    <a name="//apple_ref/swift/Method/repeating(_:count:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC9repeating_5countAByxGXDx_SitFZ">repeating(_:count:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>init with constant value</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">repeating</span><span class="p">(</span><span class="n">_</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC9repeating_5shape5orderAByxGXDx_SaySiGAA10ContiguousOtFZ"></a>
-                    <a name="//apple_ref/swift/Method/repeating(_:shape:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC9repeating_5shape5orderAByxGXDx_SaySiGAA10ContiguousOtFZ">repeating(_:shape:order:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>init with constant value</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">repeating</span><span class="p">(</span><span class="n">_</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">T</span><span class="p">,</span> <span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span> <span class="o">=</span> <span class="o">.</span><span class="kt">C</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zerosyAByxGXDSiFZ"></a>
-                    <a name="//apple_ref/swift/Method/zeros(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zerosyAByxGXDSiFZ">zeros(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zerosyAByxGXDSiFZ"></a>
+                                  <a name="//apple_ref/swift/Method/zeros(_:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zerosyAByxGXDSiFZ">zeros(_:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -2083,7 +2718,12 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zeros_5orderAByxGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zeros_5orderAByxGXDSaySiG_AA10ContiguousOtFZ">zeros(_:order:)</a>
+                        <a class="token"
+                           href="#/s:7NdArrayAACAAs18AdditiveArithmeticRzlE5zeros_5orderAByxGXDSaySiG_AA10ContiguousOtFZ">zeros(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2107,17 +2747,31 @@ array.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASdRszlE5range2to2byABySdGXDSd_SdtFZ"></a>
-                    <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE5range2to2byABySdGXDSd_SdtFZ">range(to:by:)</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Double%602"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T` == `Double`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link"
+                             href="#/Available%20where%20%60T%60%20%3D%3D%20%60Double%602"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code> == <code>Double</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASdRszlE5range2to2byABySdGXDSd_SdtFZ"></a>
+                                  <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASdRszlE5range2to2byABySdGXDSd_SdtFZ">range(to:
+                                      <wbr>
+                                      by:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -2141,7 +2795,13 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE5range4from2to2byABySdGXDSd_S2dtFZ"></a>
                     <a name="//apple_ref/swift/Method/range(from:to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE5range4from2to2byABySdGXDSd_S2dtFZ">range(from:to:by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE5range4from2to2byABySdGXDSd_S2dtFZ">range(from:
+                            <wbr>
+                            to:
+                            <wbr>
+                            by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2168,7 +2828,9 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE4onesyABySdGXDSiFZ"></a>
                     <a name="//apple_ref/swift/Method/ones(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE4onesyABySdGXDSiFZ">ones(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE4onesyABySdGXDSiFZ">ones(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2195,7 +2857,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE4ones_5orderABySdGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/ones(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE4ones_5orderABySdGXDSaySiG_AA10ContiguousOtFZ">ones(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE4ones_5orderABySdGXDSaySiG_AA10ContiguousOtFZ">ones(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2222,7 +2888,9 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE5zerosyABySdGXDSiFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE5zerosyABySdGXDSiFZ">zeros(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE5zerosyABySdGXDSiFZ">zeros(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2249,7 +2917,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE5zeros_5orderABySdGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE5zeros_5orderABySdGXDSaySiG_AA10ContiguousOtFZ">zeros(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE5zeros_5orderABySdGXDSaySiG_AA10ContiguousOtFZ">zeros(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2276,7 +2948,14 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE9repeating_5shape5orderABySdGXDSd_SaySiGAA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/repeating(_:shape:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE9repeating_5shape5orderABySdGXDSd_SaySiGAA10ContiguousOtFZ">repeating(_:shape:order:)</a>
+                        <a class="token"
+                           href="#/s:7NdArrayAACAASdRszlE9repeating_5shape5orderABySdGXDSd_SaySiGAA10ContiguousOtFZ">repeating(_:
+                            <wbr>
+                            shape:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2303,7 +2982,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASdRszlE9repeating_5countABySdGXDSd_SitFZ"></a>
                     <a name="//apple_ref/swift/Method/repeating(_:count:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASdRszlE9repeating_5countABySdGXDSd_SitFZ">repeating(_:count:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASdRszlE9repeating_5countABySdGXDSd_SitFZ">repeating(_:
+                            <wbr>
+                            count:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2327,17 +3010,30 @@ array.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASfRszlE5range2to2byABySfGXDSf_SftFZ"></a>
-                    <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE5range2to2byABySfGXDSf_SftFZ">range(to:by:)</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Float%602"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T` == `Float`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Float%602"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code> == <code>Float</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASfRszlE5range2to2byABySfGXDSf_SftFZ"></a>
+                                  <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASfRszlE5range2to2byABySfGXDSf_SftFZ">range(to:
+                                      <wbr>
+                                      by:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -2361,7 +3057,13 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE5range4from2to2byABySfGXDSf_S2ftFZ"></a>
                     <a name="//apple_ref/swift/Method/range(from:to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE5range4from2to2byABySfGXDSf_S2ftFZ">range(from:to:by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE5range4from2to2byABySfGXDSf_S2ftFZ">range(from:
+                            <wbr>
+                            to:
+                            <wbr>
+                            by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2388,7 +3090,9 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE4onesyABySfGXDSiFZ"></a>
                     <a name="//apple_ref/swift/Method/ones(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE4onesyABySfGXDSiFZ">ones(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE4onesyABySfGXDSiFZ">ones(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2415,7 +3119,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE4ones_5orderABySfGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/ones(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE4ones_5orderABySfGXDSaySiG_AA10ContiguousOtFZ">ones(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE4ones_5orderABySfGXDSaySiG_AA10ContiguousOtFZ">ones(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2442,7 +3150,9 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE5zerosyABySfGXDSiFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE5zerosyABySfGXDSiFZ">zeros(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE5zerosyABySfGXDSiFZ">zeros(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2469,7 +3179,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE5zeros_5orderABySfGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE5zeros_5orderABySfGXDSaySiG_AA10ContiguousOtFZ">zeros(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE5zeros_5orderABySfGXDSaySiG_AA10ContiguousOtFZ">zeros(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2496,7 +3210,14 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE9repeating_5shape5orderABySfGXDSf_SaySiGAA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/repeating(_:shape:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE9repeating_5shape5orderABySfGXDSf_SaySiGAA10ContiguousOtFZ">repeating(_:shape:order:)</a>
+                        <a class="token"
+                           href="#/s:7NdArrayAACAASfRszlE9repeating_5shape5orderABySfGXDSf_SaySiGAA10ContiguousOtFZ">repeating(_:
+                            <wbr>
+                            shape:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2523,7 +3244,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASfRszlE9repeating_5countABySfGXDSf_SitFZ"></a>
                     <a name="//apple_ref/swift/Method/repeating(_:count:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASfRszlE9repeating_5countABySfGXDSf_SitFZ">repeating(_:count:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASfRszlE9repeating_5countABySfGXDSf_SitFZ">repeating(_:
+                            <wbr>
+                            count:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2547,17 +3272,30 @@ array.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAACAASiRszlE5range2to2byABySiGXDSi_SitFZ"></a>
-                    <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASiRszlE5range2to2byABySiGXDSi_SitFZ">range(to:by:)</a>
-                    </code>
+              <div class="task-group">
+                  <div class="task-name-container">
+                      <a name="/Available%20where%20%60T%60%20%3D%3D%20%60Int%60"></a>
+                      <a name="//apple_ref/swift/Section/Available where `T` == `Int`" class="dashAnchor"></a>
+                      <div class="section-name-container">
+                          <a class="section-name-link" href="#/Available%20where%20%60T%60%20%3D%3D%20%60Int%60"></a>
+                          <h3 class="section-name"><p>Available where <code>T</code> == <code>Int</code></p>
+                          </h3>
+                      </div>
                   </div>
-                  <div class="height-container">
+                  <ul>
+                      <li class="item">
+                          <div>
+                              <code>
+                                  <a name="/s:7NdArrayAACAASiRszlE5range2to2byABySiGXDSi_SitFZ"></a>
+                                  <a name="//apple_ref/swift/Method/range(to:by:)" class="dashAnchor"></a>
+                                  <a class="token" href="#/s:7NdArrayAACAASiRszlE5range2to2byABySiGXDSi_SitFZ">range(to:
+                                      <wbr>
+                                      by:
+                                      <wbr>
+                                      )</a>
+                              </code>
+                          </div>
+                          <div class="height-container">
                     <div class="pointer-container"></div>
                     <section class="section">
                       <div class="pointer"></div>
@@ -2581,7 +3319,13 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASiRszlE5range4from2to2byABySiGXDSi_S2itFZ"></a>
                     <a name="//apple_ref/swift/Method/range(from:to:by:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASiRszlE5range4from2to2byABySiGXDSi_S2itFZ">range(from:to:by:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASiRszlE5range4from2to2byABySiGXDSi_S2itFZ">range(from:
+                            <wbr>
+                            to:
+                            <wbr>
+                            by:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2608,7 +3352,9 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASiRszlE5zerosyABySiGXDSiFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASiRszlE5zerosyABySiGXDSiFZ">zeros(_:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASiRszlE5zerosyABySiGXDSiFZ">zeros(_:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2635,7 +3381,11 @@ array.</p>
                     <code>
                     <a name="/s:7NdArrayAACAASiRszlE5zeros_5orderABySiGXDSaySiG_AA10ContiguousOtFZ"></a>
                     <a name="//apple_ref/swift/Method/zeros(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAACAASiRszlE5zeros_5orderABySiGXDSaySiG_AA10ContiguousOtFZ">zeros(_:order:)</a>
+                        <a class="token" href="#/s:7NdArrayAACAASiRszlE5zeros_5orderABySiGXDSaySiG_AA10ContiguousOtFZ">zeros(_:
+                            <wbr>
+                            order:
+                            <wbr>
+                            )</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2659,220 +3409,15 @@ array.</p>
                 </li>
               </ul>
             </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC3mapyAByxGXDxxKXEKF"></a>
-                    <a name="//apple_ref/swift/Method/map(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC3mapyAByxGXDxxKXEKF">map(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>map a scalar function to all array elements</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">map</span><span class="p">(</span><span class="n">_</span> <span class="nv">f</span><span class="p">:</span> <span class="p">(</span><span class="kt">T</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC6reduceyqd__qd___qd__qd___xtKXEtKlF"></a>
-                    <a name="//apple_ref/swift/Method/reduce(_:_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC6reduceyqd__qd___qd__qd___xtKXEtKlF">reduce(_:_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>reduce all elements of the array
-if the array is empty, the initial result is returned</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">reduce</span><span class="o">&lt;</span><span class="kt">Result</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">initialResult</span><span class="p">:</span> <span class="kt">Result</span><span class="p">,</span>
-                    <span class="n">_</span> <span class="nv">nextPartialResult</span><span class="p">:</span> <span class="p">(</span><span class="kt">Result</span><span class="p">,</span> <span class="kt">T</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="p">)</span> <span class="k">rethrows</span> <span class="o">-&gt;</span> <span class="kt">Result</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC8reshapedyAByxGSaySiGF"></a>
-                    <a name="//apple_ref/swift/Method/reshaped(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC8reshapedyAByxGSaySiGF">reshaped(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">reshaped</span><span class="p">(</span><span class="n">_</span> <span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>shape</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>shape of the reshaped array</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A reshaped array view or copy if the array could not be reshaped in place</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC8reshaped_5orderAByxGSaySiG_AA10ContiguousOtF"></a>
-                    <a name="//apple_ref/swift/Method/reshaped(_:order:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC8reshaped_5orderAByxGSaySiG_AA10ContiguousOtF">reshaped(_:order:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">reshaped</span><span class="p">(</span><span class="n">_</span> <span class="nv">shape</span><span class="p">:</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="nv">order</span><span class="p">:</span> <span class="kt"><a href="../Enums/Contiguous.html">Contiguous</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>shape</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>shape of the reshaped array</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>order</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>alignment of the reshaped array</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A reshaped array view or copy if the array could not be reshaped in place</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7NdArrayAAC9flattenedAByxGyF"></a>
-                    <a name="//apple_ref/swift/Method/flattened()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7NdArrayAAC9flattenedAByxGyF">flattened()</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">flattened</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Return Value</h4>
-                        <p>A flattened array view or copy if the array could not be reshaped to a flattened array</p>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
           </section>
         </section>
-        <section id="footer">
-          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-01-13)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.12.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-        </section>
+          <section id="footer">
+              <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last
+                  updated: 2020-08-10)</p>
+              <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy
+                  ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a>
+                  project.</p>
+          </section>
       </article>
     </div>
   </body>

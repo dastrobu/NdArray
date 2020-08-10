@@ -58,28 +58,28 @@
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Matrix.swift",
-      "line": 429,
+      "line": 427,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Matrix.swift",
-      "line": 453,
+      "line": 450,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Matrix.swift",
-      "line": 483,
+      "line": 479,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Matrix.swift",
-      "line": 507,
+      "line": 502,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
@@ -226,14 +226,7 @@
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/NdArray.swift",
-      "line": 401,
-      "symbol": "NdArray",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/NdArray.swift",
-      "line": 465,
+      "line": 408,
       "symbol": "NdArray",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
@@ -282,86 +275,100 @@
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 45,
+      "line": 31,
       "symbol": "Vector",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 46,
-      "symbol": "Vector.dot(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 56,
-      "symbol": "Vector.norm2()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 61,
-      "symbol": "Vector.sort(order:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 81,
-      "symbol": "Vector.reverse()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 87,
+      "line": 59,
       "symbol": "Vector",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 88,
+      "line": 60,
       "symbol": "Vector.dot(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 98,
+      "line": 70,
       "symbol": "Vector.norm2()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 103,
+      "line": 75,
       "symbol": "Vector.sort(order:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 123,
+      "line": 95,
       "symbol": "Vector.reverse()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 130,
+      "line": 101,
+      "symbol": "Vector",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
+      "line": 102,
+      "symbol": "Vector.dot(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
+      "line": 112,
+      "symbol": "Vector.norm2()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
+      "line": 117,
+      "symbol": "Vector.sort(order:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
+      "line": 137,
+      "symbol": "Vector.reverse()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
+      "line": 143,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/Vector.swift",
-      "line": 135,
+      "line": 147,
       "symbol": "*(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/VectorSequence.swift",
+      "line": 33,
+      "symbol": "Vector.makeIterator()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
