@@ -23,7 +23,7 @@ to enable fast and simple handling of multidimensional data.
 - [Sliced and Strided Access](#sliced-and-strided-access)
   - [Single Slice](#single-slice)
   - [`UnboundedRange` Slices](#unboundedrange-slices)
-  - [`Range` and `ClosdeRange` Slices](#range-and-closderange-slices)
+  - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
   - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
@@ -138,7 +138,7 @@ print(a)
 //  [0.0, 0.0]]
 ``` 
 
-### `Range` and `ClosdeRange` Slices
+### `Range` and `ClosedRange` Slices
 
 Ranges `n..<m` and closed ranges `n...m` allow to select certain sub arrays.
 ```swift
