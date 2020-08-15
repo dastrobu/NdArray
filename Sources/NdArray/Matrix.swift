@@ -140,7 +140,7 @@ public extension Matrix where T == Double {
     /// This array must be in column major storage.
     @discardableResult
     func solve(_ rhs: Matrix<T>, out: Matrix<T>? = nil) throws -> Matrix<T> {
-        var n = Int32(shape[0])
+        var n = __CLPK_integer(shape[0])
         assert(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
@@ -172,11 +172,11 @@ public extension Matrix where T == Double {
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
         let A = Matrix<T>(empty: self.shape, order: .F)
         A[...] = self[...]
-        var nrhs = Int32(B.shape[1])
-        var ipiv: [Int32] = [Int32].init(repeating: 0, count: Int(n))
-        var lda: Int32 = Int32(n)
-        var ldb = Int32(B.shape[0])
-        var info: Int32 = 0
+        var nrhs = __CLPK_integer(B.shape[1])
+        var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
+        var lda: __CLPK_integer = __CLPK_integer(n)
+        var ldb = __CLPK_integer(B.shape[0])
+        var info: __CLPK_integer = 0
         dgesv_(&n, &nrhs, A.data, &lda, &ipiv, B.data, &ldb, &info)
         if info != 0 {
             throw LapackError.dgesv(info)
@@ -195,7 +195,7 @@ public extension Matrix where T == Double {
     /// If an error occurred, the data in out may have been changed to any data.
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
-        var n = Int32(shape[0])
+        var n = __CLPK_integer(shape[0])
         assert(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
@@ -206,11 +206,11 @@ public extension Matrix where T == Double {
 
         var ipiv = try A.luFactor()
 
-        var lda = Int32(n)
-        var info: Int32 = 0
+        var lda = __CLPK_integer(n)
+        var info: __CLPK_integer = 0
 
         // do optimal workspace query
-        var lwork: Int32 = -1
+        var lwork: __CLPK_integer = -1
         var work = [__CLPK_doublereal](repeating: 0.0, count: 1)
         dgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
@@ -218,7 +218,7 @@ public extension Matrix where T == Double {
         }
 
         // retrieve optimal workspace
-        lwork = Int32(work[0])
+        lwork = __CLPK_integer(work[0])
         work = [__CLPK_doublereal](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
@@ -243,7 +243,7 @@ public extension Matrix where T == Double {
     /// This is the right-looking Level 3 BLAS version of the algorithm.
     ///
     /// This array must be in column major storage.
-    private func luFactor() throws -> [Int32] {
+    private func luFactor() throws -> [__CLPK_integer] {
         // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
         // LU factorization may be implemented, yielding P, L and U explicitly.
         assert(isFContiguous,
@@ -251,12 +251,12 @@ public extension Matrix where T == Double {
             Cannot compute LU factorization if not f contiguous
             Given out array is \(self.debugDescription).
             """)
-        var ipiv = [Int32](repeating: 0, count: Swift.min(shape[0], shape[1]))
-        var m = Int32(shape[0])
-        var n = Int32(shape[1])
+        var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
+        var m = __CLPK_integer(shape[0])
+        var n = __CLPK_integer(shape[1])
         // leading dimension is the number of rows in column major order
-        var lda = Int32(m)
-        var info: Int32 = 0
+        var lda = __CLPK_integer(m)
+        var info: __CLPK_integer = 0
         dgetrf_(&m, &n, data, &lda, &ipiv, &info)
         if info != 0 {
             throw LapackError.getrf(info)
@@ -299,7 +299,7 @@ public extension Matrix where T == Float {
     /// This array must be in column major storage.
     @discardableResult
     func solve(_ rhs: Matrix<T>, out: Matrix<T>? = nil) throws -> Matrix<T> {
-        var n = Int32(shape[0])
+        var n = __CLPK_integer(shape[0])
         assert(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
@@ -331,11 +331,11 @@ public extension Matrix where T == Float {
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
         let A = Matrix<T>(empty: self.shape, order: .F)
         A[...] = self[...]
-        var nrhs = Int32(B.shape[1])
-        var ipiv: [Int32] = [Int32].init(repeating: 0, count: Int(n))
-        var lda: Int32 = Int32(n)
-        var ldb = Int32(B.shape[0])
-        var info: Int32 = 0
+        var nrhs = __CLPK_integer(B.shape[1])
+        var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
+        var lda: __CLPK_integer = __CLPK_integer(n)
+        var ldb = __CLPK_integer(B.shape[0])
+        var info: __CLPK_integer = 0
         sgesv_(&n, &nrhs, A.data, &lda, &ipiv, B.data, &ldb, &info)
         if info != 0 {
             throw LapackError.dgesv(info)
@@ -354,7 +354,7 @@ public extension Matrix where T == Float {
     /// If an error occurred, the data in out may have been changed to any data.
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
-        var n = Int32(shape[0])
+        var n = __CLPK_integer(shape[0])
         assert(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
@@ -365,11 +365,11 @@ public extension Matrix where T == Float {
 
         var ipiv = try A.luFactor()
 
-        var lda = Int32(n)
-        var info: Int32 = 0
+        var lda = __CLPK_integer(n)
+        var info: __CLPK_integer = 0
 
         // do optimal workspace query
-        var lwork: Int32 = -1
+        var lwork: __CLPK_integer = -1
         var work = [__CLPK_real](repeating: 0.0, count: 1)
         sgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
@@ -377,7 +377,7 @@ public extension Matrix where T == Float {
         }
 
         // retrieve optimal workspace
-        lwork = Int32(work[0])
+        lwork = __CLPK_integer(work[0])
         work = [__CLPK_real](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
@@ -402,7 +402,7 @@ public extension Matrix where T == Float {
     /// This is the right-looking Level 3 BLAS version of the algorithm.
     ///
     /// This array must be in column major storage.
-    private func luFactor() throws -> [Int32] {
+    private func luFactor() throws -> [__CLPK_integer] {
         // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
         // LU factorization may be implemented, yielding P, L and U explicitly.
         assert(isFContiguous,
@@ -410,12 +410,12 @@ public extension Matrix where T == Float {
             Cannot compute LU factorization if not f contiguous
             Given out array is \(self.debugDescription).
             """)
-        var ipiv = [Int32](repeating: 0, count: Swift.min(shape[0], shape[1]))
-        var m = Int32(shape[0])
-        var n = Int32(shape[1])
+        var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
+        var m = __CLPK_integer(shape[0])
+        var n = __CLPK_integer(shape[1])
         // leading dimension is the number of rows in column major order
-        var lda = Int32(m)
-        var info: Int32 = 0
+        var lda = __CLPK_integer(m)
+        var info: __CLPK_integer = 0
         sgetrf_(&m, &n, data, &lda, &ipiv, &info)
         if info != 0 {
             throw LapackError.getrf(info)
