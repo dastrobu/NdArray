@@ -337,9 +337,9 @@ When using slices on an `NdArray` it returns a `NdArraySlice` object. This slice
 keeps track how deeply its sliced.  
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
-var B = A[...] // NdArraySlice withe sliced = 1, i.e. one dimension has been sliced
-B = A[...][..., 2] // NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
-B = A[...][..., 2][..<1] // NdArraySlice withe sliced = 3, i.e. one dimension has been sliced
+var B = A[...] // NdArraySlice with sliced = 1, i.e. one dimension has been sliced
+B = A[...][..., 2] // NdArraySlice with sliced = 2, i.e. one dimension has been sliced
+B = A[...][..., 2][..<1] // NdArraySlice with sliced = 3, i.e. one dimension has been sliced
 B = A[...][..., 2][..<1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
 ```
 So it is recommended to convert to an `NdArray` after slicing before continuing to work with the data.

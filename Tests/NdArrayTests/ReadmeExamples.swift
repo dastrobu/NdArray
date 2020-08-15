@@ -183,9 +183,9 @@ class ReadmeExamples: XCTestCase {
         }
         do {
             let A = NdArray<Double>.ones([2, 2, 2])
-            var B = A[...] // return NdArraySlice withe sliced = 1, i.e. one dimension has been sliced
-            B = A[...][..., 2] // return NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
-            B = A[...][..., 2][...1] // return NdArraySlice withe sliced = 2, i.e. one dimension has been sliced
+            var B = A[...] // return NdArraySlice with sliced = 1, i.e. one dimension has been sliced
+            B = A[...][..., 2] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
+            B = A[...][..., 2][...1] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
             // B = A[...][..., 2][...1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
         }
         do {
