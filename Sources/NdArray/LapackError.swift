@@ -1,5 +1,7 @@
+import Accelerate
+
 public enum LapackError: Error {
-    case getrf(_: Int32)
-    case getri(_: Int32)
-    case dgesv(_: Int32)
+    case getrf(_: __CLPK_integer)
+    case getri(_: __CLPK_integer)
+    case dgesv(_: __CLPK_integer)
 }
