@@ -343,7 +343,7 @@
   },
   "Classes/NdArraySlice.html#/s:7NdArray0aB5SliceCyACyxGA2ACyxGcfc": {
     "name": "init(_:)",
-    "abstract": "<p>create a new array stealing ownership from the passed array</p>",
+    "abstract": "<p>creates a view on another array without copying any data</p>",
     "parent_name": "NdArraySlice"
   },
   "Classes/NdArraySlice.html#/s:7NdArray0aB5SliceC4copyACyxGA2ACyxG_tcfc": {

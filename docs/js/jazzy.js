@@ -48,7 +48,7 @@ $('.token').on('click', function(event) {
   } else {
     location.hash = href;
   }
-    event.preventDefault();
+  event.preventDefault();
 });
 
 // Clicks on links to the current, closed, item need to open the item

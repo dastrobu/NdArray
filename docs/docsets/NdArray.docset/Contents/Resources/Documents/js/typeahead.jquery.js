@@ -98,7 +98,6 @@
             },
             templatify: function templatify(obj) {
                 return $.isFunction(obj) ? obj : template;
-
                 function template() {
                     return String(obj);
                 }
@@ -179,7 +178,6 @@
             highlight: "tt-highlight"
         };
         return build;
-
         function build(o) {
             var www, classes;
             classes = _.mixin({}, defaultClassNames, o);
@@ -199,14 +197,12 @@
                 }
             };
         }
-
         function buildHtml(c) {
             return {
                 wrapper: '<span class="' + c.wrapper + '"></span>',
                 menu: '<div role="listbox" class="' + c.menu + '"></div>'
             };
         }
-
         function buildSelectors(classes) {
             var selectors = {};
             _.each(classes, function (v, k) {
@@ -214,7 +210,6 @@
             });
             return selectors;
         }
-
         function buildCss() {
             var css = {
                 wrapper: {
@@ -279,7 +274,6 @@
             }
             this.$el = $(o.el);
         }
-
         _.mixin(EventBus.prototype, {
             _trigger: function (type, args) {
                 var $e = $.Event(namespace + type);
@@ -329,15 +323,12 @@
             }
             return this;
         }
-
         function onAsync(types, cb, context) {
             return on.call(this, "async", types, cb, context);
         }
-
         function onSync(types, cb, context) {
             return on.call(this, "sync", types, cb, context);
         }
-
         function off(types) {
             var type;
             if (!this._callbacks) {
@@ -349,7 +340,6 @@
             }
             return this;
         }
-
         function trigger(types) {
             var type, callbacks, args, syncFlush, asyncFlush;
             if (!this._callbacks) {
@@ -364,10 +354,8 @@
             }
             return this;
         }
-
         function getFlush(callbacks, context, args) {
             return flush;
-
             function flush() {
                 var cancelled;
                 for (var i = 0, len = callbacks.length; !cancelled && i < len; i += 1) {
@@ -376,7 +364,6 @@
                 return !cancelled;
             }
         }
-
         function getNextTick() {
             var nextTickFn;
             if (window.setImmediate) {
@@ -449,7 +436,6 @@
             o.pattern = _.isArray(o.pattern) ? o.pattern : [o.pattern];
             regex = getRegex(o.pattern, o.caseSensitive, o.wordsOnly, o.diacriticInsensitive);
             traverse(o.node, hightlightTextNode);
-
             function hightlightTextNode(textNode) {
                 var match, patternNode, wrapperNode;
                 if (match = regex.exec(textNode.data)) {
@@ -462,7 +448,6 @@
                 }
                 return !!match;
             }
-
             function traverse(el, hightlightTextNode) {
                 var childNode, TEXT_NODE_TYPE = 3;
                 for (var i = 0; i < el.childNodes.length; i++) {
@@ -475,11 +460,9 @@
                 }
             }
         };
-
         function accent_replacer(chr) {
             return accented[chr.toUpperCase()] || chr;
         }
-
         function getRegex(patterns, caseSensitive, wordsOnly, diacriticInsensitive) {
             var escapedPatterns = [], regexStr;
             for (var i = 0, len = patterns.length; i < len; i++) {
@@ -505,7 +488,6 @@
             38: "up",
             40: "down"
         };
-
         function Input(o, www) {
             var id;
             o = o || {};
@@ -706,7 +688,6 @@
             }
         });
         return Input;
-
         function buildOverflowHelper($input) {
             return $('<pre aria-hidden="true"></pre>').css({
                 position: "absolute",
@@ -767,7 +748,6 @@
             this._resetLastSuggestion();
             this.$el = $(o.node).attr("role", "presentation").addClass(this.classes.dataset).addClass(this.classes.dataset + "-" + this.name);
         }
-
         Dataset.extractData = function extractData(el) {
             var $el = $(el);
             if ($el.data(keys.obj)) {
@@ -885,7 +865,6 @@
                 };
                 this.source(query, sync, async);
                 !syncCalled && sync([]);
-
                 function sync(suggestions) {
                     if (syncCalled) {
                         return;
@@ -898,7 +877,6 @@
                         that.trigger("asyncRequested", query, that.name);
                     }
                 }
-
                 function async(suggestions) {
                     suggestions = suggestions || [];
                     if (!canceled && rendered < that.limit) {
@@ -924,16 +902,13 @@
             }
         });
         return Dataset;
-
         function getDisplayFn(display) {
             display = display || _.stringify;
             return _.isFunction(display) ? display : displayFn;
-
             function displayFn(obj) {
                 return obj[display];
             }
         }
-
         function getTemplates(templates, displayFn) {
             return {
                 notFound: templates.notFound && _.templatify(templates.notFound),
@@ -942,7 +917,6 @@
                 footer: templates.footer && _.templatify(templates.footer),
                 suggestion: templates.suggestion ? userSuggestionTemplate : suggestionTemplate
             };
-
             function userSuggestionTemplate(context) {
                 var template = templates.suggestion;
                 return $(template(context)).attr("id", _.guid());
@@ -970,14 +944,12 @@
             this.$node = $(o.node);
             this.query = null;
             this.datasets = _.map(o.datasets, initializeDataset);
-
             function initializeDataset(oDataset) {
                 var node = that.$node.find(oDataset.node).first();
                 oDataset.node = node.length ? node : $("<div>").appendTo(that.$node);
                 return new Dataset(oDataset, www);
             }
         }
-
         _.mixin(Menu.prototype, EventEmitter, {
             _onSelectableClick: function onSelectableClick($e) {
                 this.trigger("selectableClicked", $($e.currentTarget));
@@ -1084,7 +1056,6 @@
                     _.each(this.datasets, updateDataset);
                 }
                 return isValidUpdate;
-
                 function updateDataset(dataset) {
                     dataset.update(query);
                 }
@@ -1093,7 +1064,6 @@
                 _.each(this.datasets, clearDataset);
                 this.query = null;
                 this.$node.addClass(this.classes.empty);
-
                 function clearDataset(dataset) {
                     dataset.clear();
                 }
@@ -1137,7 +1107,6 @@
                 }
             }, this));
         }
-
         _.mixin(Status.prototype, {
             update: function update(event, suggestions) {
                 var length = suggestions.length;
@@ -1248,7 +1217,6 @@
             onWhitespaceChanged = c(this, "_openIfActive", "_onWhitespaceChanged");
             this.input.bind().onSync("focused", onFocused, this).onSync("blurred", onBlurred, this).onSync("enterKeyed", onEnterKeyed, this).onSync("tabKeyed", onTabKeyed, this).onSync("escKeyed", onEscKeyed, this).onSync("upKeyed", onUpKeyed, this).onSync("downKeyed", onDownKeyed, this).onSync("leftKeyed", onLeftKeyed, this).onSync("rightKeyed", onRightKeyed, this).onSync("queryChanged", onQueryChanged, this).onSync("whitespaceChanged", onWhitespaceChanged, this).onSync("langDirChanged", this._onLangDirChanged, this);
         }
-
         _.mixin(Typeahead.prototype, {
             _hacks: function hacks() {
                 var $input, $menu;
@@ -1495,7 +1463,6 @@
             }
         });
         return Typeahead;
-
         function c(ctx) {
             var methods = [].slice.call(arguments, 1);
             return function () {
@@ -1522,7 +1489,6 @@
                 o = o || {};
                 www = WWW(o.classNames);
                 return this.each(attach);
-
                 function attach() {
                     var $input, $wrapper, $hint, $menu, defaultHint, defaultMenu, eventBus, input, menu, status,
                         typeahead, MenuConstructor;
@@ -1683,14 +1649,12 @@
             $.fn.typeahead = old;
             return this;
         };
-
         function ttEach($els, fn) {
             $els.each(function () {
                 var $input = $(this), typeahead;
                 (typeahead = $input.data(keys.typeahead)) && fn(typeahead, $input);
             });
         }
-
         function buildHintFromInput($input, www) {
             return $input.clone().addClass(www.classes.hint).removeData().css(www.css.hint).css(getBackgroundStyles($input)).prop({
                 readonly: true,
@@ -1700,7 +1664,6 @@
                 tabindex: -1
             });
         }
-
         function prepInput($input, www) {
             $input.data(keys.attrs, {
                 dir: $input.attr("dir"),
@@ -1717,7 +1680,6 @@
             }
             return $input;
         }
-
         function getBackgroundStyles($el) {
             return {
                 backgroundAttachment: $el.css("background-attachment"),
@@ -1730,7 +1692,6 @@
                 backgroundSize: $el.css("background-size")
             };
         }
-
         function revert($input) {
             var www, $wrapper;
             www = $input.data(keys.www);
@@ -1744,7 +1705,6 @@
                 $wrapper.remove();
             }
         }
-
         function $elOrNull(obj) {
             var isValid, $el;
             isValid = _.isJQuery(obj) || _.isElement(obj);

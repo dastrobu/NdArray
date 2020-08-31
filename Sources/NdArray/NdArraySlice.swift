@@ -37,7 +37,7 @@ public class NdArraySlice<T>: NdArray<T> {
         super.init(empty: count)
     }
 
-    /// create a new array stealing ownership from the passed array
+    /// creates a view on another array without copying any data
     public required convenience init(_ a: NdArray<T>) {
         self.init(a, sliced: 0)
     }

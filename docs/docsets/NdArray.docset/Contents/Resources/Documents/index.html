@@ -202,15 +202,15 @@
               <li class="nav-group-task">
                 <a href="Functions.html#/s:7NdArray2deoiyyx_SdtA2ACySdGRbzlF">/=(_:_:)</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/s:7NdArray2deoiyyx_SftA2ACySfGRbzlF">/=(_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/s:7NdArray3absyq_q_SLRzs13SignedNumericRzA2ACyxGRb_r0_lF">abs(_:)</a>
-              </li>
-              <li class="nav-group-task">
-                  <a href="Functions.html#/s:7NdArray3absyxxA2ACySdGRbzlF">abs(_:)</a>
-              </li>
+                <li class="nav-group-task">
+                    <a href="Functions.html#/s:7NdArray2deoiyyx_SftA2ACySfGRbzlF">/=(_:_:)</a>
+                </li>
+                <li class="nav-group-task">
+                    <a href="Functions.html#/s:7NdArray3absyq_q_SLRzs13SignedNumericRzA2ACyxGRb_r0_lF">abs(_:)</a>
+                </li>
+                <li class="nav-group-task">
+                    <a href="Functions.html#/s:7NdArray3absyxxA2ACySdGRbzlF">abs(_:)</a>
+                </li>
                 <li class="nav-group-task">
                     <a href="Functions.html#/s:7NdArray3absyxxA2ACySfGRbzlF">abs(_:)</a>
                 </li>
@@ -274,7 +274,7 @@ to enable fast and simple handling of multidimensional data.</p>
                       <ul>
                           <li><a href="#single-slice">Single Slice</a></li>
                           <li><a href="#unboundedrange-slices"><code>UnboundedRange</code> Slices</a></li>
-                          <li><a href="#range-and-closderange-slices"><code>Range</code> and <code>ClosdeRange</code>
+                          <li><a href="#range-and-closedrange-slices"><code>Range</code> and <code>ClosedRange</code>
                               Slices</a></li>
                           <li><a href="#partialrangefrom-partialrangeupto-and-partialrangethrough-slices"><code>PartialRangeFrom</code>,
                               <code>PartialRangeUpTo</code> and <code>PartialRangeThrough</code> Slices</a></li>
@@ -315,7 +315,7 @@ to enable fast and simple handling of multidimensional data.</p>
 
               <p>Two arrays can easily point to the same data and data can be modified through both views. This is
                   significantly
-                  different from the Swift internal array object, which has copy on wrie semantics, meaning you cannot
+                  different from the Swift internal array object, which has copy on write semantics, meaning you cannot
                   pass around
                   pointers to the same data. Whereas this behaviour is very nice for small amounts of data, since it
                   reduces side effects.
@@ -446,7 +446,7 @@ to enable fast and simple handling of multidimensional data.</p>
 <span class="c1">//  [6.0, 7.0],</span>
 <span class="c1">//  [0.0, 0.0]]</span>
 </code></pre>
-              <h3 id='code-range-code-and-code-closderange-code-slices' class='heading'><code>Range</code> and <code>ClosdeRange</code>
+              <h3 id='code-range-code-and-code-closedrange-code-slices' class='heading'><code>Range</code> and <code>ClosedRange</code>
                   Slices</h3>
 
               <p>Ranges <code>n..&lt;m</code> and closed ranges <code>n...m</code> allow to select certain sub arrays.
@@ -776,21 +776,21 @@ to enable fast and simple handling of multidimensional data.</p>
               <p>When using slices on an <code><a href="Classes/NdArray.html">NdArray</a></code> it returns a <code><a
                       href="Classes/NdArraySlice.html">NdArraySlice</a></code> object. This slice object is similar to
                   an array but
-                  keeps track how deeply its sliced. </p>
+                  keeps track how deeply it is sliced. </p>
               <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">A</span> <span
                       class="o">=</span> <span class="kt">NdArray</span><span class="o">&lt;</span><span class="kt">Double</span><span
                       class="o">&gt;.</span><span class="nf">ones</span><span class="p">([</span><span
                       class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span
                       class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="k">var</span> <span class="nv">B</span> <span class="o">=</span> <span class="kt">A</span><span
-                          class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="c1">// NdArraySlice withe sliced = 1, i.e. one dimension has been sliced</span>
+                          class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="c1">// NdArraySlice with sliced = 1, i.e. one dimension has been sliced</span>
 <span class="kt">B</span> <span class="o">=</span> <span class="kt">A</span><span class="p">[</span><span
                           class="o">...</span><span class="p">][</span><span class="o">...</span><span
-                          class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1">// NdArraySlice withe sliced = 2, i.e. one dimension has been sliced</span>
+                          class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="c1">// NdArraySlice with sliced = 2, i.e. one dimension has been sliced</span>
 <span class="kt">B</span> <span class="o">=</span> <span class="kt">A</span><span class="p">[</span><span
                           class="o">...</span><span class="p">][</span><span class="o">...</span><span
                           class="p">,</span> <span class="mi">2</span><span class="p">][</span><span
-                          class="o">..&lt;</span><span class="mi">1</span><span class="p">]</span> <span class="c1">// NdArraySlice withe sliced = 3, i.e. one dimension has been sliced</span>
+                          class="o">..&lt;</span><span class="mi">1</span><span class="p">]</span> <span class="c1">// NdArraySlice with sliced = 3, i.e. one dimension has been sliced</span>
 <span class="kt">B</span> <span class="o">=</span> <span class="kt">A</span><span class="p">[</span><span
                           class="o">...</span><span class="p">][</span><span class="o">...</span><span
                           class="p">,</span> <span class="mi">2</span><span class="p">][</span><span
@@ -867,7 +867,7 @@ to enable fast and simple handling of multidimensional data.</p>
 </code></pre>
 
               <p>Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype,
-                  e.g. <code>sovle</code></p>
+                  e.g. <code>solve</code></p>
               <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">A</span> <span
                       class="o">=</span> <span class="kt">Matrix</span><span class="o">&lt;</span><span class="kt">Double</span><span
                       class="o">&gt;</span><span class="p">(</span><span class="kt">NdArray</span><span
@@ -897,25 +897,25 @@ to enable fast and simple handling of multidimensional data.</p>
               <p>Some features are not implemented yet, but are planned for the near future.</p>
 
               <ul>
-<li>Trigonometric functions</li>
+                  <li>Trigonometric functions</li>
                   <li>Elementwise multiplication of Double and Float arrays. Planned as <code>multiply(elementwiseBy,
                       divide(elementwiseBy)</code> employing <code>vDSP_vmulD</code>
                       Note that this can be done with help of <code>map</code> currently.
                   </li>
-</ul>
-<h2 id='out-of-scope' class='heading'>Out of Scope</h2>
+              </ul>
+              <h2 id='out-of-scope' class='heading'>Out of Scope</h2>
 
-<p>Some features would be nice to have at some time but currently out of scope.</p>
+              <p>Some features would be nice to have at some time but currently out of scope.</p>
 
-<ul>
-<li>Complex numbers (currently support for complex numbers is not planned)</li>
-</ul>
+              <ul>
+                  <li>Complex numbers (currently support for complex numbers is not planned)</li>
+              </ul>
 
           </section>
         </section>
           <section id="footer">
               <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last
-                  updated: 2020-08-10)</p>
+                  updated: 2020-08-31)</p>
               <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy
                   ♪♫ v0.13.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a>
                   project.</p>
