@@ -320,7 +320,6 @@ print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2
 ```
 
 ## Type Concept 
-
 The idea is to have basic `NdArray` type, which keeps a pointer to data and stores shape and stride information. 
 Since there can be multiple `NdArray` objects referring to the same data, ownership is tracked explicitly. 
 If an array owns its data is stored in the `ownsData` flag (similar to NumPy's ndarray)
@@ -334,7 +333,7 @@ B = NdArray(A[..., 2], order: .C) // copy, because otherwise new array will not 
 ```
 
 When using slices on an `NdArray` it returns a `NdArraySlice` object. This slice object is similar to an array but 
-keeps track how deeply its sliced.  
+keeps track how deeply it is sliced.  
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
 var B = A[...] // NdArraySlice with sliced = 1, i.e. one dimension has been sliced
