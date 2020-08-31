@@ -258,7 +258,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// full slice access
-    public subscript(r: UnboundedRange) -> NdArraySlice<T> {
+    public subscript(r: UnboundedRange) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -268,7 +268,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
-    public subscript(r: ClosedRange<Int>) -> NdArraySlice<T> {
+    public subscript(r: ClosedRange<Int>) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -278,7 +278,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
-    public subscript(r: PartialRangeThrough<Int>) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeThrough<Int>) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -288,7 +288,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
-    public subscript(r: PartialRangeUpTo<Int>) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeUpTo<Int>) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -298,7 +298,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
-    public subscript(r: PartialRangeFrom<Int>) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeFrom<Int>) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -308,7 +308,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// range slice access
-    public subscript(r: Range<Int>) -> NdArraySlice<T> {
+    public subscript(r: Range<Int>) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r]
         }
@@ -318,7 +318,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// range with stride
-    public subscript(r: Range<Int>, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: Range<Int>, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -328,7 +328,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// closed range with stride
-    public subscript(r: ClosedRange<Int>, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: ClosedRange<Int>, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -338,7 +338,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
-    public subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -348,7 +348,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
-    public subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -358,7 +358,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
-    public subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -368,7 +368,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// full range with stride
-    public subscript(r: UnboundedRange, stride: Int) -> NdArraySlice<T> {
+    public subscript(r: UnboundedRange, stride: Int) -> NdArray<T> {
         get {
             return NdArraySlice(self, sliced: 0)[r, stride]
         }
@@ -378,7 +378,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// single slice access
-    public subscript(i: Int) -> NdArraySlice<T> {
+    public subscript(i: Int) -> NdArray<T> {
         get {
             assert(!isEmpty)
             var startIndex = [Int](repeating: 0, count: ndim)

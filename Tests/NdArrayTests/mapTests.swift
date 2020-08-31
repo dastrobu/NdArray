@@ -20,7 +20,7 @@ class mapTests: XCTestCase {
         do {
             let a = NdArray<Double>.zeros([2, 3])[..., 2]
             let b = NdArray<Double>(copy: a)
-            let c: NdArraySlice<Double> = a.map {
+            let c: NdArray<Double> = a.map {
                 $0 * 2
             }
             b *= 2

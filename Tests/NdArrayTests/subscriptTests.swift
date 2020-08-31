@@ -35,13 +35,13 @@ class NdArraySsubscriptTests: XCTestCase {
     func testSubscriptShouldReturnRowSliceWhen2dArray() {
         do {
             let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)
-            let r0: NdArraySlice<Double> = a[0]
+            let r0: NdArray<Double> = a[0]
             XCTAssertEqual(r0.strides, [1])
             XCTAssertEqual(r0.shape, [3])
             XCTAssertEqual(r0[[0]], 1)
             XCTAssertEqual(r0[[1]], 2)
             XCTAssertEqual(r0[[2]], 3)
-            let r1: NdArraySlice<Double> = a[1]
+            let r1: NdArray<Double> = a[1]
             XCTAssertEqual(r1.strides, [1])
             XCTAssertEqual(r1.shape, [3])
             XCTAssertEqual(r1[[0]], 4)
@@ -51,13 +51,13 @@ class NdArraySsubscriptTests: XCTestCase {
 
         do {
             let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)
-            let r0: NdArraySlice<Double> = a[0]
+            let r0: NdArray<Double> = a[0]
             XCTAssertEqual(r0.strides, [2])
             XCTAssertEqual(r0.shape, [3])
             XCTAssertEqual(r0[[0]], 1)
             XCTAssertEqual(r0[[1]], 2)
             XCTAssertEqual(r0[[2]], 3)
-            let r1: NdArraySlice<Double> = a[1]
+            let r1: NdArray<Double> = a[1]
             XCTAssertEqual(r1.strides, [2])
             XCTAssertEqual(r1.shape, [3])
             XCTAssertEqual(r1[[0]], 4)
@@ -69,17 +69,17 @@ class NdArraySsubscriptTests: XCTestCase {
     func testSubscriptShouldReturnColSliceWhen2dArray() {
         do {
             let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)
-            let c0: NdArraySlice<Double> = a[...][0]
+            let c0: NdArray<Double> = a[...][0]
             XCTAssertEqual(c0.strides, [3])
             XCTAssertEqual(c0.shape, [2])
             XCTAssertEqual(c0[[0]], 1)
             XCTAssertEqual(c0[[1]], 4)
-            let c1: NdArraySlice<Double> = a[...][1]
+            let c1: NdArray<Double> = a[...][1]
             XCTAssertEqual(c1.strides, [3])
             XCTAssertEqual(c1.shape, [2])
             XCTAssertEqual(c1[[0]], 2)
             XCTAssertEqual(c1[[1]], 5)
-            let c2: NdArraySlice<Double> = a[...][2]
+            let c2: NdArray<Double> = a[...][2]
             XCTAssertEqual(c2.strides, [3])
             XCTAssertEqual(c2.shape, [2])
             XCTAssertEqual(c2[[0]], 3)
@@ -88,17 +88,17 @@ class NdArraySsubscriptTests: XCTestCase {
 
         do {
             let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)
-            let c0: NdArraySlice<Double> = a[...][0]
+            let c0: NdArray<Double> = a[...][0]
             XCTAssertEqual(c0.strides, [1])
             XCTAssertEqual(c0.shape, [2])
             XCTAssertEqual(c0[[0]], 1)
             XCTAssertEqual(c0[[1]], 4)
-            let c1: NdArraySlice<Double> = a[...][1]
+            let c1: NdArray<Double> = a[...][1]
             XCTAssertEqual(c1.strides, [1])
             XCTAssertEqual(c1.shape, [2])
             XCTAssertEqual(c1[[0]], 2)
             XCTAssertEqual(c1[[1]], 5)
-            let c2: NdArraySlice<Double> = a[...][2]
+            let c2: NdArray<Double> = a[...][2]
             XCTAssertEqual(c2.strides, [1])
             XCTAssertEqual(c2.shape, [2])
             XCTAssertEqual(c2[[0]], 3)
@@ -112,13 +112,13 @@ class NdArraySsubscriptTests: XCTestCase {
             let b = a[0..<2]
             XCTAssertEqual(b.strides, a.strides)
             XCTAssertEqual(b.shape, a.shape)
-            let r0: NdArraySlice<Double> = a[0..<1]
+            let r0: NdArray<Double> = a[0..<1]
             XCTAssertEqual(r0.strides, [3, 1])
             XCTAssertEqual(r0.shape, [1, 3])
             XCTAssertEqual(r0[[0, 0]], 1)
             XCTAssertEqual(r0[[0, 1]], 2)
             XCTAssertEqual(r0[[0, 2]], 3)
-            let r1: NdArraySlice<Double> = a[1..<2]
+            let r1: NdArray<Double> = a[1..<2]
             XCTAssertEqual(r1.strides, [3, 1])
             XCTAssertEqual(r1.shape, [1, 3])
             XCTAssertEqual(r1[[0, 0]], 4)
@@ -131,13 +131,13 @@ class NdArraySsubscriptTests: XCTestCase {
             let b = a[0..<2]
             XCTAssertEqual(b.strides, a.strides)
             XCTAssertEqual(b.shape, a.shape)
-            let r0: NdArraySlice<Double> = a[0..<1]
+            let r0: NdArray<Double> = a[0..<1]
             XCTAssertEqual(r0.strides, [1, 2])
             XCTAssertEqual(r0.shape, [1, 3])
             XCTAssertEqual(r0[[0, 0]], 1)
             XCTAssertEqual(r0[[0, 1]], 2)
             XCTAssertEqual(r0[[0, 2]], 3)
-            let r1: NdArraySlice<Double> = a[1..<2]
+            let r1: NdArray<Double> = a[1..<2]
             XCTAssertEqual(r1.strides, [1, 2])
             XCTAssertEqual(r1.shape, [1, 3])
             XCTAssertEqual(r1[[0, 0]], 4)
@@ -152,17 +152,17 @@ class NdArraySsubscriptTests: XCTestCase {
             let b = a[...][0..<3]
             XCTAssertEqual(b.strides, a.strides)
             XCTAssertEqual(b.shape, a.shape)
-            let r0: NdArraySlice<Double> = a[...][0..<1]
+            let r0: NdArray<Double> = a[...][0..<1]
             XCTAssertEqual(r0.strides, [3, 1])
             XCTAssertEqual(r0.shape, [2, 1])
             XCTAssertEqual(r0[[0, 0]], 1)
             XCTAssertEqual(r0[[1, 0]], 4)
-            let r1: NdArraySlice<Double> = a[...][1..<2]
+            let r1: NdArray<Double> = a[...][1..<2]
             XCTAssertEqual(r1.strides, [3, 1])
             XCTAssertEqual(r1.shape, [2, 1])
             XCTAssertEqual(r1[[0, 0]], 2)
             XCTAssertEqual(r1[[1, 0]], 5)
-            let r2: NdArraySlice<Double> = a[...][2..<3]
+            let r2: NdArray<Double> = a[...][2..<3]
             XCTAssertEqual(r2.strides, [3, 1])
             XCTAssertEqual(r2.shape, [2, 1])
             XCTAssertEqual(r2[[0, 0]], 3)
@@ -174,17 +174,17 @@ class NdArraySsubscriptTests: XCTestCase {
             let b = a[...][0..<3]
             XCTAssertEqual(b.strides, a.strides)
             XCTAssertEqual(b.shape, a.shape)
-            let r0: NdArraySlice<Double> = a[...][0..<1]
+            let r0: NdArray<Double> = a[...][0..<1]
             XCTAssertEqual(r0.strides, [1, 2])
             XCTAssertEqual(r0.shape, [2, 1])
             XCTAssertEqual(r0[[0, 0]], 1)
             XCTAssertEqual(r0[[1, 0]], 4)
-            let r1: NdArraySlice<Double> = a[...][1..<2]
+            let r1: NdArray<Double> = a[...][1..<2]
             XCTAssertEqual(r1.strides, [1, 2])
             XCTAssertEqual(r1.shape, [2, 1])
             XCTAssertEqual(r1[[0, 0]], 2)
             XCTAssertEqual(r1[[1, 0]], 5)
-            let r2: NdArraySlice<Double> = a[...][2..<3]
+            let r2: NdArray<Double> = a[...][2..<3]
             XCTAssertEqual(r2.strides, [1, 2])
             XCTAssertEqual(r2.shape, [2, 1])
             XCTAssertEqual(r2[[0, 0]], 3)
@@ -938,7 +938,7 @@ class NdArraySliceSubscriptTests: XCTestCase {
 
     func testSingleElementSlice1d() {
         let a = NdArray<Double>.range(to: 4)
-        let s: NdArraySlice<Double> = a[2]
+        let s: NdArray<Double> = a[2]
         XCTAssertEqual(s.shape, [1])
         XCTAssertEqual(s.dataArray, [2])
     }
