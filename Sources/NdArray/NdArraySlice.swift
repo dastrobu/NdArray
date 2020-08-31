@@ -47,94 +47,118 @@ public class NdArraySlice<T>: NdArray<T> {
         self.init(NdArray(copy: a), sliced: 0)
     }
 
+    private func subscr(_ r: UnboundedRange) -> NdArraySlice {
+        let slice = NdArraySlice(self, sliced: sliced + 1)
+        slice.sliceDescription = self.sliceDescription
+        slice.sliceDescription.append("[...]")
+        return slice
+    }
+
     /// full slice access
-    public override subscript(r: UnboundedRange) -> NdArraySlice<T> {
+    public override subscript(r: UnboundedRange) -> NdArray<T> {
         get {
-            let slice = NdArraySlice(self, sliced: sliced + 1)
-            slice.sliceDescription = self.sliceDescription
-            slice.sliceDescription.append("[...]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
         }
     }
 
+    private func subscr(_ r: ClosedRange<Int>) -> NdArraySlice {
+        let slice = self.subscr(r.lowerBound..<r.upperBound + 1)
+        slice.sliceDescription.removeLast()
+        slice.sliceDescription.append("[\(r.lowerBound)...\(r.upperBound)]")
+        return slice
+    }
+
     /// partial range slice access
-    public override subscript(r: ClosedRange<Int>) -> NdArraySlice<T> {
+    public override subscript(r: ClosedRange<Int>) -> NdArray<T> {
         get {
-            let slice = self[r.lowerBound..<r.upperBound + 1]
-            slice.sliceDescription.removeLast()
-            slice.sliceDescription.append("[\(r.lowerBound)...\(r.upperBound)]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
         }
     }
 
+    private func subscr(_ r: PartialRangeThrough<Int>) -> NdArraySlice {
+        let slice = self.subscr(0...r.upperBound)
+        slice.sliceDescription.removeLast()
+        slice.sliceDescription.append("[...\(r.upperBound)]")
+        return slice
+    }
+
     /// partial range slice access
-    public override subscript(r: PartialRangeThrough<Int>) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeThrough<Int>) -> NdArray<T> {
         get {
-            let slice = self[0...r.upperBound]
-            slice.sliceDescription.removeLast()
-            slice.sliceDescription.append("[...\(r.upperBound)]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
         }
     }
 
+    private func subscr(_ r: PartialRangeUpTo<Int>) -> NdArraySlice {
+        let slice = self.subscr(0..<r.upperBound)
+        slice.sliceDescription.removeLast()
+        slice.sliceDescription.append("[..<\(r.upperBound)]")
+        return slice
+    }
+
     /// partial range slice access
-    public override subscript(r: PartialRangeUpTo<Int>) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeUpTo<Int>) -> NdArray<T> {
         get {
-            let slice = self[0..<r.upperBound]
-            slice.sliceDescription.removeLast()
-            slice.sliceDescription.append("[..<\(r.upperBound)]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
         }
     }
 
+    private func subscr(_ r: PartialRangeFrom<Int>) -> NdArraySlice {
+        let slice = self.subscr(r.lowerBound..<shape[sliced])
+        slice.sliceDescription.removeLast()
+        slice.sliceDescription.append("[\(r.lowerBound)...]")
+        return slice
+    }
+
     /// partial range slice access
-    public override subscript(r: PartialRangeFrom<Int>) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeFrom<Int>) -> NdArray<T> {
         get {
-            let slice = self[r.lowerBound..<shape[sliced]]
-            slice.sliceDescription.removeLast()
-            slice.sliceDescription.append("[\(r.lowerBound)...]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
         }
+    }
+
+    private func subscr(_ r: Range<Int>) -> NdArraySlice {
+        assert(!isEmpty)
+        assert(r.lowerBound >= 0, "\(r.lowerBound) >= 0")
+
+        // check for empty range
+        if r.lowerBound >= r.upperBound {
+            let slice = NdArraySlice(self, startIndex: [Int](repeating: 0, count: ndim), sliced: sliced + 1)
+            slice.shape[sliced] = 0
+            slice.count = slice.len
+            return slice
+        }
+
+        let upperBound = Swift.min(r.upperBound, shape[sliced])
+        var startIndex = [Int](repeating: 0, count: ndim)
+        startIndex[sliced] = r.lowerBound
+        let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)
+        slice.shape[sliced] = upperBound - r.lowerBound
+        slice.count = slice.len
+        slice.sliceDescription = self.sliceDescription
+        slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound)]")
+        return slice
     }
 
     /// range slice access
-    public override subscript(r: Range<Int>) -> NdArraySlice<T> {
+    public override subscript(r: Range<Int>) -> NdArray<T> {
         get {
-            assert(!isEmpty)
-            assert(r.lowerBound >= 0, "\(r.lowerBound) >= 0")
-
-            // check for empty range
-            if r.lowerBound >= r.upperBound {
-                let slice = NdArraySlice(self, startIndex: [Int](repeating: 0, count: ndim), sliced: sliced + 1)
-                slice.shape[sliced] = 0
-                slice.count = slice.len
-                return slice
-            }
-
-            let upperBound = Swift.min(r.upperBound, shape[sliced])
-            var startIndex = [Int](repeating: 0, count: ndim)
-            startIndex[sliced] = r.lowerBound
-            let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)
-            slice.shape[sliced] = upperBound - r.lowerBound
-            slice.count = slice.len
-            slice.sliceDescription = self.sliceDescription
-            slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound)]")
-            return slice
+            return subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -142,11 +166,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// closed range with stride
-    public override subscript(r: ClosedRange<Int>, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: ClosedRange<Int>, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[\(r.lowerBound)...\(r.upperBound), \(stride)]")
             slice.strideBy(stride, axis: sliced)
@@ -158,11 +182,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// range with stride
-    public override subscript(r: Range<Int>, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: Range<Int>, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound), \(stride)]")
             slice.strideBy(stride, axis: sliced)
@@ -174,11 +198,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// partial range with stride
-    public override subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[\(r.lowerBound)..., \(stride)]")
             slice.strideBy(stride, axis: sliced)
@@ -190,11 +214,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// partial range with stride
-    public override subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[...\(r.upperBound), \(stride)]")
             slice.strideBy(stride, axis: sliced)
@@ -206,11 +230,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// partial range with stride
-    public override subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[..<\(r.upperBound), \(stride)]")
 
@@ -223,11 +247,11 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// full range with stride
-    public override subscript(r: UnboundedRange, stride: Int) -> NdArraySlice<T> {
+    public override subscript(r: UnboundedRange, stride: Int) -> NdArray<T> {
         get {
             assert(stride > 0, "\(stride) > 0")
 
-            let slice = self[r]
+            let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
             slice.sliceDescription.append("[..., \(stride)]")
 
@@ -240,7 +264,7 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     /// single slice access
-    public override subscript(i: Int) -> NdArraySlice<T> {
+    public override subscript(i: Int) -> NdArray<T> {
         get {
             assert(!isEmpty)
 

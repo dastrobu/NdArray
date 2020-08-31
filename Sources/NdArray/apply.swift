@@ -10,7 +10,7 @@ public extension NdArray {
     ///   - fSlice: Function to apply to each slice, if the array is neither 1d nor contiguous
     internal func apply1d(f1d: (Int) throws -> Void,
                           fContiguous: (Int) throws -> Void,
-                          fSlice: (NdArraySlice<T>) throws -> Void) rethrows {
+                          fSlice: (NdArray<T>) throws -> Void) rethrows {
         let n = shape.reduce(1, *)
         if n == 0 {
             return
@@ -41,7 +41,7 @@ public extension NdArray {
     ///   - fSlice: Function to apply to each slice, if the array is neither 1d nor contiguous
     internal func apply1d(other: NdArray<T>, f1d: (Int) throws -> Void,
                           fContiguous: (Int) throws -> Void,
-                          fSlice: (NdArraySlice<T>, NdArraySlice<T>) throws -> Void) rethrows {
+                          fSlice: (NdArray<T>, NdArray<T>) throws -> Void) rethrows {
         let n = shape.reduce(1, *)
         if n == 0 {
             return
