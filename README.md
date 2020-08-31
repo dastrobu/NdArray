@@ -373,7 +373,7 @@ let Ax = A * x; // matrix vector multiplication is defined
 let _ = Vector<Double>(a) // Assertion failed: Cannot create vector with shape [2, 2]. Vector must have one dimension.
 ````
 
-Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype, e.g. `sovle`
+Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype, e.g. `solve`
 ```swift
 let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
 let x = Vector<Double>.ones(2)
