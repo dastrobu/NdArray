@@ -400,3 +400,7 @@ Some features would be nice to have at some time but currently out of scope.
 
  * Complex numbers (currently support for complex numbers is not planned)
 
+
+## Docs
+
+Read the generated [docs](https://dastrobu.github.io/NdArray).
