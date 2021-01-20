@@ -135,6 +135,20 @@ class MatrixTestsDouble: XCTestCase {
         }
     }
 
+    func testMatMatMul() {
+        let A = Matrix<Double>.ones([2, 2])
+        let B = Matrix<Double>.ones([2, 2, ])
+        XCTAssertEqual((A * B).shape, [2, 2])
+        XCTAssertEqual((A * B).dataArray, [2.0, 2.0, 2.0, 2.0])
+    }
+
+    func testMatVecMul() {
+        let M = Matrix<Double>.ones([2, 2])
+        let x = Vector<Double>.ones(2)
+        XCTAssertEqual((M * x).shape, [2])
+        XCTAssertEqual((M * x).dataArray, [2.0, 2.0])
+    }
+
     func testSolveAndInverted() throws {
         // 2d effective 0d
         do {
