@@ -491,7 +491,7 @@ public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
 
     let m: Int32 = Int32(a.shape[0])
     let n: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.strides[1])
+    let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
     cblas_sgemv(order, CblasNoTrans, m, n, 1, a.data, lda, x.data, incX, 0, y.data, incY)
