@@ -9,17 +9,20 @@ compiler:
 jobs:
   include:
     - os: osx
-      osx_image: xcode11.6
+      osx_image: xcode12.5
       env: SWIFT_VERSION=5.0
     - os: osx
-      osx_image: xcode11.6
+      osx_image: xcode12.5
       env: SWIFT_VERSION=5.1
     - os: osx
-      osx_image: xcode11.6
+      osx_image: xcode12.5
       env: SWIFT_VERSION=5.2
     - os: osx
-      osx_image: xcode11.6
+      osx_image: xcode12.5
       env: SWIFT_VERSION=5.3
+    - os: osx
+      osx_image: xcode12.5
+      env: SWIFT_VERSION=5.4
 
 install:
   - eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
