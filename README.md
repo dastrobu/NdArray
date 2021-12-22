@@ -7,9 +7,9 @@
 
 N dimensional array package for numeric computing in swift.
 
-The package is inspired by [NumPy](https://www.numpy.org), the well known python package for numerical computations. 
-This swift package is certainly far away from the maturity of NumPy but implements some key features
-to enable fast and simple handling of multidimensional data.
+The package is inspired by [NumPy](https://www.numpy.org), the well known python package for numerical computations.
+This swift package is certainly far away from the maturity of NumPy but implements some key features to enable fast and
+simple handling of multidimensional data.
 
 ## Table of Contents
 
@@ -44,17 +44,22 @@ to enable fast and simple handling of multidimensional data.
 ## Installation
 
 ### Swift Package Manager
-    dependencies: [
-            .package(url: "https://github.com/dastrobu/NdArrays.git", from: "0.2.1"),
-        ],
+
+```swift
+let package = Package(
+        dependencies: [
+          .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.2.1"),
+        ]
+)
+```
 
 ## Multiple Views on Underlying Data
 
-Two arrays can easily point to the same data and data can be modified through both views. This is significantly 
-different from the Swift internal array object, which has copy on write semantics, meaning you cannot pass around 
-pointers to the same data. Whereas this behaviour is very nice for small amounts of data, since it reduces side effects. 
-For numerical computation with huge arrays, it is preferable to let the programmer manage copies. 
-The behaviour of the NdArray is very similar to NumPy's ndarray object. Here is an example:
+Two arrays can easily point to the same data and data can be modified through both views. This is significantly
+different from the Swift internal array object, which has copy on write semantics, meaning you cannot pass around
+pointers to the same data. Whereas this behaviour is very nice for small amounts of data, since it reduces side effects.
+For numerical computation with huge arrays, it is preferable to let the programmer manage copies. The behaviour of the
+NdArray is very similar to NumPy's ndarray object. Here is an example:
 
 ```swift
 let a = NdArray<Double>([9, 9, 0, 9])
@@ -67,7 +72,8 @@ print(b.ownsData) // false
 
 ## Sliced and Strided Access
 
-Like NumPy's ndarray, slices and strides can be created. 
+Like NumPy's ndarray, slices and strides can be created.
+
 ```swift
 let a = NdArray<Double>.range(to: 10)
 let b = NdArray(a[..., 2])
@@ -78,26 +84,31 @@ b[...].set(0)
 print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
 print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
 ``` 
-This creates an array first, then a strided view on the data, making it easy to set every second element to 0. 
+
+This creates an array first, then a strided view on the data, making it easy to set every second element to 0.
 
 ### Single Slice
 
 A single slice e.g. a row of a matrix is indexed by simple integer
+
 ```swift
 let a = NdArray<Double>.ones([2, 2])
-print(a) 
+print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
 a[1].set(0.0)
-print(a) 
+print(a)
 // [[1.0, 1.0],
 //  [0.0, 0.0]]
 a[...][1].set(2.0)
-print(a) 
+print(a)
 // [[1.0, 2.0],
 //  [0.0, 2.0]]
 ``` 
-Note, using element index on a one dimensional array will not access the element, use [element indexing](#element-manipulation) instead or use the `Vector` subtype which supports element indexing.
+
+Note, using element index on a one dimensional array will not access the element,
+use [element indexing](#element-manipulation) instead or use the `Vector` subtype which supports element indexing.
+
 ```swift
 let a = NdArray<Double>.range(to: 4)
 print(a[0]) // [0.0]
@@ -110,17 +121,20 @@ print(v[[0]]) // 0.0
 ### `UnboundedRange` Slices
 
 Unbound ranges select all elements, this is helpful to access lower dimensions of a multidimensional array
+
 ```swift
 let a = NdArray<Double>.ones([2, 2])
-print(a) 
+print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
 a[...][1].set(0.0)
-print(a) 
+print(a)
 // [[1.0, 0.0],
 //  [1.0, 0.0]]
 ``` 
-or with a stride, selecting every nth element. 
+
+or with a stride, selecting every nth element.
+
 ```swift
 let a = NdArray<Double>.range(to: 10).reshaped([5, 2])
 print(a)
@@ -141,6 +155,7 @@ print(a)
 ### `Range` and `ClosedRange` Slices
 
 Ranges `n..<m` and closed ranges `n...m` allow to select certain sub arrays.
+
 ```swift
 let a = NdArray<Double>.range(to: 10)
 print(a[2..<4]) // [2.0, 3.0]
@@ -151,6 +166,7 @@ print(a[2...4, 2]) // [2.0, 4.0]
 ### `PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices
 
 Partial ranges `...<m`, `...m` and `n...` define only one bound.
+
 ```swift
 let a = NdArray<Double>.range(to: 10)
 print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
@@ -161,14 +177,17 @@ print(a[4..., 2]) // [4.0, 6.0, 8.0]
 
 ## Element Manipulation
 
-The syntax for indexing individual elements is by passing an (Swift) array as index. 
-Passing indices individually cannot be implemented, since Swift does not support varargs on subscript.
+The syntax for indexing individual elements is by passing an (Swift) array as index. Passing indices individually cannot
+be implemented, since Swift does not support varargs on subscript.
+
 ```swift
 let a = NdArray<Double>.range(to: 12).reshaped([2, 2, 3])
 a[[0, 1, 2]]
 a[0, 1, 2]  // does not work with Swift
 ```
+
 For efficient iteration of all indices consider using e.g. `apply`, `map` or `reduce`.
+
 ```swift
 let a = NdArray<Double>.ones(4).reshaped([2, 2])
 let b = a.map {
@@ -189,6 +208,7 @@ print(a.reduce(0) {
 ```
 
 Scaling every second element in a matrix by its row index could be done in the following way
+
 ```swift
 let a = NdArray<Double>.ones([4, 3])
 for i in 0..<a.shape[0] {
@@ -202,13 +222,15 @@ print(a)
 //  [2.0, 1.0, 2.0],
 //  [3.0, 1.0, 3.0]]
 ```
+
 Alternatively one can use classical loops and convert each row to a vector for efficient element indexing
+
 ```swift
 let a = NdArray<Double>.ones([4, 3])
 for i in 0..<a.shape[0] {
-    let ai = Vector(a[i])
-    for j in stride(from: 0, to: a.shape[1], by: 2){
-        ai[j] *= Double(i)
+  let ai = Vector(a[i])
+  for j in stride(from: 0, to: a.shape[1], by: 2) {
+    ai[j] *= Double(i)
     }
 }
 print(a)
@@ -220,8 +242,8 @@ print(a)
 
 ## Reshaping
 
-Like in NumPy, and array can be reshaped to any compatible shape without modifying the data. That means the 
-shape and strides are recomputed to re-interpret the data. 
+Like in NumPy, and array can be reshaped to any compatible shape without modifying the data. That means the shape and
+strides are recomputed to re-interpret the data.
 
 ```swift
 let a = ndarray<double>.range(to: 12)
@@ -284,6 +306,7 @@ print(try A.inverted())
 ### Solve Linear System of Equations
 
 with single right hand side
+
 ```swift
 let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
 let x = Vector<Double>.ones(2)
@@ -291,6 +314,7 @@ print(try A.solve(x)) // [-1.0,  1.0]
 ```
 
 with multiple right hand sides
+
 ```swift
 let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
 let x = Matrix<Double>.ones([2, 2])
@@ -302,6 +326,7 @@ print(try A.solve(x))
 ## Pretty Printing
 
 Multi dimensional arrays can be printed in a human friendly way.
+
 ```swift
 print(NdArray<Double>.ones([2, 3, 4]))
 // [[[1.0, 1.0, 1.0, 1.0],
@@ -319,11 +344,13 @@ print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2
 //  [0.0, 0.0]]
 ```
 
-## Type Concept 
-The idea is to have basic `NdArray` type, which keeps a pointer to data and stores shape and stride information. 
-Since there can be multiple `NdArray` objects referring to the same data, ownership is tracked explicitly. 
-If an array owns its data is stored in the `ownsData` flag (similar to NumPy's ndarray)
+## Type Concept
+
+The idea is to have basic `NdArray` type, which keeps a pointer to data and stores shape and stride information. Since
+there can be multiple `NdArray` objects referring to the same data, ownership is tracked explicitly. If an array owns
+its data is stored in the `ownsData` flag (similar to NumPy's ndarray)
 When creating a new array from an existing one, no copy is made unless necessary. Here are a few examples
+
 ```swift
 let A = NdArray<Double>.ones(5)
 var B = NdArray(A) // no copy
@@ -332,8 +359,9 @@ B = NdArray(A[..., 2]) // no copy, but B will not be contiguous
 B = NdArray(A[..., 2], order: .C) // copy, because otherwise new array will not have C ordering
 ```
 
-When using slices on an `NdArray` it returns a `NdArraySlice` object. This slice object is similar to an array but 
-keeps track how deeply it is sliced.  
+When using slices on an `NdArray` it returns a `NdArraySlice` object. This slice object is similar to an array but keeps
+track how deeply it is sliced.
+
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
 var B = A[...] // NdArraySlice with sliced = 1, i.e. one dimension has been sliced
@@ -341,7 +369,9 @@ B = A[...][..., 2] // NdArraySlice with sliced = 2, i.e. one dimension has been 
 B = A[...][..., 2][..<1] // NdArraySlice with sliced = 3, i.e. one dimension has been sliced
 B = A[...][..., 2][..<1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
 ```
+
 So it is recommended to convert to an `NdArray` after slicing before continuing to work with the data.
+
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
 var B = NdArray(A[...]) // B has shape [2, 2, 2]
@@ -350,6 +380,7 @@ B = NdArray(A[...][..., 2][..<1]) // B has shape [2, 1, 1]
 ```
 
 When using slices to assign data, no type conversion is required.
+
 ```swift
 let A = NdArray<Double>.ones([2, 2])
 let B = NdArray<Double>.zeros(2)
@@ -358,11 +389,12 @@ print(A)
 // [[0.0, 1.0],
 //  [0.0, 1.0]]
 ```
+
 ### Subtypes
 
-To be able to define operators for matrix vector multiplication and matrix matrix multiplication, sub types like 
-`Matrix` and `Vector` are defined. Since no data is copied when creating a matrix or vector from an array, they
-can be converted anytime, thereby making sure the shapes match requirements of the sub type.
+To be able to define operators for matrix vector multiplication and matrix matrix multiplication, sub types like
+`Matrix` and `Vector` are defined. Since no data is copied when creating a matrix or vector from an array, they can be
+converted anytime, thereby making sure the shapes match requirements of the sub type.
 
 ```swift
 let a = NdArray<Double>.ones([2, 2])
@@ -374,6 +406,7 @@ let _ = Vector<Double>(a) // Assertion failed: Cannot create vector with shape [
 ````
 
 Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype, e.g. `solve`
+
 ```swift
 let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
 let x = Vector<Double>.ones(2)
@@ -382,24 +415,25 @@ print(try A.solve(x)) // [-1.0,  1.0]
 
 ## Numerical Backend
 
-Numerical operations are performed using [BLAS](http://www.netlib.org/blas), see also 
-[BLAS cheat sheet](http://www.netlib.org/blas/blasqr.pdf) for an overview and [LAPACK](http://www.netlib.org/lapack). 
-The functions of these libraries are provided by the 
+Numerical operations are performed using [BLAS](http://www.netlib.org/blas), see also
+[BLAS cheat sheet](http://www.netlib.org/blas/blasqr.pdf) for an overview and [LAPACK](http://www.netlib.org/lapack).
+The functions of these libraries are provided by the
 [Accelerate Framework](https://developer.apple.com/documentation/accelerate) and are available on most Apple platforms.
 
 ## Not Implemented
 
 Some features are not implemented yet, but are planned for the near future.
- * Trigonometric functions
- * Elementwise multiplication of Double and Float arrays. Planned as `multiply(elementwiseBy, divide(elementwiseBy)` employing `vDSP_vmulD`
-   Note that this can be done with help of `map` currently.
 
-## Out of Scope 
+* Trigonometric functions
+* Elementwise multiplication of Double and Float arrays. Planned as `multiply(elementwiseBy, divide(elementwiseBy)`
+  employing `vDSP_vmulD`
+  Note that this can be done with help of `map` currently.
+
+## Out of Scope
 
 Some features would be nice to have at some time but currently out of scope.
 
- * Complex numbers (currently support for complex numbers is not planned)
-
+* Complex numbers (currently support for complex numbers is not planned)
 
 ## Docs
 
