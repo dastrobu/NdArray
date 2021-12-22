@@ -15,7 +15,6 @@ simple handling of multidimensional data.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-(generated with [DocToc](https://github.com/thlorenz/doctoc))
 
 - [Installation](#installation)
     - [Swift Package Manager](#swift-package-manager)
@@ -38,6 +37,7 @@ simple handling of multidimensional data.
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
+- [Docs](#docs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -272,7 +272,71 @@ print(a.reshaped([2, 2, 3]))
 
 A copy will only be made if required to create an array with the specified order.
 
-## Linear Algebra Operations for `Double` and `Float` NdArrays.
+## Elementwise Operations
+
+### Scalars
+
+Arithmetic operations with scalars work in-place,
+
+```swift
+let a = NdArray<Double>.ones([2, 2])
+a *= 2
+a /= 2
+a += 2
+a /= 2
+```
+
+or with implicit copies.
+
+```swift
+var b: NdArray<Double>
+b = a * 2
+b = a / 2
+b = a + 2
+b = a - 2
+```
+
+### Basic Functions
+
+The following basic functions can be applied to any `Float` or `Double` array.
+
+```swift
+let a = NdArray<Double>.ones([2, 2])
+var b: NdArray<Double>
+
+b = abs(a)
+
+b = acos(a)
+b = asin(a)
+b = atan(a)
+
+b = cos(a)
+b = sin(a)
+b = tan(a)
+
+b = cosh(a)
+b = sinh(a)
+b = tanh(a)
+
+b = exp(a)
+b = exp2(a)
+
+b = log(a)
+b = log10(a)
+b = log1p(a)
+b = log2(a)
+b = logb(a)
+```
+
+The `abs` function is also defined for `SignedNumeric`, such as `Int` arrays.
+
+```swift
+let a = NdArray<Int>.range(from: -2, to: 2)
+print(a) // [-2, -1,  0,  1]
+print(abs(a)) // [2, 1, 0, 1]
+```
+
+## Linear Algebra Operations for `Double` and `Float` `NdArray`s.
 
 Linear algebra support is currently very basic.
 
@@ -424,7 +488,6 @@ The functions of these libraries are provided by the
 
 Some features are not implemented yet, but are planned for the near future.
 
-* Trigonometric functions
 * Elementwise multiplication of Double and Float arrays. Planned as `multiply(elementwiseBy, divide(elementwiseBy)`
   employing `vDSP_vmulD`
   Note that this can be done with help of `map` currently.
