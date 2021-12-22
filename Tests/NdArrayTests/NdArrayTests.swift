@@ -36,16 +36,15 @@ final class NdArrayTests: XCTestCase {
     }
 
     func testNdArrayShouldCopyCorrectlyWhenStrideIsNotSizeOfT() {
-        // swiftlint:disable:next nesting type_name
-        struct S: Equatable {
+        struct MyType: Equatable {
             let i: Int
             let b: Bool
         }
 
-        XCTAssertNotEqual(MemoryLayout<S>.size, MemoryLayout<S>.stride)
-        let a = NdArray<S>([S(i: 0, b: true), S(i: 1, b: false)])
-        let b = NdArray<S>(copy: a)
-        XCTAssertEqual(b.dataArray, [S(i: 0, b: true), S(i: 1, b: false)])
+        XCTAssertNotEqual(MemoryLayout<MyType>.size, MemoryLayout<MyType>.stride)
+        let a = NdArray<MyType>([MyType(i: 0, b: true), MyType(i: 1, b: false)])
+        let b = NdArray<MyType>(copy: a)
+        XCTAssertEqual(b.dataArray, [MyType(i: 0, b: true), MyType(i: 1, b: false)])
     }
 
     func testDescription() {
