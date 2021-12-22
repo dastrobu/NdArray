@@ -2,7 +2,7 @@
 
 [![Swift Version](https://img.shields.io/badge/swift-5.5-blue.svg)](https://swift.org)
 ![Platform](https://img.shields.io/badge/platform-macOS-lightgray.svg)
-![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci/badge.svg)
+![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci.yaml/badge.svg)
 [![documentation](https://github.com/dastrobu/NdArray/raw/master/docs/badge.svg?sanitize=true)](https://dastrobu.github.io/NdArray/)
 
 N dimensional array package for numeric computing in swift.
