@@ -18,23 +18,23 @@ simple handling of multidimensional data.
 (generated with [DocToc](https://github.com/thlorenz/doctoc))
 
 - [Installation](#installation)
-  - [Swift Package Manager](#swift-package-manager)
+    - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
-  - [Single Slice](#single-slice)
-  - [`UnboundedRange` Slices](#unboundedrange-slices)
-  - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
-  - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+    - [Single Slice](#single-slice)
+    - [`UnboundedRange` Slices](#unboundedrange-slices)
+    - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
+    - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
-  - [Matrix Vector Multiplication](#matrix-vector-multiplication)
-  - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
-  - [Matrix Inversion](#matrix-inversion)
-  - [Solve Linear System of Equations](#solve-linear-system-of-equations)
+    - [Matrix Vector Multiplication](#matrix-vector-multiplication)
+    - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+    - [Matrix Inversion](#matrix-inversion)
+    - [Solve Linear System of Equations](#solve-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Type Concept](#type-concept)
-  - [Subtypes](#subtypes)
+    - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
@@ -47,9 +47,9 @@ simple handling of multidimensional data.
 
 ```swift
 let package = Package(
-        dependencies: [
-          .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.2.1"),
-        ]
+    dependencies: [
+        .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.2.1"),
+    ]
 )
 ```
 
@@ -228,9 +228,9 @@ Alternatively one can use classical loops and convert each row to a vector for e
 ```swift
 let a = NdArray<Double>.ones([4, 3])
 for i in 0..<a.shape[0] {
-  let ai = Vector(a[i])
-  for j in stride(from: 0, to: a.shape[1], by: 2) {
-    ai[j] *= Double(i)
+    let ai = Vector(a[i])
+    for j in stride(from: 0, to: a.shape[1], by: 2) {
+        ai[j] *= Double(i)
     }
 }
 print(a)
@@ -242,15 +242,15 @@ print(a)
 
 ## Reshaping
 
-Like in NumPy, and array can be reshaped to any compatible shape without modifying the data. That means the shape and
-strides are recomputed to re-interpret the data.
+Like in NumPy, an array can be reshaped to any compatible shape without modifying data. That means the shape and strides
+are recomputed to re-interpret the data.
 
 ```swift
 let a = ndarray<double>.range(to: 12)
 print(a.reshaped([2, 6]))
 // [[ 0.0,  1.0,  2.0,  3.0,  4.0,  5.0],
 //  [ 6.0,  7.0,  8.0,  9.0, 10.0, 11.0]]
-print(a.reshaped([2, 6], order: .f))
+print(a.reshaped([2, 6], order: .F))
 // [[ 0.0,  2.0,  4.0,  6.0,  8.0, 10.0],
 //  [ 1.0,  3.0,  5.0,  7.0,  9.0, 11.0]]
 print(a.reshaped([3, 4]))
