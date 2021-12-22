@@ -97,6 +97,55 @@ class ReadmeExamples: XCTestCase {
         print(a[4..., 2]) // [4.0, 6.0, 8.0]
     }
 
+    func testScalars() {
+        let a = NdArray<Double>.ones([2, 2])
+        a *= 2
+        a /= 2
+        a += 2
+        a /= 2
+
+        var b: NdArray<Double>
+        b = a * 2
+        b = a / 2
+        b = a + 2
+        b = a - 2
+    }
+
+    func testBasicFunctions() {
+        do {
+            let a = NdArray<Double>.ones([2, 2])
+            var b: NdArray<Double>
+
+            b = abs(a)
+
+            b = acos(a)
+            b = asin(a)
+            b = atan(a)
+
+            b = cos(a)
+            b = sin(a)
+            b = tan(a)
+
+            b = cosh(a)
+            b = sinh(a)
+            b = tanh(a)
+
+            b = exp(a)
+            b = exp2(a)
+
+            b = log(a)
+            b = log10(a)
+            b = log1p(a)
+            b = log2(a)
+            b = logb(a)
+        }
+        do {
+            let a = NdArray<Int>.range(from: -2, to: 2)
+            print(a) // [-2, -1,  0,  1]
+            print(abs(a)) // [2, 1, 0, 1]
+        }
+    }
+
     func testLinearAlgebra() throws {
         do {
             let A = Matrix<Double>.ones([2, 2])
