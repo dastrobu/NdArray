@@ -271,9 +271,7 @@ class ReadmeExamples: XCTestCase {
         do {
             let a = NdArray<Double>.ones([4, 3])
             for i in 0..<a.shape[0] {
-                a[i][..., 2].apply {
-                    $0 * Double(i)
-                }
+                a[i][..., 2] *= Double(i)
             }
             print(a)
             // [[0.0, 1.0, 0.0],
