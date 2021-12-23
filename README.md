@@ -48,7 +48,7 @@ features to enable fast and simple handling of multidimensional numeric data.
 ```swift
 let package = Package(
     dependencies: [
-        .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.2.1"),
+        .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.3.0"),
     ]
 )
 ```
