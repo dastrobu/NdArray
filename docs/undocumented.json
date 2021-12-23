@@ -240,7 +240,7 @@
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/NdArraySlice.swift",
-      "line": 266,
+      "line": 290,
       "symbol": "NdArraySlice.debugDescription",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -632,35 +632,21 @@
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/basic_functions.swift",
-      "line": 9,
+      "line": 10,
       "symbol": "abs(_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/basic_functions.swift",
-      "line": 17,
-      "symbol": "abs(_:out:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/basic_functions.swift",
-      "line": 27,
+      "line": 29,
       "symbol": "abs(_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/basic_functions.swift",
-      "line": 35,
-      "symbol": "abs(_:out:)",
-      "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ds/code/swift/NdArray/Sources/NdArray/basic_functions.swift",
-      "line": 45,
+      "line": 160,
       "symbol": "abs(_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
       "warning": "undocumented"
