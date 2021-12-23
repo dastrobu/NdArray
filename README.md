@@ -246,7 +246,7 @@ Like in NumPy, an array can be reshaped to any compatible shape without modifyin
 are recomputed to re-interpret the data.
 
 ```swift
-let a = ndarray<double>.range(to: 12)
+let a = NdArray<Double>.range(to: 12)
 print(a.reshaped([2, 6]))
 // [[ 0.0,  1.0,  2.0,  3.0,  4.0,  5.0],
 //  [ 6.0,  7.0,  8.0,  9.0, 10.0, 11.0]]
