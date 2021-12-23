@@ -52,19 +52,19 @@ $('.token').on('click', function(event) {
 });
 
 // Clicks on links to the current, closed, item need to open the item
-$("a:not('.token')").on('click', function () {
-    if (location == this.href) {
-        openCurrentItemIfClosed();
-    }
+$("a:not('.token')").on('click', function() {
+  if (location == this.href) {
+    openCurrentItemIfClosed();
+  }
 });
 
 // KaTeX rendering
 if ("katex" in window) {
-    $($('.math').each((_, element) => {
-        katex.render(element.textContent, element, {
-            displayMode: $(element).hasClass('m-block'),
-            throwOnError: false,
-            trust: true
-        });
-    }))
+  $($('.math').each( (_, element) => {
+    katex.render(element.textContent, element, {
+      displayMode: $(element).hasClass('m-block'),
+      throwOnError: false,
+      trust: true
+    });
+  }))
 }
