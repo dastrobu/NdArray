@@ -146,7 +146,6 @@ public func logb<T: NdArray<Double>>(_ a: T) -> T {
 
 // Float
 
-
 /// see ``vDSP_vabsD``.
 public func abs<T: NdArray<Float>>(_ a: T, out b: T) {
     a.apply1d(other: b, f1d: { _ in

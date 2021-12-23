@@ -5,11 +5,11 @@
 ![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci.yaml/badge.svg)
 [![documentation](https://github.com/dastrobu/NdArray/raw/master/docs/badge.svg?sanitize=true)](https://dastrobu.github.io/NdArray/)
 
-N dimensional array package for numeric computing in swift.
+N dimensional array package for numeric computing in [Swift](https://swift.org).
 
-The package is inspired by [NumPy](https://www.numpy.org), the well known python package for numerical computations.
-This swift package is certainly far away from the maturity of NumPy but implements some key features to enable fast and
-simple handling of multidimensional data.
+The package is inspired by [NumPy](https://www.numpy.org), the well known [python](https://python.org) package for
+numerical computations. This Swift package is certainly far away from the maturity of NumPy but implements some key
+features to enable fast and simple handling of multidimensional numeric data.
 
 ## Table of Contents
 
@@ -17,23 +17,23 @@ simple handling of multidimensional data.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 - [Installation](#installation)
-    - [Swift Package Manager](#swift-package-manager)
+  - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
-    - [Single Slice](#single-slice)
-    - [`UnboundedRange` Slices](#unboundedrange-slices)
-    - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
-    - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+  - [Single Slice](#single-slice)
+  - [`UnboundedRange` Slices](#unboundedrange-slices)
+  - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
+  - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
 - [Linear Algebra Operations for `Double` and `Float` NdArrays.](#linear-algebra-operations-for-double-and-float-ndarrays)
-    - [Matrix Vector Multiplication](#matrix-vector-multiplication)
-    - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
-    - [Matrix Inversion](#matrix-inversion)
-    - [Solve Linear System of Equations](#solve-linear-system-of-equations)
+  - [Matrix Vector Multiplication](#matrix-vector-multiplication)
+  - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+  - [Matrix Inversion](#matrix-inversion)
+  - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Type Concept](#type-concept)
-    - [Subtypes](#subtypes)
+  - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
@@ -367,7 +367,7 @@ print(try A.inverted())
 //  [ 1.0,  0.0]]
 ```
 
-### Solve Linear System of Equations
+### Solve a Linear System of Equations
 
 with single right hand side
 
