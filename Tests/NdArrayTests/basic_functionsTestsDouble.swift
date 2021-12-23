@@ -7,7 +7,6 @@ import XCTest
 
 // swiftlint:disable:next type_name
 class basic_functionsTestsDouble: XCTestCase {
-
     func testAbs() {
         // 0d
         do {
@@ -45,7 +44,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(abs(a).dataArray, [2, 1, 0, 4, 5, 6])
         }
     }
-
     func testAcos() {
         // 0d
         do {
@@ -83,7 +81,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(acos(a).dataArray, NdArray(a, order: .C).dataArray.map(acos))
         }
     }
-
     func testAsin() {
         // 0d
         do {
@@ -121,7 +118,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(asin(a).dataArray, NdArray(a, order: .C).dataArray.map(asin))
         }
     }
-
     func testAtan() {
         // 0d
         do {
@@ -159,7 +155,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(atan(a).dataArray, NdArray(a, order: .C).dataArray.map(atan))
         }
     }
-
     func testCos() {
         // 0d
         do {
@@ -197,7 +192,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(cos(a).dataArray, NdArray(a, order: .C).dataArray.map(cos))
         }
     }
-
     func testSin() {
         // 0d
         do {
@@ -235,7 +229,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(sin(a).dataArray, NdArray(a, order: .C).dataArray.map(sin))
         }
     }
-
     func testTan() {
         // 0d
         do {
@@ -273,7 +266,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(tan(a).dataArray, NdArray(a, order: .C).dataArray.map(tan))
         }
     }
-
     func testCosh() {
         // 0d
         do {
@@ -311,7 +303,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(cosh(a).dataArray, NdArray(a, order: .C).dataArray.map(cosh))
         }
     }
-
     func testSinh() {
         // 0d
         do {
@@ -349,7 +340,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(sinh(a).dataArray, NdArray(a, order: .C).dataArray.map(sinh))
         }
     }
-
     func testTanh() {
         // 0d
         do {
@@ -387,7 +377,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(tanh(a).dataArray, NdArray(a, order: .C).dataArray.map(tanh))
         }
     }
-
     func testLog() {
         // 0d
         do {
@@ -425,7 +414,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(log(a).dataArray, NdArray(a, order: .C).dataArray.map(log))
         }
     }
-
     func testLog10() {
         // 0d
         do {
@@ -463,7 +451,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(log10(a).dataArray, NdArray(a, order: .C).dataArray.map(log10))
         }
     }
-
     func testLog1p() {
         // 0d
         do {
@@ -501,7 +488,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(log1p(a).dataArray, NdArray(a, order: .C).dataArray.map(log1p))
         }
     }
-
     func testLog2() {
         // 0d
         do {
@@ -539,7 +525,6 @@ class basic_functionsTestsDouble: XCTestCase {
             XCTAssertEqual(log2(a).dataArray, NdArray(a, order: .C).dataArray.map(log2))
         }
     }
-
     func testLogb() {
         // 0d
         do {

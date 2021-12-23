@@ -192,7 +192,7 @@ public extension Matrix where T == Double {
     /// This method inverts U and then computes inv(A) by solving the system
     /// inv(A)*L = inv(U) for inv(A).
     ///
-    /// If an error occurred, the data in out may have been changed to any data.
+    /// If an error occurred, the data in `out` may have been changed to any data.
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
