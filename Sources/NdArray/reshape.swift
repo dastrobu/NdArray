@@ -16,7 +16,7 @@ public extension NdArray {
 
         if count == 0 {
             self.shape = shape
-            self.strides = Array(repeating: 1, count: shape.count)
+            strides = Array(repeating: 1, count: shape.count)
             return true
         }
 
@@ -26,7 +26,7 @@ public extension NdArray {
         let oldDim = oldShape.count
         let newDim = newShape.count
 
-        let oldStrides = self.strides
+        let oldStrides = strides
         var newStrides = [Int](repeating: 0, count: newDim)
 
         /* oi to oj and ni to nj give the axis ranges currently worked with */
@@ -109,7 +109,7 @@ public extension NdArray {
         }
 
         self.shape = newShape
-        self.strides = newStrides
+        strides = newStrides
         return true
     }
 

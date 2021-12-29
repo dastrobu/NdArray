@@ -18,7 +18,7 @@ public class NdArraySlice<T>: NdArray<T> {
         precondition(sliced <= ndim,
             """
             Cannot slice array with ndim \(ndim) more than \(ndim) times.
-            Precondition failed while trying to create slice \(self.debugDescription).
+            Precondition failed while trying to create slice \(debugDescription).
             """)
     }
 
@@ -28,12 +28,12 @@ public class NdArraySlice<T>: NdArray<T> {
         super.init(a)
 
         let start = a.flatIndex(startIndex)
-        self.data = a.data + start
-        self.count = a.len
+        data = a.data + start
+        count = a.len
     }
 
     internal required init(empty count: Int) {
-        self.sliced = 0
+        sliced = 0
         super.init(empty: count)
     }
 
@@ -49,7 +49,7 @@ public class NdArraySlice<T>: NdArray<T> {
 
     private func subscr(_ r: UnboundedRange) -> NdArraySlice {
         let slice = NdArraySlice(self, sliced: sliced + 1)
-        slice.sliceDescription = self.sliceDescription
+        slice.sliceDescription = sliceDescription
         slice.sliceDescription.append("[...]")
         return slice
     }
@@ -150,7 +150,7 @@ public class NdArraySlice<T>: NdArray<T> {
         let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced + 1)
         slice.shape[sliced] = upperBound - r.lowerBound
         slice.count = slice.len
-        slice.sliceDescription = self.sliceDescription
+        slice.sliceDescription = sliceDescription
         slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound)]")
         return slice
     }
@@ -274,7 +274,7 @@ public class NdArraySlice<T>: NdArray<T> {
 
             // here we reduce the shape, hence sliced stays the same
             let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced)
-            slice.sliceDescription = self.sliceDescription
+            slice.sliceDescription = sliceDescription
             slice.sliceDescription.append("[\(i)]")
             // drop shape and stride
             slice.shape = Array(slice.shape[0..<sliced] + slice.shape[(sliced + 1)...])
@@ -289,7 +289,7 @@ public class NdArraySlice<T>: NdArray<T> {
 
     public override var debugDescription: String {
         let address = String(format: "%p", Int(bitPattern: data))
-        var sliceDescription = self.sliceDescription.joined()
+        var sliceDescription = sliceDescription.joined()
         if sliceDescription == "" {
             sliceDescription = "-"
         }
