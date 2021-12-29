@@ -1,0 +1,9 @@
+on: push
+name: doctoc
+jobs:
+  doctoc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: technote-space/toc-generator@v4
+        with:
+          TOC_TITLE: "## Table of Contents"

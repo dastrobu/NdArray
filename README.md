@@ -11,10 +11,9 @@ The package is inspired by [NumPy](https://www.numpy.org), the well known [pytho
 numerical computations. This Swift package is certainly far away from the maturity of NumPy but implements some key
 features to enable fast and simple handling of multidimensional numeric data.
 
-## Table of Contents
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents
 
 - [Installation](#installation)
   - [Swift Package Manager](#swift-package-manager)
