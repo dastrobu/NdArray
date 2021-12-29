@@ -66,9 +66,9 @@ open class NdArray<T>: CustomDebugStringConvertible,
         let n = shape.isEmpty ? 0 : shape.reduce(1, *)
         self.init(empty: n)
         var success = reshape([n])
-        assert(success, "could not reshape from [\(self.shape)] to \(n)")
+        precondition(success, "could not reshape from [\(self.shape)] to \(n)")
         success = reshape(shape, order: order)
-        assert(success, "could not reshape form [\(self.shape)] to \(shape)")
+        precondition(success, "could not reshape form [\(self.shape)] to \(shape)")
     }
 
     internal func stealOwnership() {
@@ -79,7 +79,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
                 Assertion failed while trying stealing ownership from owner of \(debugDescription).
                 """)
         }
-        assert(owner.ownsData,
+        precondition(owner.ownsData,
             """
             Cannot steal from array not owning its data
             Assertion failed while trying to init stealing from \(owner.debugDescription).
@@ -99,7 +99,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
         self.count = a.count
         self.shape = a.shape
         self.strides = a.strides
-        assert(self !== owner)
+        precondition(self !== owner)
     }
 
     deinit {
@@ -178,13 +178,13 @@ open class NdArray<T>: CustomDebugStringConvertible,
         case .C:
             for i in 0..<rowCount {
                 let row = a[i]
-                assert(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
+                precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
                 memcpy(data + i * strides[0], row, colCount * MemoryLayout<T>.stride)
             }
         case .F:
             for i in 0..<rowCount {
                 let row = a[i]
-                assert(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
+                precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
                 // manual memcopy for strided data
                 for j in 0..<colCount {
                     data[i * strides[0] + j * strides[1]] = row[j]
@@ -208,20 +208,20 @@ open class NdArray<T>: CustomDebugStringConvertible,
         case .C:
             for i in 0..<iCount {
                 let ai = a[i]
-                assert(ai.count == jCount, "\(ai.count) == \(jCount) at index \(i)")
+                precondition(ai.count == jCount, "\(ai.count) == \(jCount) at index \(i)")
                 for j in 0..<jCount {
                     let aij = ai[j]
-                    assert(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
+                    precondition(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
                     memcpy(data + i * strides[0] + j * strides[1], aij, kCount * MemoryLayout<T>.stride)
                 }
             }
         case .F:
             for i in 0..<iCount {
                 let ai = a[i]
-                assert(ai.count == jCount, "\(ai.count) == \(jCount) at index \(i)")
+                precondition(ai.count == jCount, "\(ai.count) == \(jCount) at index \(i)")
                 for j in 0..<jCount {
                     let aij = ai[j]
-                    assert(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
+                    precondition(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
                     for k in 0..<kCount {
                         data[i * strides[0] + j * strides[1] + k * strides[2]] = aij[k]
                     }
@@ -380,7 +380,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// single slice access
     public subscript(i: Int) -> NdArray<T> {
         get {
-            assert(!isEmpty)
+            precondition(!isEmpty)
             var startIndex = [Int](repeating: 0, count: ndim)
             startIndex[0] = i
             // here we reduce the shape, hence slice = 0
@@ -474,7 +474,7 @@ internal extension NdArray {
     /// compute the flat index from strides and an index array of size ndim
     func flatIndex(_ index: [Int]) -> Int {
         let ndim = self.ndim
-        assert(index.count == ndim, "\(index.count) != \(ndim)")
+        precondition(index.count == ndim, "\(index.count) != \(ndim)")
         var flatIndex: Int = 0
         for i in 0..<ndim {
             flatIndex += index[i] * strides[i]

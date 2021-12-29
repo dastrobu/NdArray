@@ -221,7 +221,7 @@ class ReadmeExamples: XCTestCase {
             var B = A[...] // return NdArraySlice with sliced = 1, i.e. one dimension has been sliced
             B = A[...][..., 2] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
             B = A[...][..., 2][...1] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
-            // B = A[...][..., 2][...1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
+            // B = A[...][..., 2][...1][...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
         }
         do {
             let A = NdArray<Double>.ones([2, 2, 2])

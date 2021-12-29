@@ -5,16 +5,16 @@ public extension NdArray {
     /// Copy the values from the array into another array. The destination array must have the same shape as the source
     /// array.
     func copyTo(_ out: NdArray<T>) {
-        assert(shape == out.shape,
+        precondition(shape == out.shape,
             """
             Cannot copy array with shape \(shape) to array with shape \(out.shape).
-            Assertion failed while trying to copy \(self.debugDescription) to \(out.debugDescription).
+            Precondition failed while trying to copy \(self.debugDescription) to \(out.debugDescription).
             """)
         if count == 0 {
             // if there is nothing to copy, return
             return
         }
-        assert(ndim > 0, "\(ndim) > 0")
+        precondition(ndim > 0, "\(ndim) > 0")
         // check if both arrays are aligned and have the same alignment. In this case do a simple memcpy
         if (isCContiguous && out.isCContiguous) ||
                (isFContiguous && out.isFContiguous) {

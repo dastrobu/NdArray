@@ -47,10 +47,10 @@ public extension NdArray where T: AdditiveArithmetic {
 
     /// in place addition of a vector,
     func add(_ x: NdArray<T>) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(self.debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             var p = data
@@ -77,10 +77,10 @@ public extension NdArray where T: AdditiveArithmetic {
 
     /// in place subtraction of a vector,
     func subtract(_ x: NdArray<T>) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot subtract arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             var p = data
@@ -184,10 +184,10 @@ public extension NdArray where T == Double {
     /// in place addition of a scaled vector,
     /// uses BLAS daxpy operation: self = alpha * x + self
     func add(_ alpha: T, _ x: NdArray<T>) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             cblas_daxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
@@ -201,10 +201,10 @@ public extension NdArray where T == Double {
     /// in place addition of a scaled vector,
     /// uses ATLAS daxpyb operation: self = alpha * x + beta * self
     func add(_ alpha: T, _ x: NdArray<T>, _ beta: T) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             catlas_daxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
@@ -292,10 +292,10 @@ public extension NdArray where T == Float {
     /// in place addition of a scaled vector,
     /// uses BLAS saxpy operation: self = alpha * x + self
     func add(_ alpha: T, _ x: NdArray<T>) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             cblas_saxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
@@ -309,10 +309,10 @@ public extension NdArray where T == Float {
     /// in place addition of a scaled vector,
     /// uses ATLAS saxpyb operation: self = alpha * x + beta * self
     func add(_ alpha: T, _ x: NdArray<T>, _ beta: T) {
-        assert(shape == x.shape,
+        precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Assertion failed while trying to add \(x.debugDescription) to \(debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             catlas_saxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
