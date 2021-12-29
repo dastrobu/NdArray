@@ -57,7 +57,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// full slice access
     public override subscript(r: UnboundedRange) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -74,7 +74,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: ClosedRange<Int>) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -91,7 +91,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeThrough<Int>) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -108,7 +108,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeUpTo<Int>) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -125,7 +125,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range slice access
     public override subscript(r: PartialRangeFrom<Int>) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])
@@ -158,7 +158,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// range slice access
     public override subscript(r: Range<Int>) -> NdArray<T> {
         get {
-            return subscr(r)
+            subscr(r)
         }
         set {
             newValue.copyTo(self[r])

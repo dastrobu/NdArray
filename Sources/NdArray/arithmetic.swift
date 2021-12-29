@@ -112,7 +112,7 @@ public extension NdArray where T: AdditiveArithmetic {
 
     /// - Returns: 0 if array is empty, the sum of all elements otherwise
     func sum() -> T {
-        return reduce(T.zero, +)
+        reduce(T.zero, +)
     }
 }
 
@@ -372,7 +372,7 @@ public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
 }
 
 public func +<K: AdditiveArithmetic, T: NdArray<K>>(x: K, a: T) -> T {
-    return a + x
+    a + x
 }
 
 public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
@@ -427,7 +427,7 @@ public func *=<K: Numeric, T: NdArray<K>>(a: T, x: K) {
 }
 
 public func *<K: Numeric, T: NdArray<K>>(x: K, a: T) -> T {
-    return a * x
+    a * x
 }
 
 // Double operators
@@ -454,7 +454,7 @@ public func *=<T: NdArray<Double>>(a: T, x: Double) {
 }
 
 public func *<T: NdArray<Double>>(x: Double, a: T) -> T {
-    return a * x
+    a * x
 }
 
 public func /=<T: NdArray<Double>>(a: T, x: Double) {
@@ -472,7 +472,7 @@ public func +=<T: NdArray<Double>>(a: T, b: T) {
 }
 
 public func +<T: NdArray<Double>>(x: Double, a: T) -> T {
-    return a + x
+    a + x
 }
 
 public func -<T: NdArray<Double>>(a: T, b: T) -> T {
@@ -509,7 +509,7 @@ public func *=<T: NdArray<Float>>(a: T, x: Float) {
 }
 
 public func *<T: NdArray<Float>>(x: Float, a: T) -> T {
-    return a * x
+    a * x
 }
 
 public func /=<T: NdArray<Float>>(a: T, x: Float) {
@@ -527,7 +527,7 @@ public func +=<T: NdArray<Float>>(a: T, b: T) {
 }
 
 public func +<T: NdArray<Float>>(x: Float, a: T) -> T {
-    return a + x
+    a + x
 }
 
 public func -<T: NdArray<Float>>(a: T, b: T) -> T {

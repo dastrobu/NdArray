@@ -9,7 +9,7 @@ open class Matrix<T>: NdArray<T> {
 
     /// flag to indicate if this matrix is a square matrix
     var isSquare: Bool {
-        return shape[0] == shape[1]
+        shape[0] == shape[1]
     }
 
     /// create an 2D NdArray from a plain array
@@ -110,7 +110,7 @@ open class Matrix<T>: NdArray<T> {
 public extension Matrix where T == Double {
     /// short hand form for `transposed()`
     var T: Matrix<T> {
-        return transposed()
+        transposed()
     }
 
     /// solve a system of linear equations
@@ -269,7 +269,7 @@ public extension Matrix where T == Double {
 public extension Matrix where T == Float {
     /// short hand form for `transposed()`
     var T: Matrix<T> {
-        return transposed()
+        transposed()
     }
 
     /// solve a system of linear equations

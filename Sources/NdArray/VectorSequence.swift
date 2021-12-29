@@ -39,7 +39,7 @@ public extension Vector {
 
     /// - Returns: shape[0] or 0 if vector is empty
     var underestimatedCount: Int {
-        return isEmpty ? 0 : shape[0]
+        isEmpty ? 0 : shape[0]
     }
 
     /// Calls body(p), where p is a pointer to the vector's contiguous storage.

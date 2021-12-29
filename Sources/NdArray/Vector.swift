@@ -141,9 +141,9 @@ public extension Vector where T == Float {
 }
 
 public func * (a: Vector<Double>, b: Vector<Double>) -> Double {
-    return a.dot(b)
+    a.dot(b)
 }
 
 public func * (a: Vector<Float>, b: Vector<Float>) -> Float {
-    return a.dot(b)
+    a.dot(b)
 }
