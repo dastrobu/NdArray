@@ -22,10 +22,10 @@ open class Vector<T>: NdArray<T>, Sequence {
     }
 
     public required convenience init(copy a: NdArray<T>) {
-        assert(a.shape.count == 1,
+        precondition(a.shape.count == 1,
             """
             Cannot create vector with shape \(a.shape). Vector must have one dimension.
-            Assertion failed while trying to copy \(a.debugDescription).
+            Precondition failed while trying to copy \(a.debugDescription).
             """)
         self.init(empty: a.shape, order: a.isFContiguous ? .F : .C)
         a.copyTo(self)
@@ -35,22 +35,22 @@ open class Vector<T>: NdArray<T>, Sequence {
     public subscript(i: Int) -> T {
         get {
             let k = i * strides[0]
-            assert(k < strides[0] * shape[0])
+            precondition(k < strides[0] * shape[0])
             return data[k]
         }
         set {
             let k = i * strides[0]
-            assert(k < strides[0] * shape[0])
+            precondition(k < strides[0] * shape[0])
             return data[k] = newValue
         }
     }
 
     /// creates a view on another array without copying any data
     public required init(_ a: NdArray<T>) {
-        assert(a.shape.count == 1,
+        precondition(a.shape.count == 1,
             """
             Cannot create vector with shape \(a.shape). Vector must have one dimension.
-            Assertion failed while trying to create vector from \(a.debugDescription).
+            Precondition failed while trying to create vector from \(a.debugDescription).
             """)
         super.init(a)
     }
@@ -58,10 +58,10 @@ open class Vector<T>: NdArray<T>, Sequence {
 
 public extension Vector where T == Double {
     func dot(_ y: Vector<T>) -> T {
-        assert(shape == y.shape,
+        precondition(shape == y.shape,
             """
             Cannot compute dot product of vectors with shape \(shape) and \(y.shape).
-            Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
+            Precondition failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
         return cblas_ddot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))
@@ -100,10 +100,10 @@ public extension Vector where T == Double {
 
 public extension Vector where T == Float {
     func dot(_ y: Vector<T>) -> T {
-        assert(shape == y.shape,
+        precondition(shape == y.shape,
             """
             Cannot compute dot product of vectors with shape \(shape) and \(y.shape).
-            Assertion failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
+            Precondition failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
         return cblas_sdot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))

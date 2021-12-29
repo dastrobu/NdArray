@@ -15,10 +15,10 @@ public class NdArraySlice<T>: NdArray<T> {
     internal init(_ a: NdArray<T>, sliced: Int) {
         self.sliced = sliced
         super.init(a)
-        assert(sliced <= ndim,
+        precondition(sliced <= ndim,
             """
             Cannot slice array with ndim \(ndim) more than \(ndim) times.
-            Assertion failed while trying to create slice \(self.debugDescription).
+            Precondition failed while trying to create slice \(self.debugDescription).
             """)
     }
 
@@ -133,8 +133,8 @@ public class NdArraySlice<T>: NdArray<T> {
     }
 
     private func subscr(_ r: Range<Int>) -> NdArraySlice {
-        assert(!isEmpty)
-        assert(r.lowerBound >= 0, "\(r.lowerBound) >= 0")
+        precondition(!isEmpty)
+        precondition(r.lowerBound >= 0, "\(r.lowerBound) >= 0")
 
         // check for empty range
         if r.lowerBound >= r.upperBound {
@@ -168,7 +168,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// closed range with stride
     public override subscript(r: ClosedRange<Int>, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -184,7 +184,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// range with stride
     public override subscript(r: Range<Int>, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -200,7 +200,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range with stride
     public override subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -216,7 +216,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range with stride
     public override subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -232,7 +232,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range with stride
     public override subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -249,7 +249,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// full range with stride
     public override subscript(r: UnboundedRange, stride: Int) -> NdArray<T> {
         get {
-            assert(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -266,7 +266,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// single slice access
     public override subscript(i: Int) -> NdArray<T> {
         get {
-            assert(!isEmpty)
+            precondition(!isEmpty)
 
             // set the index on the sliced dimension
             var startIndex = [Int](repeating: 0, count: ndim)

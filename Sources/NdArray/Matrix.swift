@@ -27,13 +27,13 @@ open class Matrix<T>: NdArray<T> {
         case .C:
             for i in 0..<rowCount {
                 let row = a[i]
-                assert(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
+                precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
                 memcpy(data + i * strides[0], row, colCount * MemoryLayout<T>.stride)
             }
         case .F:
             for i in 0..<rowCount {
                 let row = a[i]
-                assert(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
+                precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
                 // manual memcopy for strided data
                 for j in 0..<colCount {
                     data[i * strides[0] + j * strides[1]] = row[j]
@@ -43,7 +43,7 @@ open class Matrix<T>: NdArray<T> {
     }
 
     public init(empty shape: [Int], order: Contiguous = .C) {
-        assert(shape.count == 2,
+        precondition(shape.count == 2,
             """
             Cannot create matrix with shape \(shape). Matrix must have two dimensions.
             """)
@@ -58,10 +58,10 @@ open class Matrix<T>: NdArray<T> {
 
     /// creates a view on another array without copying any data
     public required init(_ a: NdArray<T>) {
-        assert(a.shape.count == 2,
+        precondition(a.shape.count == 2,
             """
             Cannot create matrix with shape \(a.shape). Matrix must have two dimensions.
-            Assertion failed while trying to init matrix from \(a.debugDescription).
+            Precondition failed while trying to init matrix from \(a.debugDescription).
             """)
         super.init(a)
     }
@@ -73,10 +73,10 @@ open class Matrix<T>: NdArray<T> {
     }
 
     public required convenience init(copy a: NdArray<T>) {
-        assert(a.shape.count == 2,
+        precondition(a.shape.count == 2,
             """
             Cannot create matrix with shape \(a.shape). Matrix must have two dimensions.
-            Assertion failed while trying to copy \(a.debugDescription).
+            Precondition failed while trying to copy \(a.debugDescription).
             """)
         self.init(empty: a.shape, order: a.isFContiguous ? .F : .C)
         a.copyTo(self)
@@ -97,10 +97,10 @@ open class Matrix<T>: NdArray<T> {
     /// Note: if the matrix has an effective dimension of 0, transposition has no effect.
     public func transposed(out: Matrix<T>) {
         if effectiveNdim > 0 {
-            assert(shape == out.shape.reversed(),
+            precondition(shape == out.shape.reversed(),
                 """
                 Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
-                Assertion failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
+                Precondition failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
                 """)
             out[...][...] = self.transposed()[...][...]
         }
@@ -141,24 +141,24 @@ public extension Matrix where T == Double {
     @discardableResult
     func solve(_ rhs: Matrix<T>, out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
-        assert(isSquare,
+        precondition(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
-            Assertion failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(self.debugDescription).
             """)
 
         let B = out ?? Matrix(empty: rhs.shape, order: .F)
-        assert(B.isFContiguous,
+        precondition(B.isFContiguous,
             """
             Cannot use out array if not f contiguous.
             Given out array is \(B.debugDescription).
             """)
-        assert(!rhs.overlaps(B),
+        precondition(!rhs.overlaps(B),
             """
             Cannot use out array if it overlaps with x.
             x is \(rhs.debugDescription) and out is \(B.debugDescription).
             """)
-        assert(rhs.shape[0] == n,
+        precondition(rhs.shape[0] == n,
             """
             Cannot use x with shape \(rhs.shape) to solve with matrix \(debugDescription).
             """)
@@ -196,10 +196,10 @@ public extension Matrix where T == Double {
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
-        assert(isSquare,
+        precondition(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
-            Assertion failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(self.debugDescription).
             """)
         let A = out ?? Matrix(empty: self.shape, order: .F)
         A[...] = self[...]
@@ -246,7 +246,7 @@ public extension Matrix where T == Double {
     private func luFactor() throws -> [__CLPK_integer] {
         // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
         // LU factorization may be implemented, yielding P, L and U explicitly.
-        assert(isFContiguous,
+        precondition(isFContiguous,
             """
             Cannot compute LU factorization if not f contiguous
             Given out array is \(self.debugDescription).
@@ -300,24 +300,24 @@ public extension Matrix where T == Float {
     @discardableResult
     func solve(_ rhs: Matrix<T>, out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
-        assert(isSquare,
+        precondition(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
-            Assertion failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(self.debugDescription).
             """)
 
         let B = out ?? Matrix(empty: rhs.shape, order: .F)
-        assert(B.isFContiguous,
+        precondition(B.isFContiguous,
             """
             Cannot use out array if not f contiguous.
             Given out array is \(B.debugDescription).
             """)
-        assert(!rhs.overlaps(B),
+        precondition(!rhs.overlaps(B),
             """
             Cannot use out array if it overlaps with x.
             x is \(rhs.debugDescription) and out is \(B.debugDescription).
             """)
-        assert(rhs.shape[0] == n,
+        precondition(rhs.shape[0] == n,
             """
             Cannot use x with shape \(rhs.shape) to solve with matrix \(debugDescription).
             """)
@@ -355,10 +355,10 @@ public extension Matrix where T == Float {
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
-        assert(isSquare,
+        precondition(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
-            Assertion failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(self.debugDescription).
             """)
         let A = out ?? Matrix(empty: self.shape, order: .F)
         A[...] = self[...]
@@ -405,10 +405,10 @@ public extension Matrix where T == Float {
     private func luFactor() throws -> [__CLPK_integer] {
         // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
         // LU factorization may be implemented, yielding P, L and U explicitly.
-        assert(isFContiguous,
+        precondition(isFContiguous,
             """
             Cannot compute LU factorization if not f contiguous
-            Given out array is \(self.debugDescription).
+            Given out array is \(debugDescription).
             """)
         var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
         var m = __CLPK_integer(shape[0])
@@ -425,6 +425,12 @@ public extension Matrix where T == Float {
 }
 
 public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
+    precondition(A.shape[1] == x.shape[0],
+        """
+        Cannot multiply Matrix with shape \(A.shape) with Vector with shape \(x.shape).
+        Precondition failed while trying to multiply \(A.debugDescription) with \(x.debugDescription).
+        """)
+
     let y = Vector<Double>(empty: x.shape[0])
 
     let a: Matrix<Double>
@@ -448,6 +454,11 @@ public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
 }
 
 public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
+    precondition(A.shape[1] == B.shape[0],
+        """
+        Cannot multiply Matrix with shape \(A.shape) with Matrix with shape \(B.shape).
+        Precondition failed while trying to multiply \(A.debugDescription) with \(B.debugDescription).
+        """)
     let a: Matrix<Double>
     let b: Matrix<Double>
     let c: Matrix<Double>
@@ -477,6 +488,11 @@ public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
 // TODO override for band/tridiag matrix
 
 public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
+    precondition(A.shape[1] == x.shape[0],
+        """
+        Cannot multiply Matrix with shape \(A.shape) with Vector with shape \(x.shape).
+        Precondition failed while trying to multiply \(A.debugDescription) with \(x.debugDescription).
+        """)
     let y = Vector<Float>(empty: x.shape[0])
 
     let a: Matrix<Float>
@@ -500,6 +516,12 @@ public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
 }
 
 public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
+    precondition(A.shape[1] == B.shape[0],
+        """
+        Cannot multiply Matrix with shape \(A.shape) with Matrix with shape \(B.shape).
+        Precondition failed while trying to multiply \(A.debugDescription) with \(B.debugDescription).
+        """)
+
     let a: Matrix<Float>
     let b: Matrix<Float>
     let c: Matrix<Float>

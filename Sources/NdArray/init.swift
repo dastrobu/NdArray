@@ -28,7 +28,7 @@ private func arange<T>(start: T, stop: T, step: T) -> Int where T: BinaryFloatin
             n = 0
         }
     }
-    assert(n >= 0)
+    precondition(n >= 0)
     return n
 }
 

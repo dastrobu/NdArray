@@ -431,7 +431,7 @@ let A = NdArray<Double>.ones([2, 2, 2])
 var B = A[...] // NdArraySlice with sliced = 1, i.e. one dimension has been sliced
 B = A[...][..., 2] // NdArraySlice with sliced = 2, i.e. one dimension has been sliced
 B = A[...][..., 2][..<1] // NdArraySlice with sliced = 3, i.e. one dimension has been sliced
-B = A[...][..., 2][..<1][...] // Assertion failed: Cannot slice array with ndim 3 more than 3 times.
+B = A[...][..., 2][..<1][...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
 ```
 
 So it is recommended to convert to an `NdArray` after slicing before continuing to work with the data.
@@ -466,7 +466,7 @@ let b = NdArray<Double>.zeros(2)
 let A = Matrix<Double>(a) // matrix from array without copy
 let x = Vector<Double>(b) // vector from array without copy
 let Ax = A * x; // matrix vector multiplication is defined
-let _ = Vector<Double>(a) // Assertion failed: Cannot create vector with shape [2, 2]. Vector must have one dimension.
+let _ = Vector<Double>(a) // Precondition failed: Cannot create vector with shape [2, 2]. Vector must have one dimension.
 ````
 
 Furthermore algorithms specific for subtypes like a matrix will be defined as method on the subtype, e.g. `solve`
