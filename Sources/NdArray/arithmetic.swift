@@ -50,7 +50,7 @@ public extension NdArray where T: AdditiveArithmetic {
         precondition(shape == x.shape,
             """
             Cannot add arrays with shape \(x.shape) and \(shape).
-            Precondition failed while trying to add \(x.debugDescription) to \(self.debugDescription).
+            Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
             var p = data

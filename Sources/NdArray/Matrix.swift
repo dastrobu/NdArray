@@ -69,7 +69,7 @@ open class Matrix<T>: NdArray<T> {
     public required init(empty count: Int) {
         super.init(empty: count)
         // make pseudo 2d
-        self.reshape([1] + shape)
+        reshape([1] + shape)
     }
 
     public required convenience init(copy a: NdArray<T>) {
@@ -87,8 +87,8 @@ open class Matrix<T>: NdArray<T> {
     public func transposed() -> Matrix<T> {
         let a = Matrix<T>(self)
         if effectiveNdim > 0 {
-            a.shape = self.shape.reversed()
-            a.strides = self.strides.reversed()
+            a.shape = shape.reversed()
+            a.strides = strides.reversed()
         }
         return a
     }
@@ -100,7 +100,7 @@ open class Matrix<T>: NdArray<T> {
             precondition(shape == out.shape.reversed(),
                 """
                 Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
-                Precondition failed while trying to transpose \(self.debugDescription) to \(out.debugDescription).
+                Precondition failed while trying to transpose \(debugDescription) to \(out.debugDescription).
                 """)
             out[...][...] = self.transposed()[...][...]
         }
@@ -144,7 +144,7 @@ public extension Matrix where T == Double {
         precondition(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
-            Precondition failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(debugDescription).
             """)
 
         let B = out ?? Matrix(empty: rhs.shape, order: .F)
@@ -170,7 +170,7 @@ public extension Matrix where T == Double {
         B[...] = rhs[...]
 
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
-        let A = Matrix<T>(empty: self.shape, order: .F)
+        let A = Matrix<T>(empty: shape, order: .F)
         A[...] = self[...]
         var nrhs = __CLPK_integer(B.shape[1])
         var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
@@ -199,9 +199,9 @@ public extension Matrix where T == Double {
         precondition(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
-            Precondition failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(debugDescription).
             """)
-        let A = out ?? Matrix(empty: self.shape, order: .F)
+        let A = out ?? Matrix(empty: shape, order: .F)
         A[...] = self[...]
 
         var ipiv = try A.luFactor()
@@ -249,7 +249,7 @@ public extension Matrix where T == Double {
         precondition(isFContiguous,
             """
             Cannot compute LU factorization if not f contiguous
-            Given out array is \(self.debugDescription).
+            Given out array is \(debugDescription).
             """)
         var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
         var m = __CLPK_integer(shape[0])
@@ -303,7 +303,7 @@ public extension Matrix where T == Float {
         precondition(isSquare,
             """
             Cannot solve for non square matrix with shape \(shape).
-            Precondition failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(debugDescription).
             """)
 
         let B = out ?? Matrix(empty: rhs.shape, order: .F)
@@ -329,7 +329,7 @@ public extension Matrix where T == Float {
         B[...] = rhs[...]
 
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
-        let A = Matrix<T>(empty: self.shape, order: .F)
+        let A = Matrix<T>(empty: shape, order: .F)
         A[...] = self[...]
         var nrhs = __CLPK_integer(B.shape[1])
         var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
@@ -358,9 +358,9 @@ public extension Matrix where T == Float {
         precondition(isSquare,
             """
             Cannot invert non square matrix with shape \(shape).
-            Precondition failed while trying to solve \(self.debugDescription).
+            Precondition failed while trying to solve \(debugDescription).
             """)
-        let A = out ?? Matrix(empty: self.shape, order: .F)
+        let A = out ?? Matrix(empty: shape, order: .F)
         A[...] = self[...]
 
         var ipiv = try A.luFactor()

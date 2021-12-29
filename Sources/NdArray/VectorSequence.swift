@@ -32,9 +32,9 @@ public extension Vector {
 
     func makeIterator() -> VectorIterator<T> {
         if isEmpty {
-            return VectorIterator(baseAddress: self.data, stride: 0, count: 0)
+            return VectorIterator(baseAddress: data, stride: 0, count: 0)
         }
-        return VectorIterator(baseAddress: self.data, stride: strides[0], count: shape[0])
+        return VectorIterator(baseAddress: data, stride: strides[0], count: shape[0])
     }
 
     /// - Returns: shape[0] or 0 if vector is empty

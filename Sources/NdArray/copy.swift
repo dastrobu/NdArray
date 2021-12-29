@@ -8,7 +8,7 @@ public extension NdArray {
         precondition(shape == out.shape,
             """
             Cannot copy array with shape \(shape) to array with shape \(out.shape).
-            Precondition failed while trying to copy \(self.debugDescription) to \(out.debugDescription).
+            Precondition failed while trying to copy \(debugDescription) to \(out.debugDescription).
             """)
         if count == 0 {
             // if there is nothing to copy, return
