@@ -28,7 +28,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// dimension of the array, i.e. the length of the shape
     /// - SeeAlso: effectiveNdim
     public var ndim: Int {
-        return shape.count
+        shape.count
     }
 
     /// the effective ndim is the number of dimensions, the array actually has, if any size is 0, the element
@@ -42,12 +42,12 @@ open class NdArray<T>: CustomDebugStringConvertible,
 
     /// an array is considered empty if it has no items, i.e. if the effectiveNdim is 0.
     public var isEmpty: Bool {
-        return effectiveNdim == 0
+        effectiveNdim == 0
     }
 
     /// flag indicating if this ndarray owns its data
     public var ownsData: Bool {
-        return owner == nil
+        owner == nil
     }
 
     /// create a new array without initializing any memory
@@ -244,13 +244,13 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     public var description: String {
-        return "\(self, style: .multiLine)"
+        "\(self, style: .multiLine)"
     }
 
     /// element access
     public subscript(index: [Int]) -> T {
         get {
-            return data[flatIndex(index)]
+            data[flatIndex(index)]
         }
         set {
             self.data[flatIndex(index)] = newValue
@@ -260,7 +260,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// full slice access
     public subscript(r: UnboundedRange) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -270,7 +270,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range slice access
     public subscript(r: ClosedRange<Int>) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -280,7 +280,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range slice access
     public subscript(r: PartialRangeThrough<Int>) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -290,7 +290,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range slice access
     public subscript(r: PartialRangeUpTo<Int>) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -300,7 +300,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range slice access
     public subscript(r: PartialRangeFrom<Int>) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -310,7 +310,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// range slice access
     public subscript(r: Range<Int>) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r]
+            NdArraySlice(self, sliced: 0)[r]
         }
         set {
             newValue.copyTo(self[r])
@@ -320,7 +320,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// range with stride
     public subscript(r: Range<Int>, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -330,7 +330,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// closed range with stride
     public subscript(r: ClosedRange<Int>, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -340,7 +340,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range with stride
     public subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -350,7 +350,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range with stride
     public subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -360,7 +360,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// partial range with stride
     public subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -370,7 +370,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// full range with stride
     public subscript(r: UnboundedRange, stride: Int) -> NdArray<T> {
         get {
-            return NdArraySlice(self, sliced: 0)[r, stride]
+            NdArraySlice(self, sliced: 0)[r, stride]
         }
         set {
             newValue.copyTo(self[r, stride])
@@ -410,20 +410,20 @@ extension NdArray {
     /// (row major)
     public var isCContiguous: Bool {
         // compare C contiguous strides to actual strides
-        return strides == strides(order: .C)
+        strides == strides(order: .C)
     }
 
     /// flag indicating if the array is F contiguous, i.e. is stored contiguously in memory and has Fortran order
     /// (column major)
     public var isFContiguous: Bool {
         // compare F contiguous strides to actual strides
-        return strides == strides(order: .F)
+        strides == strides(order: .F)
     }
 
     /// flag indicating if the array is contiguous, i.e. is stored contiguously in memory and has either C or Fortran
     /// order.
     public var isContiguous: Bool {
-        return isCContiguous || isFContiguous
+        isCContiguous || isFContiguous
     }
 
     /// - Returns: true if data regions of this array overlap with data region of the other array

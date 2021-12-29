@@ -2,7 +2,7 @@ import Foundation
 
 fileprivate extension RangeReplaceableCollection where Self: StringProtocol {
     func paddingToLeft(toLength n: Int, withPad pad: Element = " ") -> String {
-        return String(repeatElement(pad, count: Swift.max(0, n - count)) + suffix(Swift.max(count, count - n)))
+        String(repeatElement(pad, count: Swift.max(0, n - count)) + suffix(Swift.max(count, count - n)))
     }
 }
 
@@ -72,7 +72,7 @@ public extension String.StringInterpolation {
                 Swift.max(n, formatter(element).count)
             })
             let wrapperFormatter: (T) -> String = { element in
-                return formatter(element).paddingToLeft(toLength: n, withPad: " ")
+                formatter(element).paddingToLeft(toLength: n, withPad: " ")
             }
             appendLiteral(value.string(separator: "\n", indent: 1, formatter: wrapperFormatter))
         }

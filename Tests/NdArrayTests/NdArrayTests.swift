@@ -3,11 +3,11 @@ import Foundation
 @testable import NdArray
 
 private func address<T>(_ p: UnsafeBufferPointer<T>) -> String {
-    return String(format: "%x", Int(bitPattern: p.baseAddress))
+    String(format: "%x", Int(bitPattern: p.baseAddress))
 }
 
 private func address<T>(_ p: UnsafePointer<T>) -> String {
-    return String(format: "%x", Int(bitPattern: p))
+    String(format: "%x", Int(bitPattern: p))
 }
 
 final class NdArrayTests: XCTestCase {
