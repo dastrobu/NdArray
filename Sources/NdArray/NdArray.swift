@@ -99,7 +99,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
         self.count = a.count
         self.shape = a.shape
         self.strides = a.strides
-        precondition(self !== owner)
+        assert(self !== owner)
     }
 
     deinit {
@@ -247,17 +247,20 @@ open class NdArray<T>: CustomDebugStringConvertible,
         "\(self, style: .multiLine)"
     }
 
-    /// element access
+    /**
+     element access
+     */
     public subscript(index: [Int]) -> T {
         get {
             data[flatIndex(index)]
         }
         set {
-            self.data[flatIndex(index)] = newValue
+            data[flatIndex(index)] = newValue
         }
     }
 
     /// full slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[0..., 0..., 0...] over old one a[...][...][...]")
     public subscript(r: UnboundedRange) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -268,6 +271,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[0...42, 0...42, 0...42] over old one a[0...42][0...42][0...42]")
     public subscript(r: ClosedRange<Int>) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -278,6 +282,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[...42, ...42, ...42] over old one a[...42][...42][...42]")
     public subscript(r: PartialRangeThrough<Int>) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -288,6 +293,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[..<42, ..<42, ..<42] over old one a[..<42][..<42][..<42]")
     public subscript(r: PartialRangeUpTo<Int>) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -298,6 +304,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[42..., 42.., 42..] over old one a[42...][42...][42...]")
     public subscript(r: PartialRangeFrom<Int>) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -308,6 +315,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// range slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[1..<42, 1..<42, 1..<42] over old one a[1..<42][1..<42][1..<42]")
     public subscript(r: Range<Int>) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r]
@@ -318,6 +326,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[1..<42 ~ 3, 1..<42 ~ 3, 1..<42 ~ 3] over old one a[1..<42, 3][1..<42, 3][1..<42, 3]")
     public subscript(r: Range<Int>, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -328,6 +337,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// closed range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[0...42 ~ 3, 0...42 ~ 3, 0...42 ~ 3] over old one a[0...42, 3][0...42, 3][0...42, 3]")
     public subscript(r: ClosedRange<Int>, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -338,6 +348,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[42... ~ 3, 42.. ~ 3, 42.. ~ 3] over old one a[42..., 3][42..., 3][42..., 3]")
     public subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -348,6 +359,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[...42 ~ 3, ...42 ~ 3, ...42 ~ 3] over old one a[...42, 3][...42, 3][...42, 3]")
     public subscript(r: PartialRangeThrough<Int>, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -358,6 +370,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// partial range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[..<42 ~ 3, ..<42 ~ 3, ..<42 ~ 3] over old one a[..<42, 3][..<42, 3][..<42, 3]")
     public subscript(r: PartialRangeUpTo<Int>, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -368,6 +381,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// full range with stride
+    @available(*, deprecated, message: "prefer new slicing syntax a[0... ~ 3, 0... ~ 3, 0... ~ 3] over old one a[..., 3][..., 3][..., 3]")
     public subscript(r: UnboundedRange, stride: Int) -> NdArray<T> {
         get {
             NdArraySlice(self, sliced: 0)[r, stride]
@@ -378,6 +392,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     }
 
     /// single slice access
+    @available(*, deprecated, message: "prefer new slicing syntax a[42, 42, 42] over old one a[42][42][42]")
     public subscript(i: Int) -> NdArray<T> {
         get {
             precondition(!isEmpty)
@@ -400,6 +415,47 @@ open class NdArray<T>: CustomDebugStringConvertible,
         }
         set {
             newValue.copyTo(self[i])
+        }
+    }
+
+    /**
+     slice access
+     */
+    public subscript(slices: [Slice]) -> NdArray<T> {
+        get {
+            var a = NdArraySlice(self, sliced: 0)
+            for (i, s) in slices.enumerated() {
+                switch s.sliceKind {
+                case .range(lowerBound: let lowerBound, upperBound: let upperBound, stride: let stride):
+                    let stride = stride ?? 1
+                    let lowerBound = lowerBound ?? 0
+                    let upperBound = upperBound ?? shape[i]
+                    a = a.subscr(lowerBound: lowerBound, upperBound: upperBound, stride: stride)
+                case .index(let i):
+                    a = a.subscr(i)
+                    if a.shape.isEmpty {
+                        a.shape = [1]
+                        a.strides = [1]
+                        a.count = 1
+                    }
+                }
+            }
+            return NdArray(a)
+        }
+        set {
+            newValue.copyTo(self[slices])
+        }
+    }
+
+    /**
+     slice access
+     */
+    public subscript(slices: Slice...) -> NdArray<T> {
+        get {
+            self[slices]
+        }
+        set {
+            self[slices] = newValue
         }
     }
 }

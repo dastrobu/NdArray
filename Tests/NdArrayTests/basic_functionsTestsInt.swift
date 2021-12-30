@@ -26,7 +26,7 @@ class basic_functionsTestsInt: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Int>.range(from: -3, to: 3)[..., 2]
+            let a = NdArray<Int>.range(from: -3, to: 3)[0... ~ 2]
             XCTAssertEqual(abs(a).dataArray, [3, 1, 1])
         }
         // 2d C contiguous
@@ -41,7 +41,7 @@ class basic_functionsTestsInt: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Int>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)[1..., 2]
+            let a = NdArray<Int>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)[1... ~ 2]
             XCTAssertEqual(abs(a).dataArray, [2, 1, 0, 4, 5, 6])
         }
     }

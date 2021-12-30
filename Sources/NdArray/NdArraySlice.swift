@@ -4,7 +4,7 @@
 
 import Darwin
 
-public class NdArraySlice<T>: NdArray<T> {
+internal class NdArraySlice<T>: NdArray<T> {
     /// number of dimensions that have been sliced
     private var sliced: Int
 
@@ -50,7 +50,7 @@ public class NdArraySlice<T>: NdArray<T> {
     private func subscr(_ r: UnboundedRange) -> NdArraySlice {
         let slice = NdArraySlice(self, sliced: sliced + 1)
         slice.sliceDescription = sliceDescription
-        slice.sliceDescription.append("[...]")
+        slice.sliceDescription.append("[0...]")
         return slice
     }
 
@@ -141,6 +141,8 @@ public class NdArraySlice<T>: NdArray<T> {
             let slice = NdArraySlice(self, startIndex: [Int](repeating: 0, count: ndim), sliced: sliced + 1)
             slice.shape[sliced] = 0
             slice.count = slice.len
+            slice.sliceDescription = sliceDescription
+            slice.sliceDescription.append("[\(r.lowerBound)..<\(r.upperBound)]")
             return slice
         }
 
@@ -200,7 +202,7 @@ public class NdArraySlice<T>: NdArray<T> {
     /// partial range with stride
     public override subscript(r: PartialRangeFrom<Int>, stride: Int) -> NdArray<T> {
         get {
-            precondition(stride > 0, "\(stride) > 0")
+            precondition(stride > 0, "\(stride) > 0, \(debugDescription)")
 
             let slice = self.subscr(r)
             slice.sliceDescription.removeLast()
@@ -285,6 +287,34 @@ public class NdArraySlice<T>: NdArray<T> {
         set {
             newValue.copyTo(self[i])
         }
+    }
+
+    internal func subscr(lowerBound: Int, upperBound: Int, stride: Int) -> NdArraySlice<T> {
+        precondition(stride > 0, "\(stride) > 0")
+
+        let slice = self.subscr(lowerBound..<upperBound)
+        slice.sliceDescription.removeLast()
+        slice.sliceDescription.append("[\(lowerBound)..<\(upperBound), \(stride)]")
+        slice.strideBy(stride, axis: sliced)
+        return slice
+    }
+
+    internal func subscr(_ i: Int) -> NdArraySlice<T> {
+        precondition(!isEmpty)
+
+        // set the index on the sliced dimension
+        var startIndex = [Int](repeating: 0, count: ndim)
+        startIndex[sliced] = i
+
+        // here we reduce the shape, hence sliced stays the same
+        let slice = NdArraySlice(self, startIndex: startIndex, sliced: sliced)
+        slice.sliceDescription = sliceDescription
+        slice.sliceDescription.append("[\(i)]")
+        // drop shape and stride
+        slice.shape = Array(slice.shape[0..<sliced] + slice.shape[(sliced + 1)...])
+        slice.strides = Array(slice.strides[0..<sliced] + slice.strides[(sliced + 1)...])
+        slice.count = slice.len
+        return slice
     }
 
     public override var debugDescription: String {

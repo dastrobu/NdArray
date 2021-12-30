@@ -37,8 +37,8 @@ class applyTests: XCTestCase {
         do {
             let a = NdArray<Double>.range(from: -3, to: 3)
             let b = NdArray<Double>.range(from: -3, to: 3)
-            a[..., 2].apply { $0 * 2}
-            b[..., 2] *= 2
+            a[0... ~ 2].apply { $0 * 2}
+            b[0... ~ 2] *= 2
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
         // 2d C contiguous
@@ -61,16 +61,16 @@ class applyTests: XCTestCase {
         do {
             let a = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)
             let b = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)
-            a[1..., 2].apply { $0 * 2}
-            b[1..., 2] *= 2
+            a[1... ~ 2].apply { $0 * 2}
+            b[1... ~ 2] *= 2
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
         // 2d not aligned
         do {
             let a = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)
             let b = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)
-            a[...][1..., 2].apply { $0 * 2}
-            b[...][1..., 2] *= 2
+            a[0..., 1... ~ 2].apply { $0 * 2}
+            b[0..., 1... ~ 2] *= 2
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
     }

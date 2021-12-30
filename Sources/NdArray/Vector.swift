@@ -88,7 +88,7 @@ public extension Vector where T == Double {
             // make a copy sort it and copy back if array is not contiguous
             let cpy = Vector(copy: self)
             vDSP_vsortD(cpy.data, n, sortOrder)
-            self[...] = cpy[...]
+            self[0...] = cpy[0...]
         }
     }
 
@@ -130,7 +130,7 @@ public extension Vector where T == Float {
             // make a copy sort it and copy back if array is not contiguous
             let cpy = Vector(copy: self)
             vDSP_vsort(cpy.data, n, sortOrder)
-            self[...] = cpy[...]
+            self[0...] = cpy[0...]
         }
     }
 

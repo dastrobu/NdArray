@@ -29,7 +29,7 @@ class copyTests: XCTestCase {
 
     func testInitCopyShouldCopyNonContiguousArray() {
         do {
-            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)[...][..., 2]
+            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)[0..., 0... ~ 2]
             let cpy = NdArray(copy: a)
             XCTAssert(cpy.ownsData)
             XCTAssertFalse(a.overlaps(cpy))
@@ -38,7 +38,7 @@ class copyTests: XCTestCase {
             XCTAssert(cpy.isCContiguous)
         }
         do {
-            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)[...][..., 2]
+            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)[0..., 0... ~ 2]
             let cpy = NdArray(copy: a)
             XCTAssert(cpy.ownsData)
             XCTAssertFalse(a.overlaps(cpy))
@@ -47,7 +47,7 @@ class copyTests: XCTestCase {
             XCTAssert(cpy.isCContiguous) // since the original array is not contiguous, the copy defaults to C
         }
         do {
-            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)[...][..., 2]
+            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .C)[0..., 0... ~ 2]
             let cpy = NdArray(copy: a, order: .F)
             XCTAssert(cpy.ownsData)
             XCTAssertFalse(a.overlaps(cpy))
@@ -56,7 +56,7 @@ class copyTests: XCTestCase {
             XCTAssert(cpy.isFContiguous)
         }
         do {
-            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)[...][..., 2]
+            let a = NdArray<Double>([[1, 2, 3], [4, 5, 6]], order: .F)[0..., 0... ~ 2]
             let cpy = NdArray(copy: a, order: .F)
             XCTAssert(cpy.ownsData)
             XCTAssertFalse(a.overlaps(cpy))
@@ -110,8 +110,8 @@ class copyTests: XCTestCase {
 
     func testCopyToShouldCopyToFContiguousArrayWhenSrcIsNotContiguousAndOutIsFContiguous() {
         let a = NdArray<Double>.range(to: 3 * 4).reshaped([3, 4], order: .F)
-        let a1 = a[...][..., 2]
-        let a2 = a[...][2...]
+        let a1 = a[0..., 0... ~ 2]
+        let a2 = a[0..., 2...]
         XCTAssertFalse(a1.isContiguous)
         XCTAssert(a2.isFContiguous)
         XCTAssert(a1.overlaps(a2))
