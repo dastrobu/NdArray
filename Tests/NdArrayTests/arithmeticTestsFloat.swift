@@ -29,7 +29,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             let b = a * 2
             XCTAssertEqual(NdArray(copy: a).dataArray, NdArray<Float>.range(from: 0, to: 6, by: 2).dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 * 2 }))
@@ -57,9 +57,9 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2]
             let b = a * 2
-            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2].dataArray)
+            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2].dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 * 2 }))
             XCTAssertEqual(a.shape, b.shape)
             XCTAssert(b.isCContiguous)
@@ -88,7 +88,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             let b = a / 2
             XCTAssertEqual(NdArray(copy: a).dataArray, NdArray<Float>.range(from: 0, to: 6, by: 2).dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 / 2 }))
@@ -116,9 +116,9 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2]
             let b = a / 2
-            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2].dataArray)
+            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2].dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 / 2 }))
             XCTAssertEqual(a.shape, b.shape)
             XCTAssert(b.isCContiguous)
@@ -147,7 +147,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             let b = a + 2
             XCTAssertEqual(NdArray(copy: a).dataArray, NdArray<Float>.range(from: 0, to: 6, by: 2).dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 + 2 }))
@@ -175,9 +175,9 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2]
             let b = a + 2
-            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2].dataArray)
+            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2].dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 + 2 }))
             XCTAssertEqual(a.shape, b.shape)
             XCTAssert(b.isCContiguous)
@@ -206,7 +206,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             let b = a - 2
             XCTAssertEqual(NdArray(copy: a).dataArray, NdArray<Float>.range(from: 0, to: 6, by: 2).dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 - 2 }))
@@ -234,9 +234,9 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2]
             let b = a - 2
-            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2].dataArray)
+            XCTAssertEqual(a.dataArray, NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2].dataArray)
             XCTAssertEqual(b.dataArray, NdArray(copy: a).dataArray.map({ $0 - 2 }))
             XCTAssertEqual(a.shape, b.shape)
             XCTAssert(b.isCContiguous)
@@ -265,7 +265,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] *= 2
+            a[0... ~ 2] *= 2
             XCTAssertEqual(a.dataArray, [0, 1, 4, 3, 8, 5])
         }
         // 2d C contiguous
@@ -283,7 +283,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] *= 2
+            a[0... ~ 2] *= 2
             XCTAssertEqual(a.dataArray, [0, 2, 4, 3, 4, 5, 12, 14, 16, 9, 10, 11])
         }
     }
@@ -310,7 +310,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] /= 2
+            a[0... ~ 2] /= 2
             XCTAssertEqual(a.dataArray, [0, 1, 1, 3, 2, 5])
         }
         // 2d C contiguous
@@ -328,7 +328,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] /= 2
+            a[0... ~ 2] /= 2
             XCTAssertEqual(a.dataArray, [0.0, 0.5, 1.0, 3.0, 4.0, 5.0, 3.0, 3.5, 4.0, 9.0, 10.0, 11.0])
         }
     }
@@ -355,7 +355,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] += 2
+            a[0... ~ 2] += 2
             XCTAssertEqual(a.dataArray, [2, 1, 4, 3, 6, 5])
         }
         // 2d C contiguous
@@ -373,7 +373,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] += 2
+            a[0... ~ 2] += 2
             XCTAssertEqual(a.dataArray, [2, 3, 4, 3, 4, 5, 8, 9, 10, 9, 10, 11])
         }
     }
@@ -400,7 +400,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] -= 2
+            a[0... ~ 2] -= 2
             XCTAssertEqual(a.dataArray, [-2, 1, 0, 3, 2, 5])
         }
         // 2d C contiguous
@@ -418,7 +418,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] -= 2
+            a[0... ~ 2] -= 2
             XCTAssertEqual(a.dataArray, [-2, -1, 0, 3, 4, 5, 4, 5, 6, 9, 10, 11])
         }
     }
@@ -441,7 +441,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             XCTAssertEqual(a.max()!, 4)
         }
         // 2d C contiguous
@@ -456,7 +456,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2]
             XCTAssertEqual(a.max()!, 8)
         }
     }
@@ -479,7 +479,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             XCTAssertEqual(a.min()!, 0)
         }
         // 2d C contiguous
@@ -494,7 +494,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[1..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
             XCTAssertEqual(a.min()!, 3)
         }
     }
@@ -517,7 +517,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(to: 6)[..., 2]
+            let a = NdArray<Float>.range(to: 6)[0... ~ 2]
             XCTAssertEqual(a.sum(), 6)
         }
         // 2d C contiguous
@@ -532,7 +532,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[1..., 2]
+            let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
             XCTAssertEqual(a.sum(), 42)
         }
     }
@@ -555,7 +555,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Float>.range(from: 1, to: 7)[..., 2]
+            let a = NdArray<Float>.range(from: 1, to: 7)[0... ~ 2]
             XCTAssertEqual(a.product(), 15)
         }
         // 2d C contiguous
@@ -570,7 +570,7 @@ class arithmeticTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Float>.range(from: 1, to: 4 * 3 + 1).reshaped([4, 3], order: .C)[1..., 2]
+            let a = NdArray<Float>.range(from: 1, to: 4 * 3 + 1).reshaped([4, 3], order: .C)[1... ~ 2]
             XCTAssertEqual(a.product(), 158400)
         }
     }
@@ -597,7 +597,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] += a[1..., 2]
+            a[0... ~ 2] += a[1... ~ 2]
             XCTAssertEqual(a.dataArray, [1, 1, 5, 3, 9, 5])
         }
         // 2d C contiguous
@@ -615,7 +615,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] += a[1..., 2]
+            a[0... ~ 2] += a[1... ~ 2]
             XCTAssertEqual(a.dataArray, [3, 5, 7, 3, 4, 5, 15, 17, 19, 9, 10, 11])
         }
 
@@ -643,7 +643,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2] -= a[1..., 2]
+            a[0... ~ 2] -= a[1... ~ 2]
             XCTAssertEqual(a.dataArray, [-1, 1, -1, 3, -1, 5])
         }
         // 2d C contiguous
@@ -661,7 +661,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2] -= a[1..., 2]
+            a[0... ~ 2] -= a[1... ~ 2]
             XCTAssertEqual(a.dataArray, [-3, -3, -3, 3, 4, 5, -3, -3, -3, 9, 10, 11])
         }
     }
@@ -688,7 +688,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            let b = a[..., 2] + a[1..., 2]
+            let b = a[0... ~ 2] + a[1... ~ 2]
             XCTAssertEqual(b.dataArray, [1, 5, 9])
         }
         // 2d C contiguous
@@ -706,7 +706,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            let b = a[..., 2] + a[1..., 2]
+            let b = a[0... ~ 2] + a[1... ~ 2]
             XCTAssertEqual(b.dataArray, [3, 5, 7, 15, 17, 19])
         }
     }
@@ -733,7 +733,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            let b = a[..., 2] - a[1..., 2]
+            let b = a[0... ~ 2] - a[1... ~ 2]
             XCTAssertEqual(b.dataArray, [-1, -1, -1])
         }
         // 2d C contiguous
@@ -751,7 +751,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            let b = a[..., 2] - a[1..., 2]
+            let b = a[0... ~ 2] - a[1... ~ 2]
             XCTAssertEqual(b.dataArray, [-3, -3, -3, -3, -3, -3])
         }
     }
@@ -779,8 +779,8 @@ class arithmeticTestsFloat: XCTestCase {
         do {
             let a = NdArray<Float>.range(to: 6)
             let b = NdArray<Float>.range(to: 6)
-            a[..., 2].add(3, a[1..., 2])
-            b[..., 2] = b[..., 2] + 3 * a[1..., 2]
+            a[0... ~ 2].add(3, a[1... ~ 2])
+            b[0... ~ 2] = b[0... ~ 2] + 3 * a[1... ~ 2]
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
         // 2d C contiguous
@@ -799,8 +799,8 @@ class arithmeticTestsFloat: XCTestCase {
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
             let b = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2].add(3, a[1..., 2])
-            b[..., 2] = b[..., 2] + 3 * a[1..., 2]
+            a[0... ~ 2].add(3, a[1... ~ 2])
+            b[0... ~ 2] = b[0... ~ 2] + 3 * a[1... ~ 2]
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
     }
@@ -828,8 +828,8 @@ class arithmeticTestsFloat: XCTestCase {
         do {
             let a = NdArray<Float>.range(to: 6)
             let b = NdArray<Float>.range(to: 6)
-            a[..., 2].add(3, a[1..., 2], 5)
-            b[..., 2] = 5 * b[..., 2] + 3 * a[1..., 2]
+            a[0... ~ 2].add(3, a[1... ~ 2], 5)
+            b[0... ~ 2] = 5 * b[0... ~ 2] + 3 * a[1... ~ 2]
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
         // 2d C contiguous
@@ -848,8 +848,8 @@ class arithmeticTestsFloat: XCTestCase {
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
             let b = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2].add(3, a[1..., 2], 5)
-            b[..., 2] = 5 * b[..., 2] + 3 * a[1..., 2]
+            a[0... ~ 2].add(3, a[1... ~ 2], 5)
+            b[0... ~ 2] = 5 * b[0... ~ 2] + 3 * a[1... ~ 2]
             XCTAssertEqual(a.dataArray, b.dataArray)
         }
     }
@@ -876,8 +876,8 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            let b = -a[..., 2]
-            XCTAssertEqual(b.dataArray, NdArray<Float>(copy: a[..., 2]).map({ -$0 }).dataArray)
+            let b = -a[0... ~ 2]
+            XCTAssertEqual(b.dataArray, NdArray<Float>(copy: a[0... ~ 2]).map({ -$0 }).dataArray)
         }
         // 2d C contiguous
         do {
@@ -894,8 +894,8 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            let b = -a[..., 2]
-            XCTAssertEqual(b.dataArray, NdArray<Float>(copy: a[..., 2]).map({ -$0 }).dataArray)
+            let b = -a[0... ~ 2]
+            XCTAssertEqual(b.dataArray, NdArray<Float>(copy: a[0... ~ 2]).map({ -$0 }).dataArray)
         }
     }
 
@@ -931,7 +931,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 1d not aligned
         do {
             let a = NdArray<Float>.range(to: 6)
-            a[..., 2].set(1)
+            a[0... ~ 2].set(1)
             XCTAssertEqual(a.dataArray, [1, 1, 1, 3, 1, 5])
         }
         // 2d C contiguous
@@ -949,7 +949,7 @@ class arithmeticTestsFloat: XCTestCase {
         // 2d not aligned
         do {
             let a = NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)
-            a[..., 2].set(1)
+            a[0... ~ 2].set(1)
             XCTAssertEqual(a.dataArray, [1, 1, 1, 3, 4, 5, 1, 1, 1, 9, 10, 11])
         }
     }

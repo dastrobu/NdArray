@@ -102,7 +102,7 @@ open class Matrix<T>: NdArray<T> {
                 Cannot transpose matrix with shape \(shape) to matrix with shape \(out.shape).
                 Precondition failed while trying to transpose \(debugDescription) to \(out.debugDescription).
                 """)
-            out[...][...] = self.transposed()[...][...]
+            out[0..., 0...] = self.transposed()[0..., 0...]
         }
     }
 }
@@ -167,11 +167,11 @@ public extension Matrix where T == Double {
             return B
         }
         // copy rhs to work space (thereby also making sure it is F contiguous)
-        B[...] = rhs[...]
+        B[0...] = rhs[0...]
 
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
         let A = Matrix<T>(empty: shape, order: .F)
-        A[...] = self[...]
+        A[0...] = self[0...]
         var nrhs = __CLPK_integer(B.shape[1])
         var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
         var lda: __CLPK_integer = __CLPK_integer(n)
@@ -202,7 +202,7 @@ public extension Matrix where T == Double {
             Precondition failed while trying to solve \(debugDescription).
             """)
         let A = out ?? Matrix(empty: shape, order: .F)
-        A[...] = self[...]
+        A[0...] = self[0...]
 
         var ipiv = try A.luFactor()
 
@@ -326,11 +326,11 @@ public extension Matrix where T == Float {
             return B
         }
         // copy rhs to work space (thereby also making sure it is F contiguous)
-        B[...] = rhs[...]
+        B[0...] = rhs[0...]
 
         // copy self to A, since it is modified (thereby also making sure it is F contiguous)
         let A = Matrix<T>(empty: shape, order: .F)
-        A[...] = self[...]
+        A[0...] = self[0...]
         var nrhs = __CLPK_integer(B.shape[1])
         var ipiv: [__CLPK_integer] = [__CLPK_integer].init(repeating: 0, count: Int(n))
         var lda: __CLPK_integer = __CLPK_integer(n)
@@ -361,7 +361,7 @@ public extension Matrix where T == Float {
             Precondition failed while trying to solve \(debugDescription).
             """)
         let A = out ?? Matrix(empty: shape, order: .F)
-        A[...] = self[...]
+        A[0...] = self[0...]
 
         var ipiv = try A.luFactor()
 

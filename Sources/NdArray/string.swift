@@ -30,7 +30,7 @@ fileprivate extension NdArray {
             let depthSeperator: String = String(repeating: separator, count: ndim - 1)
             let a = NdArray(self)
             for i in 0..<shape[0] {
-                s += a[i].string(separator: separator, indent: indent, depth: depth + 1, formatter: formatter)
+                s += a[Slice(i)].string(separator: separator, indent: indent, depth: depth + 1, formatter: formatter)
                 s += ","
                 s += depthSeperator
                 s += String(repeating: " ", count: indent * (depth + 1))

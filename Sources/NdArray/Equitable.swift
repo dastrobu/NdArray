@@ -50,7 +50,7 @@ extension NdArray: Equatable where T: Equatable {
                 // make sure the array is not sliced
                 let a = NdArray(lhs)
                 let b = NdArray(rhs)
-                for i in 0..<a.shape[0] where a[i] != b[i] {
+                for i in 0..<a.shape[0] where a[[Slice(i)]] != b[[Slice(i)]] {
                     return false
                 }
             }
