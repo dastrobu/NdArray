@@ -10,12 +10,11 @@ jobs:
       - uses: norio-nomura/action-swiftlint@3.2.1
         with:
           args: --strict
-  test:
+  macOS-test:
     strategy:
       matrix:
         swift-version:
           - "5.5"
-          - "5.4"
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,3 +22,18 @@ jobs:
         with:
           swift-version: ${{ matrix.swift-version }}
       - run: swift test
+  iOS-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: xcodebuild -scheme NdArray -destination 'platform=iOS Simulator,name=iPhone 13'
+  tvOS-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: xcodebuild -scheme NdArray -destination 'platform=tvOS Simulator,name=Apple TV'
+  whatchOS-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: xcodebuild -scheme NdArray -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm'
