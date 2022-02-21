@@ -13,34 +13,35 @@ features to enable fast and simple handling of multidimensional numeric data.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Installation](#installation)
-  - [Swift Package Manager](#swift-package-manager)
+    - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
-  - [Slices and the Stride Operator `~`](#slices-and-the-stride-operator-)
-  - [Single Slice](#single-slice)
-  - [`UnboundedRange` Slices](#unboundedrange-slices)
-  - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
-  - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+    - [Slices and the Stride Operator `~`](#slices-and-the-stride-operator-)
+    - [Single Slice](#single-slice)
+    - [`UnboundedRange` Slices](#unboundedrange-slices)
+    - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
+    - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
 - [Elementwise Operations](#elementwise-operations)
-  - [Scalars](#scalars)
-  - [Basic Functions](#basic-functions)
+    - [Scalars](#scalars)
+    - [Basic Functions](#basic-functions)
 - [Linear Algebra Operations for `Double` and `Float` `NdArray`s.](#linear-algebra-operations-for-double-and-float-ndarrays)
-  - [Matrix Vector Multiplication](#matrix-vector-multiplication)
-  - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
-  - [Matrix Inversion](#matrix-inversion)
-  - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
+    - [Matrix Vector Multiplication](#matrix-vector-multiplication)
+    - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+    - [Matrix Inversion](#matrix-inversion)
+    - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Type Concept](#type-concept)
-  - [Subtypes](#subtypes)
+    - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
 - [API Changes](#api-changes)
-  - [TLDR](#tldr)
-  - [Removal of `NdArraySlice`](#removal-of-ndarrayslice)
+    - [TLDR](#tldr)
+    - [Removal of `NdArraySlice`](#removal-of-ndarrayslice)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
 - [Docs](#docs)
@@ -87,11 +88,11 @@ Like NumPy's ndarray, slices and strides can be created.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-let b = NdArray(a[0... ~ 2]) // every second element
+let b = NdArray(a[[0... ~ 2]]) // every second element
 print(a) // [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 print(b) // [0.0, 2.0, 4.0, 6.0, 8.0]
 print(b.strides) // [2]
-b[0...].set(0)
+b[[0...]].set(0)
 print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
 print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
 ``` 
@@ -106,24 +107,24 @@ NumPy's syntax.
 
 ```
 NdArray        NumPy
-a[0...]        a[::]
-a[0... ~ 2]    a[::2]
-a[..<42 ~ 2]   a[:42:2]
-a[3..<42 ~ 2]  a[3:42:2]
-a[3...42 ~ 2]  a[3:41:2]
+a[[0...]]        a[::]
+a[[0... ~ 2]]    a[::2]
+a[[..<42 ~ 2]]   a[:42:2]
+a[[3..<42 ~ 2]]  a[3:42:2]
+a[[3...42 ~ 2]]  a[3:41:2]
 ```
 
 Alternatively, slice objects can be created programmatically. The following notations are equivalent:
 
 ```
- a[0...] ≡ a[Slice()]
- a[1...] ≡ a[Slice(lowerBound: 1)]
- a[..<42] ≡ a[Slice(upperBound: 42)]
- a[...42] ≡ a[Slice(upperBound: 43)]
- a[1..<42] ≡ a[Slice(lowerBound: 1, upperBound: 42)]
- a[1... ~ 2] ≡ a[Slice(lowerBound: 1, upperBound, stride: 2)]
- a[..<42 ~ 3] ≡ a[Slice(upperBound: 42, stride: 3)]
- a[1..<42 ~ 3] ≡ a[Slice(lowerBound: 1, upperBound: 42, stride: 3)]
+ a[[0...]] ≡ a[Slice()]
+ a[[1...]] ≡ a[Slice(lowerBound: 1)]]
+ a[[..<42]] ≡ a[Slice(upperBound: 42)]]
+ a[[...42]] ≡ a[Slice(upperBound: 43)]]
+ a[[1..<42]] ≡ a[Slice(lowerBound: 1, upperBound: 42)]]
+ a[[1... ~ 2]] ≡ a[Slice(lowerBound: 1, upperBound, stride: 2)]]
+ a[[..<42 ~ 3]] ≡ a[Slice(upperBound: 42, stride: 3)]]
+ a[[1..<42 ~ 3]] ≡ a[Slice(lowerBound: 1, upperBound: 42, stride: 3)]]
 ```
 
 Note, to avoid confusion with pure indexing, integer literals need to be converted to a slice explicitly. This means
@@ -146,11 +147,11 @@ let a = NdArray<Double>.ones([2, 2])
 print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
-a[Slice(1)].set(0.0)
+a[[Slice(1)]].set(0.0)
 print(a)
 // [[1.0, 1.0],
 //  [0.0, 0.0]]
-a[0..., Slice(1)].set(2.0)
+a[[0..., Slice(1)]].set(2.0)
 print(a)
 // [[1.0, 2.0],
 //  [0.0, 2.0]]
@@ -161,7 +162,7 @@ use [element indexing](#element-manipulation) instead or use the `Vector` subtyp
 
 ```swift
 let a = NdArray<Double>.range(to: 4)
-print(a[Slice(0)]) // [0.0]
+print(a[[Slice(0)]]) // [0.0]
 print(a[[0]]) // 0.0
 let v = Vector(a)
 print(v[0] as Double) // 0.0
@@ -177,7 +178,7 @@ let a = NdArray<Double>.ones([2, 2])
 print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
-a[0..., Slice(1)].set(0.0)
+a[[0..., Slice(1)]].set(0.0)
 print(a)
 // [[1.0, 0.0],
 //  [1.0, 0.0]]
@@ -193,7 +194,7 @@ print(a)
 //  [4.0, 5.0],
 //  [6.0, 7.0],
 //  [8.0, 9.0]]
-a[0... ~ 2].set(0.0)
+a[[0... ~ 2]].set(0.0)
 print(a)
 // [[0.0, 0.0],
 //  [2.0, 3.0],
@@ -212,9 +213,9 @@ Ranges `n..<m` and closed ranges `n...m` allow selecting certain sub arrays.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-print(a[2..<4]) // [2.0, 3.0]
-print(a[2...4]) // [2.0, 3.0, 4.0]
-print(a[2...4 ~ 2]) // [2.0, 4.0]
+print(a[[2..<4]]) // [2.0, 3.0]
+print(a[[2...4]]) // [2.0, 3.0, 4.0]
+print(a[[2...4 ~ 2]]) // [2.0, 4.0]
 ``` 
 
 ### `PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices
@@ -223,16 +224,16 @@ Partial ranges `...<m`, `...m` and `n...` define only one bound.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
-print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
-print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
-print(a[4..., 2]) // [4.0, 6.0, 8.0]
+print(a[[..<4]]) // [0.0, 1.0, 2.0, 3.0]
+print(a[[...4]]) // [0.0, 1.0, 2.0, 3.0, 4.0]
+print(a[[4...]]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+print(a[[4... ~ 2]]) // [4.0, 6.0, 8.0]
 ``` 
 
 ## Element Manipulation
 
 Individual elements can be indexed by passing a (Swift) array as index. In the future, there may be varargs support on
-subscript to be able to pass indices directly.
+subscript to be able to pass indices directly [#44](https://github.com/dastrobu/NdArray/issues/44).
 
 ```swift
 let a = NdArray<Double>.range(to: 12).reshaped([2, 2, 3])
@@ -266,7 +267,7 @@ Scaling every second element in a matrix by its row index could be done in the f
 ```swift
 let a = NdArray<Double>.ones([4, 3])
 for i in 0..<a.shape[0] {
-    a[Slice(i), 0... ~ 2] *= Double(i)
+    a[[Slice(i), 0... ~ 2]] *= Double(i)
 }
 print(a)
 // [[0.0, 1.0, 0.0],
@@ -471,8 +472,8 @@ When creating a new array from an existing one, no copy is made unless necessary
 let A = NdArray<Double>.ones(5)
 var B = NdArray(A) // no copy
 B = NdArray(copy: A) // copy explicitly required
-B = NdArray(A[0... ~ 2]) // no copy, but B will not be contiguous
-B = NdArray(A[0... ~ 2], order: .C) // copy, because otherwise new array will not have C ordering
+B = NdArray(A[[0... ~ 2]]) // no copy, but B will not be contiguous
+B = NdArray(A[[0... ~ 2]], order: .C) // copy, because otherwise new array will not have C ordering
 ```
 
 ### Subtypes
@@ -509,13 +510,16 @@ The functions of these libraries are provided by the
 
 ### TLDR
 
-To migrate from `<=0.3.0` to `0.4.0` you should upgrade to 0.4.0 and fix all compile warnings. Here are a few rules of
-thumb:
+To migrate from `<=0.3.0` to `0.4.0` upgrade to `0.4.0` first and fix all compile warnings. Do not skip `0.4.0`, since
+this can result in undesired behaviour (`a[0..., 2]` will be interpreted as "take slice along zeroth and first
+dimension" from `0.5.0` instead of "take slice along zeroth dimension with stride 2" `<=0.3.0`).
+
+Here are a few rules of thumb to fix compile warnings after upgrading to `0.4.0`:
 
 ```
-a[...] => a[0...] // UnboundedRange is now expresed by 0...
-a[..., 2] => a[0... ~ 2] // strides are now expressed by the stride operator ~
-a[...][3] => a[0..., Slice(3)] // multi dimensional slices are now created within one subscript call [] not many [][][]
+a[...] => a[[0...]] // UnboundedRange is now expresed by 0...
+a[..., 2] => a[[0... ~ 2]] // strides are now expressed by the stride operator ~
+a[...][3] => a[[0..., Slice(3)]] // multi dimensional slices are now created within one subscript call [] not many [][][]
 ```
 
 ### Removal of `NdArraySlice`
@@ -556,10 +560,10 @@ object, slices are obtained by
 
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
-var B = A[0...] // NdArray with sliced = 1, i.e. one dimension has been sliced
-B = A[0..., 0... ~ 2] // NdArray with sliced = 2, i.e. one dimension has been sliced
-B = A[0..., 0... ~ 2, ..<1] // NdArray with sliced = 3, i.e. one dimension has been sliced
-B = A[0..., 0... ~ 2, ..<1, 0...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
+var B = A[[0...]] // NdArray with sliced = 1, i.e. one dimension has been sliced
+B = A[[0..., 0... ~ 2]] // NdArray with sliced = 2, i.e. one dimension has been sliced
+B = A[[0..., 0... ~ 2, ..<1]] // NdArray with sliced = 3, i.e. one dimension has been sliced
+B = A[[0..., 0... ~ 2, ..<1, 0...]] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
 ```
 
 With this API, there is no subtypes returned when slicing, requiring to remember how many times the array was already

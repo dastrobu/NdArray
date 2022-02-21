@@ -446,18 +446,6 @@ open class NdArray<T>: CustomDebugStringConvertible,
             newValue.copyTo(self[slices])
         }
     }
-
-    /**
-     slice access
-     */
-    public subscript(slices: Slice...) -> NdArray<T> {
-        get {
-            self[slices]
-        }
-        set {
-            self[slices] = newValue
-        }
-    }
 }
 
 // extension helping to handle different memory alignments

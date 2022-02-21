@@ -28,7 +28,7 @@ class VectorSequenceTests: XCTestCase {
     }
 
     func testIteratorShouldIterateWhenArrayIsNotContiguous() {
-        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[0... ~ 2])
+        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[[0... ~ 2]])
         var v: [Int] = []
         for ai in a {
             v.append(ai)
@@ -49,7 +49,7 @@ class VectorSequenceTests: XCTestCase {
     }
 
     func testUnderestimatedCountShouldBeShape0WhenNotContiguous() {
-        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[0... ~ 2])
+        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[[0... ~ 2]])
         XCTAssertEqual(a.underestimatedCount, a.shape[0])
         XCTAssertEqual(a.underestimatedCount, 3)
         XCTAssertFalse(a.isContiguous)
@@ -67,7 +67,7 @@ class VectorSequenceTests: XCTestCase {
     }
 
     func testWithContiguousStorageIfAvailableShouldNotCallBodyWhenNotContiguous() {
-        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[0... ~ 2])
+        let a = Vector(Vector<Int>([1, 1, 2, 2, 3, 3])[[0... ~ 2]])
         XCTAssertFalse(a.isContiguous)
         let r: Int? = a.withContiguousStorageIfAvailable { _ in
             // should not be called for non contiguous array

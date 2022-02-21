@@ -43,7 +43,7 @@ class VectorTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
             a.sort(order: .descending)
             XCTAssertEqual(a.dataArray, [4, 1, 2, 3, 0, 5])
             a.sort(order: .ascending)
@@ -66,7 +66,7 @@ class VectorTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
             a.reverse()
             XCTAssertEqual(a.dataArray, [4, 1, 2, 3, 0, 5])
         }
@@ -85,7 +85,7 @@ class VectorTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
             XCTAssertEqual(a.norm2(), 4.47213595499958, accuracy: 1e-15)
         }
     }
@@ -103,13 +103,13 @@ class VectorTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
             XCTAssertEqual(a.dot(a), 20)
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
-            let b = Vector<Double>(Vector<Double>.range(to: 6)[1... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
+            let b = Vector<Double>(Vector<Double>.range(to: 6)[[1... ~ 2]])
             XCTAssertEqual(a.dot(b), 26)
         }
     }
@@ -127,13 +127,13 @@ class VectorTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
             XCTAssertEqual(a.dot(a), a * a)
         }
         // 1d not aligned
         do {
-            let a = Vector<Double>(Vector<Double>.range(to: 6)[0... ~ 2])
-            let b = Vector<Double>(Vector<Double>.range(to: 6)[1... ~ 2])
+            let a = Vector<Double>(Vector<Double>.range(to: 6)[[0... ~ 2]])
+            let b = Vector<Double>(Vector<Double>.range(to: 6)[[1... ~ 2]])
             XCTAssertEqual(a.dot(b), b * a)
         }
     }
