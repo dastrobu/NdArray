@@ -46,7 +46,7 @@ public extension NdArray {
                 let dst = NdArray(out) // make a NdArray view to get rid of sliced when doing subscripts
                 let src = NdArray(self)
                 for i in 0..<shape[0] {
-                    dst[Slice(i)] = src[Slice(i)]
+                    dst[[Slice(i)]] = src[[Slice(i)]]
                 }
             }
         }

@@ -25,7 +25,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: -3, to: 3)[0... ~ 2]
+            let a = NdArray<Double>.range(from: -3, to: 3)[[0... ~ 2]]
             XCTAssertEqual(abs(a).dataArray, [3, 1, 1])
         }
         // 2d C contiguous
@@ -40,7 +40,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: -5, to: 4 * 3 - 5).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(abs(a).dataArray, [2, 1, 0, 4, 5, 6])
         }
     }
@@ -62,7 +62,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(acos(a).dataArray, NdArray(a, order: .C).dataArray.map(acos))
         }
         // 2d C contiguous
@@ -77,7 +77,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(acos(a).dataArray, NdArray(a, order: .C).dataArray.map(acos))
         }
     }
@@ -99,7 +99,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(asin(a).dataArray, NdArray(a, order: .C).dataArray.map(asin))
         }
         // 2d C contiguous
@@ -114,7 +114,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(asin(a).dataArray, NdArray(a, order: .C).dataArray.map(asin))
         }
     }
@@ -136,7 +136,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(atan(a).dataArray, NdArray(a, order: .C).dataArray.map(atan))
         }
         // 2d C contiguous
@@ -151,7 +151,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(atan(a).dataArray, NdArray(a, order: .C).dataArray.map(atan))
         }
     }
@@ -173,7 +173,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(cos(a).dataArray, NdArray(a, order: .C).dataArray.map(cos))
         }
         // 2d C contiguous
@@ -188,7 +188,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(cos(a).dataArray, NdArray(a, order: .C).dataArray.map(cos))
         }
     }
@@ -210,7 +210,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(sin(a).dataArray, NdArray(a, order: .C).dataArray.map(sin))
         }
         // 2d C contiguous
@@ -225,7 +225,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(sin(a).dataArray, NdArray(a, order: .C).dataArray.map(sin))
         }
     }
@@ -247,7 +247,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(tan(a).dataArray, NdArray(a, order: .C).dataArray.map(tan))
         }
         // 2d C contiguous
@@ -262,7 +262,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(tan(a).dataArray, NdArray(a, order: .C).dataArray.map(tan))
         }
     }
@@ -284,7 +284,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(cosh(a).dataArray, NdArray(a, order: .C).dataArray.map(cosh))
         }
         // 2d C contiguous
@@ -299,7 +299,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(cosh(a).dataArray, NdArray(a, order: .C).dataArray.map(cosh))
         }
     }
@@ -321,7 +321,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(sinh(a).dataArray, NdArray(a, order: .C).dataArray.map(sinh))
         }
         // 2d C contiguous
@@ -336,7 +336,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(sinh(a).dataArray, NdArray(a, order: .C).dataArray.map(sinh))
         }
     }
@@ -358,7 +358,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[0... ~ 2]
+            let a = (NdArray<Double>.range(from: 1, to: 7) / 10)[[0... ~ 2]]
             XCTAssertEqual(tanh(a).dataArray, NdArray(a, order: .C).dataArray.map(tanh))
         }
         // 2d C contiguous
@@ -373,7 +373,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[1... ~ 2]
+            let a = (NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C) / 100)[[1... ~ 2]]
             XCTAssertEqual(tanh(a).dataArray, NdArray(a, order: .C).dataArray.map(tanh))
         }
     }
@@ -395,7 +395,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: 1, to: 7)[0... ~ 2]
+            let a = NdArray<Double>.range(from: 1, to: 7)[[0... ~ 2]]
             XCTAssertEqual(log(a).dataArray, NdArray(a, order: .C).dataArray.map(log))
         }
         // 2d C contiguous
@@ -410,7 +410,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(log(a).dataArray, NdArray(a, order: .C).dataArray.map(log))
         }
     }
@@ -432,7 +432,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: 1, to: 7)[0... ~ 2]
+            let a = NdArray<Double>.range(from: 1, to: 7)[[0... ~ 2]]
             XCTAssertEqual(log10(a).dataArray, NdArray(a, order: .C).dataArray.map(log10))
         }
         // 2d C contiguous
@@ -447,7 +447,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(log10(a).dataArray, NdArray(a, order: .C).dataArray.map(log10))
         }
     }
@@ -469,7 +469,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: 1, to: 7)[0... ~ 2]
+            let a = NdArray<Double>.range(from: 1, to: 7)[[0... ~ 2]]
             XCTAssertEqual(log1p(a).dataArray, NdArray(a, order: .C).dataArray.map(log1p))
         }
         // 2d C contiguous
@@ -484,7 +484,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(log1p(a).dataArray, NdArray(a, order: .C).dataArray.map(log1p))
         }
     }
@@ -506,7 +506,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: 1, to: 7)[0... ~ 2]
+            let a = NdArray<Double>.range(from: 1, to: 7)[[0... ~ 2]]
             XCTAssertEqual(log2(a).dataArray, NdArray(a, order: .C).dataArray.map(log2))
         }
         // 2d C contiguous
@@ -521,7 +521,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(log2(a).dataArray, NdArray(a, order: .C).dataArray.map(log2))
         }
     }
@@ -543,7 +543,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 1d not aligned
         do {
-            let a = NdArray<Double>.range(from: 1, to: 7)[0... ~ 2]
+            let a = NdArray<Double>.range(from: 1, to: 7)[[0... ~ 2]]
             XCTAssertEqual(logb(a).dataArray, NdArray(a, order: .C).dataArray.map(logb))
         }
         // 2d C contiguous
@@ -558,7 +558,7 @@ class basic_functionsTestsDouble: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[1... ~ 2]
+            let a = NdArray<Double>.range(from: 0, to: 4 * 3).reshaped([4, 3], order: .C)[[1... ~ 2]]
             XCTAssertEqual(logb(a).dataArray, NdArray(a, order: .C).dataArray.map(logb))
         }
     }

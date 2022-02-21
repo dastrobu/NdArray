@@ -27,7 +27,7 @@ public extension NdArray {
                 // make sure the array is not sliced
                 let a = NdArray(self)
                 for i in 0..<shape[0] {
-                    try fSlice(a[Slice(i)])
+                    try fSlice(a[[Slice(i)]])
                 }
             }
         }
@@ -59,7 +59,7 @@ public extension NdArray {
                 let a = NdArray(self)
                 let b = NdArray(other)
                 for i in 0..<shape[0] {
-                    try fSlice(a[Slice(i)], b[Slice(i)])
+                    try fSlice(a[[Slice(i)]], b[[Slice(i)]])
                 }
             }
         }

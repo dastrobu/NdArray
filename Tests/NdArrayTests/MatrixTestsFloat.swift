@@ -53,7 +53,7 @@ class MatrixTestsFloat: XCTestCase {
         }
         // 2d not aligned
         do {
-            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2])
+            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[[0... ~ 2]])
             XCTAssertEqual(a.shape, [2, 3])
             XCTAssertEqual(a.transposed().shape, [3, 2])
             XCTAssertEqual(a.strides, [6, 1])
@@ -108,7 +108,7 @@ class MatrixTestsFloat: XCTestCase {
         }
         // 2d not aligned -> C contiguous
         do {
-            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2])
+            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[[0... ~ 2]])
             XCTAssertEqual(a.shape, [2, 3])
             XCTAssertEqual(a.transposed().shape, [3, 2])
             XCTAssertEqual(a.strides, [6, 1])
@@ -117,7 +117,7 @@ class MatrixTestsFloat: XCTestCase {
         }
         // 2d not aligned -> F contiguous
         do {
-            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2])
+            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[[0... ~ 2]])
             XCTAssertEqual(a.shape, [2, 3])
             XCTAssertEqual(a.transposed().shape, [3, 2])
             XCTAssertEqual(a.strides, [6, 1])
@@ -126,7 +126,7 @@ class MatrixTestsFloat: XCTestCase {
         }
         // 2d not aligned -> not aligned
         do {
-            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[0... ~ 2])
+            let a = Matrix(NdArray<Float>.range(to: 4 * 3).reshaped([4, 3], order: .C)[[0... ~ 2]])
             XCTAssertEqual(a.shape, [2, 3])
             XCTAssertEqual(a.transposed().shape, [3, 2])
             XCTAssertEqual(a.strides, [6, 1])
@@ -180,7 +180,7 @@ class MatrixTestsFloat: XCTestCase {
         }
         // not aligned
         do {
-            let A = Matrix(NdArray<Float>.range(to: 4 * 2).reshaped([4, 2], order: .C)[0... ~ 2])
+            let A = Matrix(NdArray<Float>.range(to: 4 * 2).reshaped([4, 2], order: .C)[[0... ~ 2]])
             let b = Vector(NdArray<Float>.ones([2]))
             let x1 = try A.solve(b)
 
@@ -193,8 +193,8 @@ class MatrixTestsFloat: XCTestCase {
         do {
             let A = Matrix(NdArray<Float>.range(from: 1, to: 5).reshaped([2, 2], order: .C))
             let B = Matrix(NdArray<Float>.ones([2, 3]), order: .F)
-            B[0..., Slice(1)].set(2.0)
-            B[0..., Slice(2)].set(3.0)
+            B[[0..., Slice(1)]].set(2.0)
+            B[[0..., Slice(2)]].set(3.0)
             let X1 = try A.solve(B)
 
             let Ai = try A.inverted()
@@ -205,8 +205,8 @@ class MatrixTestsFloat: XCTestCase {
         do {
             let A = Matrix(NdArray<Float>.range(from: 1, to: 5).reshaped([2, 2], order: .C))
             let B = Matrix(NdArray<Float>.ones([2, 3]), order: .F)
-            B[0..., Slice(1)].set(2.0)
-            B[0..., Slice(2)].set(3.0)
+            B[[0..., Slice(1)]].set(2.0)
+            B[[0..., Slice(2)]].set(3.0)
             let X1 = try A.solve(B)
 
             let Ai = try A.inverted()
@@ -216,8 +216,8 @@ class MatrixTestsFloat: XCTestCase {
         // multiple rhs not aligned
         do {
             let A = Matrix(NdArray<Float>.range(from: 1, to: 5).reshaped([2, 2], order: .C))
-            let B = Matrix(Matrix(NdArray<Float>.ones([2, 3]), order: .F)[0..., 0... ~ 2])
-            B[0..., Slice(1)].set(2.0)
+            let B = Matrix(Matrix(NdArray<Float>.ones([2, 3]), order: .F)[[0..., 0... ~ 2]])
+            B[[0..., Slice(1)]].set(2.0)
             let X1 = try A.solve(B)
 
             let Ai = try A.inverted()
@@ -228,8 +228,8 @@ class MatrixTestsFloat: XCTestCase {
         do {
             let A = Matrix(NdArray<Float>.range(from: 1, to: 5).reshaped([2, 2], order: .C))
             let B = Matrix(NdArray<Float>.ones([2, 3]), order: .F)
-            B[0..., Slice(1)].set(2.0)
-            B[0..., Slice(2)].set(3.0)
+            B[[0..., Slice(1)]].set(2.0)
+            B[[0..., Slice(2)]].set(3.0)
             let X1 = Matrix<Float>(empty: B.shape, order: .F)
             try A.solve(B, out: X1)
 
