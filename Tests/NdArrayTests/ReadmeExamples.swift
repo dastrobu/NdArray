@@ -152,6 +152,12 @@ class ReadmeExamples: XCTestCase {
             // [[2.0, 2.0],
             //  [2.0, 2.0]]
         }
+        do{
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            print(A.transposed())
+            // [[0.0,  2.0],
+            //  [1.0,  3.0]]
+        }
         do {
             let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
             print(try A.inverted())
