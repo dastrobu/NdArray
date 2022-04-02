@@ -32,6 +32,7 @@ features to enable fast and simple handling of multidimensional numeric data.
 - [Linear Algebra Operations for `Double` and `Float` `NdArray`s.](#linear-algebra-operations-for-double-and-float-ndarrays)
   - [Matrix Vector Multiplication](#matrix-vector-multiplication)
   - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+  - [Matrix Transpose](#matrix-transpose)
   - [Matrix Inversion](#matrix-inversion)
   - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
