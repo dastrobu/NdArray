@@ -32,6 +32,7 @@ features to enable fast and simple handling of multidimensional numeric data.
 - [Linear Algebra Operations for `Double` and `Float` `NdArray`s.](#linear-algebra-operations-for-double-and-float-ndarrays)
   - [Matrix Vector Multiplication](#matrix-vector-multiplication)
   - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+  - [Matrix Transpose](#matrix-transpose)
   - [Matrix Inversion](#matrix-inversion)
   - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
@@ -409,6 +410,15 @@ let x = Matrix<Double>.ones([2, 2])
 print(A * x)
 // [[2.0, 2.0],
 //  [2.0, 2.0]]
+```
+
+### Matrix Transpose
+
+```swift
+let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+print(A.transposed())
+// [[0.0,  2.0],
+//  [1.0,  3.0]]
 ```
 
 ### Matrix Inversion
