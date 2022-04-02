@@ -14,6 +14,7 @@ class ReadmeExamples: XCTestCase {
         print(a.ownsData) // true
         print(b.ownsData) // false
     }
+
     func testSlices() {
         let a = NdArray<Double>.range(to: 10)
         let b = NdArray(a[[0... ~ 2]]) // every second element
@@ -24,6 +25,7 @@ class ReadmeExamples: XCTestCase {
         print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
         print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
     }
+
     func testSingleSlice() {
         do {
             let a = NdArray<Double>.ones([2, 2])
@@ -48,6 +50,7 @@ class ReadmeExamples: XCTestCase {
             print(v[[0]]) // 0.0
         }
     }
+
     func testUnboundRange() {
         do {
             let a = NdArray<Double>.ones([2, 2])
@@ -76,12 +79,14 @@ class ReadmeExamples: XCTestCase {
             // [0.0, 0.0]]
         }
     }
+
     func testRangeAndClosedRange() {
         let a = NdArray<Double>.range(to: 10)
         print(a[[2..<4]]) // [2.0, 3.0]
         print(a[[2...4]]) // [2.0, 3.0, 4.0]
         print(a[[2...4 ~ 2]]) // [2.0, 4.0]
     }
+
     func testPartialRanges() {
         let a = NdArray<Double>.range(to: 10)
         print(a[[..<4]]) // [0.0, 1.0, 2.0, 3.0]
@@ -89,6 +94,7 @@ class ReadmeExamples: XCTestCase {
         print(a[[4...]]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
         print(a[[4... ~ 2]]) // [4.0, 6.0, 8.0]
     }
+
     func testScalars() {
         let a = NdArray<Double>.ones([2, 2])
         a *= 2
@@ -103,6 +109,7 @@ class ReadmeExamples: XCTestCase {
         b = a - 2
         _ = b
     }
+
     func testBasicFunctions() {
         do {
             let a = NdArray<Double>.ones([2, 2])
@@ -139,6 +146,7 @@ class ReadmeExamples: XCTestCase {
             print(abs(a)) // [2, 1, 0, 1]
         }
     }
+
     func testLinearAlgebra() throws {
         do {
             let A = Matrix<Double>.ones([2, 2])
@@ -152,7 +160,13 @@ class ReadmeExamples: XCTestCase {
             // [[2.0, 2.0],
             //  [2.0, 2.0]]
         }
-        do{
+        do {
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            print(A.transposed())
+            // [[0.0,  2.0],
+            //  [1.0,  3.0]]
+        }
+        do {
             let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
             print(A.transposed())
             // [[0.0,  2.0],
@@ -177,6 +191,7 @@ class ReadmeExamples: XCTestCase {
             //  [ 1.0,  1.0]]
         }
     }
+
     func testReshape() {
         let a = NdArray<Double>.range(to: 12)
         print(a.reshaped([2, 6]))
@@ -201,6 +216,7 @@ class ReadmeExamples: XCTestCase {
         //  [[ 6.0,  7.0,  8.0],
         //   [ 9.0, 10.0, 11.0]]]
     }
+
     func testPrettyPrinting() {
         print(NdArray<Double>.ones([2, 3, 4]))
         // [[[1.0, 1.0, 1.0, 1.0],
@@ -217,6 +233,7 @@ class ReadmeExamples: XCTestCase {
         // [[0.0, 0.0],
         //  [0.0, 0.0]]
     }
+
     func testTypes() {
         do {
             let A = NdArray<Double>.ones(5)
@@ -264,6 +281,7 @@ class ReadmeExamples: XCTestCase {
             _ = Ax
         }
     }
+
     func testElementIndexing() {
         do {
             let a = NdArray<Double>.ones(4).reshaped([2, 2])
