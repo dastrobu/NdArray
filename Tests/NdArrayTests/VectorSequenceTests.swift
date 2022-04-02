@@ -59,7 +59,8 @@ class VectorSequenceTests: XCTestCase {
         let a = Vector<Int>([1, 2, 3])
         XCTAssertTrue(a.isContiguous)
         let r: Int? = a.withContiguousStorageIfAvailable {
-            XCTAssertEqual($0.baseAddress!, a.data)
+            XCTAssertEqual($0.baseAddress!, a.data.baseAddress!)
+            XCTAssertEqual($0.count, a.data.count)
             XCTAssertEqual($0.count, a.shape[0])
             return 42
         }

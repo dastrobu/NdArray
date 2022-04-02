@@ -18,9 +18,9 @@ public func abs<K: SignedNumeric, T: NdArray<K>>(_ a: T) -> T where K: Comparabl
 /// see ``vDSP_vabsD``.
 public func abs<T: NdArray<Double>>(_ a: T, out b: T) {
     a.apply1d(other: b, f1d: { _ in
-        vDSP_vabsD(a.data, a.strides[0], b.data, b.strides[0], vDSP_Length(a.shape[0]))
+        vDSP_vabsD(a.dataStart, a.strides[0], b.dataStart, b.strides[0], vDSP_Length(a.shape[0]))
     }, fContiguous: { n in
-        vDSP_vabsD(a.data, 1, b.data, 1, vDSP_Length(n))
+        vDSP_vabsD(a.dataStart, 1, b.dataStart, 1, vDSP_Length(n))
     }, fSlice: { ai, bi in
         abs(ai, out: bi)
     })
@@ -149,9 +149,9 @@ public func logb<T: NdArray<Double>>(_ a: T) -> T {
 /// see ``vDSP_vabsD``.
 public func abs<T: NdArray<Float>>(_ a: T, out b: T) {
     a.apply1d(other: b, f1d: { _ in
-        vDSP_vabs(a.data, a.strides[0], b.data, b.strides[0], vDSP_Length(a.shape[0]))
+        vDSP_vabs(a.dataStart, a.strides[0], b.dataStart, b.strides[0], vDSP_Length(a.shape[0]))
     }, fContiguous: { n in
-        vDSP_vabs(a.data, 1, b.data, 1, vDSP_Length(n))
+        vDSP_vabs(a.dataStart, 1, b.dataStart, 1, vDSP_Length(n))
     }, fSlice: { ai, bi in
         abs(ai, out: bi)
     })

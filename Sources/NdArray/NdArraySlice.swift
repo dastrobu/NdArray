@@ -28,7 +28,7 @@ internal class NdArraySlice<T>: NdArray<T> {
         super.init(a)
 
         let start = a.flatIndex(startIndex)
-        data = a.data + start
+        dataStart = a.dataStart + start
         count = a.len
     }
 
@@ -318,7 +318,7 @@ internal class NdArraySlice<T>: NdArray<T> {
     }
 
     public override var debugDescription: String {
-        let address = String(format: "%p", Int(bitPattern: data))
+        let address = String(format: "%p", Int(bitPattern: dataStart))
         var sliceDescription = sliceDescription.joined()
         if sliceDescription == "" {
             sliceDescription = "-"

@@ -24,8 +24,8 @@ extension NdArray: Equatable where T: Equatable {
         case 0:
             return true
         case 1:
-            var l = lhs.data
-            var r = rhs.data
+            var l = lhs.dataStart
+            var r = rhs.dataStart
             let ls = lhs.strides[0]
             let rs = rhs.strides[0]
             for _ in 0..<lhs.count {
@@ -37,8 +37,8 @@ extension NdArray: Equatable where T: Equatable {
             }
         default:
             if (lhs.isCContiguous && rhs.isCContiguous) || (lhs.isFContiguous && rhs.isFContiguous) {
-                var l = lhs.data
-                var r = rhs.data
+                var l = lhs.dataStart
+                var r = rhs.dataStart
                 for _ in 0..<lhs.count {
                     if l.pointee != r.pointee {
                         return false

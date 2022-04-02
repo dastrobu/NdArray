@@ -94,7 +94,7 @@ public extension NdArray where T == Double {
     static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
         let a = NdArray(empty: n)
-        vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vrampD)
+        vramp(start: start, step: step, data: a.dataStart, n: n, vramp: vDSP_vrampD)
         let r = self.init(a)
         r.stealOwnership()
         return r
@@ -138,7 +138,7 @@ public extension NdArray where T == Double {
 
     static func repeating(_ x: T, count: Int) -> Self {
         let a = NdArray(empty: count)
-        catlas_dset(Int32(count), x, a.data, 1)
+        catlas_dset(Int32(count), x, a.dataStart, 1)
         let r = self.init(a)
         r.stealOwnership()
         return r
@@ -158,7 +158,7 @@ public extension NdArray where T == Float {
     static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: start, stop: stop, step: step)
         let a = NdArray(empty: n)
-        vramp(start: start, step: step, data: a.data, n: n, vramp: vDSP_vramp)
+        vramp(start: start, step: step, data: a.dataStart, n: n, vramp: vDSP_vramp)
         let r = self.init(a)
         r.stealOwnership()
         return r
@@ -202,7 +202,7 @@ public extension NdArray where T == Float {
 
     static func repeating(_ x: T, count: Int) -> Self {
         let a = NdArray(empty: count)
-        catlas_sset(Int32(count), x, a.data, 1)
+        catlas_sset(Int32(count), x, a.dataStart, 1)
         let r = self.init(a)
         r.stealOwnership()
         return r
@@ -223,7 +223,7 @@ public extension NdArray where T == Int {
     static func range(from start: T, to stop: T, by step: T = 1) -> Self {
         let n = arange(start: Double(start), stop: Double(stop), step: Double(step))
         let a = self.init(empty: n)
-        var p = a.data
+        var p = a.dataStart
         for i in stride(from: start, to: stop, by: step) {
             p.initialize(to: i)
             p += 1
@@ -235,7 +235,7 @@ public extension NdArray where T == Int {
 
     static func zeros(_ count: Int) -> Self {
         let a = self.init(empty: count)
-        memset(a.data, 0, count * MemoryLayout<Int>.stride)
+        memset(a.dataStart, 0, count * MemoryLayout<Int>.stride)
         let r = self.init(a)
         r.stealOwnership()
         return r
