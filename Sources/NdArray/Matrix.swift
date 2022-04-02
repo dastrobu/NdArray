@@ -28,7 +28,7 @@ open class Matrix<T>: NdArray<T> {
             for i in 0..<rowCount {
                 let row = a[i]
                 precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
-                memcpy(data + i * strides[0], row, colCount * MemoryLayout<T>.stride)
+                memcpy(dataStart + i * strides[0], row, colCount * MemoryLayout<T>.stride)
             }
         case .F:
             for i in 0..<rowCount {
@@ -36,7 +36,7 @@ open class Matrix<T>: NdArray<T> {
                 precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
                 // manual memcopy for strided data
                 for j in 0..<colCount {
-                    data[i * strides[0] + j * strides[1]] = row[j]
+                    dataStart[i * strides[0] + j * strides[1]] = row[j]
                 }
             }
         }
@@ -177,7 +177,7 @@ public extension Matrix where T == Double {
         var lda: __CLPK_integer = __CLPK_integer(n)
         var ldb = __CLPK_integer(B.shape[0])
         var info: __CLPK_integer = 0
-        dgesv_(&n, &nrhs, A.data, &lda, &ipiv, B.data, &ldb, &info)
+        dgesv_(&n, &nrhs, A.dataStart, &lda, &ipiv, B.dataStart, &ldb, &info)
         if info != 0 {
             throw LapackError.dgesv(info)
         }
@@ -212,7 +212,7 @@ public extension Matrix where T == Double {
         // do optimal workspace query
         var lwork: __CLPK_integer = -1
         var work = [__CLPK_doublereal](repeating: 0.0, count: 1)
-        dgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
+        dgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -222,7 +222,7 @@ public extension Matrix where T == Double {
         work = [__CLPK_doublereal](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
-        dgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
+        dgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -257,7 +257,7 @@ public extension Matrix where T == Double {
         // leading dimension is the number of rows in column major order
         var lda = __CLPK_integer(m)
         var info: __CLPK_integer = 0
-        dgetrf_(&m, &n, data, &lda, &ipiv, &info)
+        dgetrf_(&m, &n, dataStart, &lda, &ipiv, &info)
         if info != 0 {
             throw LapackError.getrf(info)
         }
@@ -336,7 +336,7 @@ public extension Matrix where T == Float {
         var lda: __CLPK_integer = __CLPK_integer(n)
         var ldb = __CLPK_integer(B.shape[0])
         var info: __CLPK_integer = 0
-        sgesv_(&n, &nrhs, A.data, &lda, &ipiv, B.data, &ldb, &info)
+        sgesv_(&n, &nrhs, A.dataStart, &lda, &ipiv, B.dataStart, &ldb, &info)
         if info != 0 {
             throw LapackError.dgesv(info)
         }
@@ -371,7 +371,7 @@ public extension Matrix where T == Float {
         // do optimal workspace query
         var lwork: __CLPK_integer = -1
         var work = [__CLPK_real](repeating: 0.0, count: 1)
-        sgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
+        sgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -381,7 +381,7 @@ public extension Matrix where T == Float {
         work = [__CLPK_real](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
-        sgetri_(&n, A.data, &lda, &ipiv, &work, &lwork, &info)
+        sgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -416,7 +416,7 @@ public extension Matrix where T == Float {
         // leading dimension is the number of rows in column major order
         var lda = __CLPK_integer(m)
         var info: __CLPK_integer = 0
-        sgetrf_(&m, &n, data, &lda, &ipiv, &info)
+        sgetrf_(&m, &n, dataStart, &lda, &ipiv, &info)
         if info != 0 {
             throw LapackError.getrf(info)
         }
@@ -448,7 +448,7 @@ public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
     let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
-    cblas_dgemv(order, CblasNoTrans, m, n, 1, a.data, lda, x.data, incX, 0, y.data, incY)
+    cblas_dgemv(order, CblasNoTrans, m, n, 1, a.dataStart, lda, x.dataStart, incX, 0, y.dataStart, incY)
 
     return y
 }
@@ -481,7 +481,7 @@ public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
     let lda: Int32 = Int32(a.shape[0])
     let ldb: Int32 = Int32(b.shape[0])
     let ldc: Int32 = Int32(c.shape[0])
-    cblas_dgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.data, lda, b.data, ldb, 0, c.data, ldc)
+    cblas_dgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.dataStart, lda, b.dataStart, ldb, 0, c.dataStart, ldc)
     return c
 }
 
@@ -510,7 +510,7 @@ public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
     let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
-    cblas_sgemv(order, CblasNoTrans, m, n, 1, a.data, lda, x.data, incX, 0, y.data, incY)
+    cblas_sgemv(order, CblasNoTrans, m, n, 1, a.dataStart, lda, x.dataStart, incX, 0, y.dataStart, incY)
 
     return y
 }
@@ -544,6 +544,6 @@ public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
     let lda: Int32 = Int32(a.shape[0])
     let ldb: Int32 = Int32(b.shape[0])
     let ldc: Int32 = Int32(c.shape[0])
-    cblas_sgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.data, lda, b.data, ldb, 0, c.data, ldc)
+    cblas_sgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.dataStart, lda, b.dataStart, ldb, 0, c.dataStart, ldc)
     return c
 }

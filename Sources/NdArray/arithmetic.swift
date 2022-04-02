@@ -29,13 +29,13 @@ public extension NdArray where T: AdditiveArithmetic {
     func add(_ x: T) {
         apply1d(f1d: { n in
             let s = strides[0]
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee + x)
                 p += s
             }
         }, fContiguous: { n in
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee + x)
                 p += 1
@@ -53,8 +53,8 @@ public extension NdArray where T: AdditiveArithmetic {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            var p = data
-            var px = x.data
+            var p = dataStart
+            var px = x.dataStart
             let s = strides[0]
             let sx = x.strides[0]
             for _ in 0..<n {
@@ -63,8 +63,8 @@ public extension NdArray where T: AdditiveArithmetic {
                 px += sx
             }
         }, fContiguous: { n in
-            var p = data
-            var px = x.data
+            var p = dataStart
+            var px = x.dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee + px.pointee)
                 p += 1
@@ -83,8 +83,8 @@ public extension NdArray where T: AdditiveArithmetic {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            var p = data
-            var px = x.data
+            var p = dataStart
+            var px = x.dataStart
             let s = strides[0]
             let sx = x.strides[0]
             for _ in 0..<n {
@@ -93,8 +93,8 @@ public extension NdArray where T: AdditiveArithmetic {
                 px += sx
             }
         }, fContiguous: { n in
-            var p = data
-            var px = x.data
+            var p = dataStart
+            var px = x.dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee - px.pointee)
                 p += 1
@@ -122,13 +122,13 @@ public extension NdArray where T: Numeric {
     func multiply(by x: T) {
         apply1d(f1d: { n in
             let s = strides[0]
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee * x)
                 p += s
             }
         }, fContiguous: { n in
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 p.initialize(to: p.pointee * x)
                 p += 1
@@ -154,11 +154,11 @@ public extension NdArray where T == Double {
         if isEmpty {
             return nil
         }
-        var r = data[0]
+        var r = dataStart[0]
         apply1d(f1d: { n in
-            vDSP_maxvD(data, strides[0], &r, vDSP_Length(n))
+            vDSP_maxvD(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_maxvD(data, 1, &r, vDSP_Length(n))
+            vDSP_maxvD(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r = Swift.max(r, s.max()!)
         })
@@ -172,9 +172,9 @@ public extension NdArray where T == Double {
         }
         var r = data[0]
         apply1d(f1d: { n in
-            vDSP_minvD(data, strides[0], &r, vDSP_Length(n))
+            vDSP_minvD(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_minvD(data, 1, &r, vDSP_Length(n))
+            vDSP_minvD(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r = Swift.min(r, s.min()!)
         })
@@ -190,9 +190,9 @@ public extension NdArray where T == Double {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            cblas_daxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
+            cblas_daxpy(Int32(n), alpha, x.dataStart, Int32(x.strides[0]), dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            cblas_daxpy(Int32(n), alpha, x.data, 1, data, 1)
+            cblas_daxpy(Int32(n), alpha, x.dataStart, 1, dataStart, 1)
         }, fSlice: { s, o in
             s.add(alpha, o)
         })
@@ -207,9 +207,9 @@ public extension NdArray where T == Double {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            catlas_daxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
+            catlas_daxpby(Int32(n), alpha, x.dataStart, Int32(x.strides[0]), beta, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            catlas_daxpby(Int32(n), alpha, x.data, 1, beta, data, 1)
+            catlas_daxpby(Int32(n), alpha, x.dataStart, 1, beta, dataStart, 1)
         }, fSlice: { s, o in
             s.add(alpha, o, beta)
         })
@@ -218,9 +218,9 @@ public extension NdArray where T == Double {
     /// in place multiplication by a scalar
     func multiply(by x: T) {
         apply1d(f1d: { n in
-            cblas_dscal(Int32(n), x, data, Int32(strides[0]))
+            cblas_dscal(Int32(n), x, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            cblas_dscal(Int32(n), x, data, 1)
+            cblas_dscal(Int32(n), x, dataStart, 1)
         }, fSlice: { s in
             s *= x
         })
@@ -233,9 +233,9 @@ public extension NdArray where T == Double {
     /// set all values to a new constant value
     func set(_ alpha: T) {
         apply1d(f1d: { n in
-            catlas_dset(Int32(n), alpha, data, Int32(strides[0]))
+            catlas_dset(Int32(n), alpha, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            catlas_dset(Int32(n), alpha, data, 1)
+            catlas_dset(Int32(n), alpha, dataStart, 1)
         }, fSlice: { s in
             s.set(alpha)
         })
@@ -245,9 +245,9 @@ public extension NdArray where T == Double {
     func sum() -> T {
         var r = T.zero
         apply1d(f1d: { n in
-            vDSP_sveD(data, strides[0], &r, vDSP_Length(n))
+            vDSP_sveD(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_sveD(data, 1, &r, vDSP_Length(n))
+            vDSP_sveD(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r += s.sum()
         })
@@ -264,9 +264,9 @@ public extension NdArray where T == Float {
         }
         var r = data[0]
         apply1d(f1d: { n in
-            vDSP_maxv(data, strides[0], &r, vDSP_Length(n))
+            vDSP_maxv(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_maxv(data, 1, &r, vDSP_Length(n))
+            vDSP_maxv(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r = Swift.max(r, s.max()!)
         })
@@ -280,9 +280,9 @@ public extension NdArray where T == Float {
         }
         var r = data[0]
         apply1d(f1d: { n in
-            vDSP_minv(data, strides[0], &r, vDSP_Length(n))
+            vDSP_minv(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_minv(data, 1, &r, vDSP_Length(n))
+            vDSP_minv(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r = Swift.min(r, s.min()!)
         })
@@ -298,9 +298,9 @@ public extension NdArray where T == Float {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            cblas_saxpy(Int32(n), alpha, x.data, Int32(x.strides[0]), data, Int32(strides[0]))
+            cblas_saxpy(Int32(n), alpha, x.dataStart, Int32(x.strides[0]), dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            cblas_saxpy(Int32(n), alpha, x.data, 1, data, 1)
+            cblas_saxpy(Int32(n), alpha, x.dataStart, 1, dataStart, 1)
         }, fSlice: { s, o in
             s.add(alpha, o)
         })
@@ -315,9 +315,9 @@ public extension NdArray where T == Float {
             Precondition failed while trying to add \(x.debugDescription) to \(debugDescription).
             """)
         apply1d(other: x, f1d: { n in
-            catlas_saxpby(Int32(n), alpha, x.data, Int32(x.strides[0]), beta, data, Int32(strides[0]))
+            catlas_saxpby(Int32(n), alpha, x.dataStart, Int32(x.strides[0]), beta, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            catlas_saxpby(Int32(n), alpha, x.data, 1, beta, data, 1)
+            catlas_saxpby(Int32(n), alpha, x.dataStart, 1, beta, dataStart, 1)
         }, fSlice: { s, o in
             s.add(alpha, o, beta)
         })
@@ -326,9 +326,9 @@ public extension NdArray where T == Float {
     /// in place multiplication by a scalar
     func multiply(by x: T) {
         apply1d(f1d: { n in
-            cblas_sscal(Int32(n), x, data, Int32(strides[0]))
+            cblas_sscal(Int32(n), x, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            cblas_sscal(Int32(n), x, data, 1)
+            cblas_sscal(Int32(n), x, dataStart, 1)
         }, fSlice: { s in
             s *= x
         })
@@ -341,9 +341,9 @@ public extension NdArray where T == Float {
     /// set all values to a new constant value
     func set(_ alpha: T) {
         apply1d(f1d: { n in
-            catlas_sset(Int32(n), alpha, data, Int32(strides[0]))
+            catlas_sset(Int32(n), alpha, dataStart, Int32(strides[0]))
         }, fContiguous: { n in
-            catlas_sset(Int32(n), alpha, data, 1)
+            catlas_sset(Int32(n), alpha, dataStart, 1)
         }, fSlice: { s in
             s.set(alpha)
         })
@@ -353,9 +353,9 @@ public extension NdArray where T == Float {
     func sum() -> T {
         var r = T.zero
         apply1d(f1d: { n in
-            vDSP_sve(data, strides[0], &r, vDSP_Length(n))
+            vDSP_sve(dataStart, strides[0], &r, vDSP_Length(n))
         }, fContiguous: { n in
-            vDSP_sve(data, 1, &r, vDSP_Length(n))
+            vDSP_sve(dataStart, 1, &r, vDSP_Length(n))
         }, fSlice: { s in
             r += s.sum()
         })

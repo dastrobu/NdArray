@@ -13,13 +13,13 @@ public extension NdArray {
         var r = initialResult
         try apply1d(f1d: { n in
             let s = strides[0]
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 r = try nextPartialResult(r, p.pointee)
                 p += s
             }
         }, fContiguous: { n in
-            var p = data
+            var p = dataStart
             for _ in 0..<n {
                 r = try nextPartialResult(r, p.pointee)
                 p += 1

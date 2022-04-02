@@ -9,8 +9,13 @@ public enum Contiguous {
 open class NdArray<T>: CustomDebugStringConvertible,
     CustomStringConvertible {
 
-    /// data buffer
-    internal(set) public var data: UnsafeMutablePointer<T>
+    /// data buffer start
+    internal var dataStart: UnsafeMutablePointer<T>
+
+    /// data buffer for row data access
+    public var data: UnsafeMutableBufferPointer<T> {
+        UnsafeMutableBufferPointer(start: dataStart, count: count)
+    }
 
     /// length of the buffer
     internal var count: Int
@@ -53,7 +58,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// create a new array without initializing any memory
     public required init(empty count: Int = 0) {
         self.count = count
-        data = UnsafeMutablePointer<T>.allocate(capacity: count)
+        dataStart = UnsafeMutablePointer<T>.allocate(capacity: count)
         if count == 0 {
             shape = [0]
         } else {
@@ -95,7 +100,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
         } else {
             self.owner = a.owner
         }
-        self.data = a.data
+        self.dataStart = a.dataStart
         self.count = a.count
         self.shape = a.shape
         self.strides = a.strides
@@ -104,7 +109,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
 
     deinit {
         if ownsData {
-            data.deallocate()
+            dataStart.deallocate()
         }
     }
 
@@ -160,7 +165,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /// create an 1D NdArray from a plain array
     public convenience init(_ a: [T]) {
         self.init(empty: a.count)
-        data.initialize(from: a, count: a.count)
+        dataStart.initialize(from: a, count: a.count)
     }
 
     /// create an 2D NdArray from a plain array
@@ -179,7 +184,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
             for i in 0..<rowCount {
                 let row = a[i]
                 precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
-                memcpy(data + i * strides[0], row, colCount * MemoryLayout<T>.stride)
+                memcpy(dataStart + i * strides[0], row, colCount * MemoryLayout<T>.stride)
             }
         case .F:
             for i in 0..<rowCount {
@@ -212,7 +217,7 @@ open class NdArray<T>: CustomDebugStringConvertible,
                 for j in 0..<jCount {
                     let aij = ai[j]
                     precondition(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
-                    memcpy(data + i * strides[0] + j * strides[1], aij, kCount * MemoryLayout<T>.stride)
+                    memcpy(dataStart + i * strides[0] + j * strides[1], aij, kCount * MemoryLayout<T>.stride)
                 }
             }
         case .F:
@@ -235,11 +240,11 @@ open class NdArray<T>: CustomDebugStringConvertible,
         if isEmpty {
             return []
         }
-        return Array(UnsafeBufferPointer(start: data, count: count))
+        return Array(UnsafeBufferPointer(start: dataStart, count: count))
     }
 
     public var debugDescription: String {
-        let address = String(format: "%p", Int(bitPattern: data))
+        let address = String(format: "%p", Int(bitPattern: dataStart))
         return "NdArray(shape: \(shape), strides: \(strides), data: \(address))"
     }
 
@@ -473,11 +478,11 @@ extension NdArray {
     /// - Returns: true if data regions of this array overlap with data region of the other array
     public func overlaps(_ other: NdArray<T>) -> Bool {
         // check if other starts within our memory
-        if other.data >= self.data && other.data < self.data + self.count {
+        if other.dataStart >= self.dataStart && other.dataStart < self.dataStart + self.count {
             return true
         }
         // check if our memory starts within other memory
-        if self.data >= other.data && self.data < other.data + other.count {
+        if self.dataStart >= other.dataStart && self.dataStart < other.dataStart + other.count {
             return true
         }
         return false

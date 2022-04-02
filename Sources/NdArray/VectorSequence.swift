@@ -32,9 +32,9 @@ public extension Vector {
 
     func makeIterator() -> VectorIterator<T> {
         if isEmpty {
-            return VectorIterator(baseAddress: data, stride: 0, count: 0)
+            return VectorIterator(baseAddress: dataStart, stride: 0, count: 0)
         }
-        return VectorIterator(baseAddress: data, stride: strides[0], count: shape[0])
+        return VectorIterator(baseAddress: dataStart, stride: strides[0], count: shape[0])
     }
 
     /// - Returns: shape[0] or 0 if vector is empty
@@ -46,7 +46,7 @@ public extension Vector {
     /// If the vector is not contiguous, body is not called and nil is returned.
     func withContiguousStorageIfAvailable<R>(_ body: (UnsafeBufferPointer<T>) throws -> R) rethrows -> R? {
         if isContiguous {
-            return try body(UnsafeBufferPointer(start: data, count: count))
+            return try body(UnsafeBufferPointer(start: dataStart, count: count))
         } else {
             return nil
         }

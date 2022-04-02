@@ -18,7 +18,7 @@ open class Vector<T>: NdArray<T>, Sequence {
     /// create an 1D NdArray from a plain array
     public convenience init(_ a: [T]) {
         self.init(empty: a.count)
-        data.initialize(from: a, count: a.count)
+        dataStart.initialize(from: a, count: a.count)
     }
 
     public required convenience init(copy a: NdArray<T>) {
@@ -64,12 +64,12 @@ public extension Vector where T == Double {
             Precondition failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
-        return cblas_ddot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))
+        return cblas_ddot(n, dataStart, Int32(strides[0]), y.dataStart, Int32(y.strides[0]))
     }
 
     func norm2() -> T {
         let n = Int32(shape[0])
-        return cblas_dnrm2(n, data, Int32(strides[0]))
+        return cblas_dnrm2(n, dataStart, Int32(strides[0]))
     }
 
     func sort(order: SortOrder = .ascending) {
@@ -83,18 +83,18 @@ public extension Vector where T == Double {
         }
 
         if isContiguous {
-            vDSP_vsortD(data, n, sortOrder)
+            vDSP_vsortD(dataStart, n, sortOrder)
         } else {
             // make a copy sort it and copy back if array is not contiguous
             let cpy = Vector(copy: self)
-            vDSP_vsortD(cpy.data, n, sortOrder)
+            vDSP_vsortD(cpy.dataStart, n, sortOrder)
             self[[0...]] = cpy[[0...]]
         }
     }
 
     func reverse() {
         let n = vDSP_Length(shape[0])
-        vDSP_vrvrsD(data, strides[0], n)
+        vDSP_vrvrsD(dataStart, strides[0], n)
     }
 }
 
@@ -106,12 +106,12 @@ public extension Vector where T == Float {
             Precondition failed while trying to compute dot product for vectors from \(debugDescription) and \(y.debugDescription).
             """)
         let n = Int32(shape[0])
-        return cblas_sdot(n, data, Int32(strides[0]), y.data, Int32(y.strides[0]))
+        return cblas_sdot(n, dataStart, Int32(strides[0]), y.dataStart, Int32(y.strides[0]))
     }
 
     func norm2() -> T {
         let n = Int32(shape[0])
-        return cblas_snrm2(n, data, Int32(strides[0]))
+        return cblas_snrm2(n, dataStart, Int32(strides[0]))
     }
 
     func sort(order: SortOrder = .ascending) {
@@ -125,18 +125,18 @@ public extension Vector where T == Float {
         }
 
         if isContiguous {
-            vDSP_vsort(data, n, sortOrder)
+            vDSP_vsort(dataStart, n, sortOrder)
         } else {
             // make a copy sort it and copy back if array is not contiguous
             let cpy = Vector(copy: self)
-            vDSP_vsort(cpy.data, n, sortOrder)
+            vDSP_vsort(cpy.dataStart, n, sortOrder)
             self[[0...]] = cpy[[0...]]
         }
     }
 
     func reverse() {
         let n = vDSP_Length(shape[0])
-        vDSP_vrvrs(data, strides[0], n)
+        vDSP_vrvrs(dataStart, strides[0], n)
     }
 }
 

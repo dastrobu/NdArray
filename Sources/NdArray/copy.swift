@@ -19,7 +19,7 @@ public extension NdArray {
         if (isCContiguous && out.isCContiguous) ||
                (isFContiguous && out.isFContiguous) {
             // since buffers may overlap, use memmove instead of memcpy
-            memmove(out.data, data, count * MemoryLayout<T>.stride)
+            memmove(out.dataStart, dataStart, count * MemoryLayout<T>.stride)
         } else if overlaps(out) {
             // if memory overlaps and is not 1d aligned make an intermediate copy
             if out.isFContiguous {
