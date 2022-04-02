@@ -22,7 +22,7 @@ internal class NdArraySlice<T>: NdArray<T> {
             """)
     }
 
-    /// construct an array slice from a starting at index start
+    /// construct an array slice from starting at index start
     internal init(_ a: NdArray<T>, startIndex: [Int], sliced: Int = 1) {
         self.sliced = sliced
         super.init(a)
