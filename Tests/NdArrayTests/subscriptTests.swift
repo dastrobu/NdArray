@@ -433,7 +433,7 @@ class NdArraySubscriptTests: XCTestCase {
         do {
             let a = NdArray<Double>.range(to: 6)
             let b = a[[1..<6]]
-            a[0..<5] = b
+            a[[0..<5]] = b
             XCTAssertEqual(a.dataArray, [1, 2, 3, 4, 5, 5])
         }
     }
@@ -691,7 +691,7 @@ class NdArraySliceSubscriptTests: XCTestCase {
         do {
             let a = NdArraySlice(NdArray<Double>.range(to: 6))
             let b = a[[1..<6]]
-            a[0..<5] = b
+            a[[0..<5]] = b
             XCTAssertEqual(a.dataArray, [1, 2, 3, 4, 5, 5])
         }
     }
@@ -845,9 +845,9 @@ class NdArraySliceSubscriptTests: XCTestCase {
         do {
             let a = NdArraySlice(NdArray<Double>.range(to: 3 * 4).reshaped([3, 4]))
             a[[0..., 0... ~ 2]] = a[[0..., 1... ~ 2]]
-            XCTAssertEqual(NdArray(a[0]).dataArray, [1, 1, 3, 3])
-            XCTAssertEqual(NdArray(a[1]).dataArray, [5, 5, 7, 7])
-            XCTAssertEqual(NdArray(a[2]).dataArray, [9, 9, 11, 11])
+            XCTAssertEqual(NdArray(a[[Slice(0)]]).dataArray, [1, 1, 3, 3])
+            XCTAssertEqual(NdArray(a[[Slice(1)]]).dataArray, [5, 5, 7, 7])
+            XCTAssertEqual(NdArray(a[[Slice(2)]]).dataArray, [9, 9, 11, 11])
         }
     }
 
@@ -927,12 +927,12 @@ class NdArraySliceSubscriptTests: XCTestCase {
     func testSliceAccess3d() {
         do {
             let a = NdArraySlice(NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3]))
-            XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
+            XCTAssertEqual(NdArray(copy: a[[Slice(0)]], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
 
         do {
             let a = NdArraySlice(NdArray<Int>(NdArray<Int>.range(to: 2 * 2 * 3).reshaped([2, 2, 3]), order: .F))
-            XCTAssertEqual(NdArray(copy: a[0], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
+            XCTAssertEqual(NdArray(copy: a[[Slice(0)]], order: .C).dataArray, [0, 1, 2, 3, 4, 5])
         }
     }
 
