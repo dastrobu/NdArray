@@ -69,8 +69,8 @@ final class NdArrayTests: XCTestCase {
 
     func testOverlaps() {
         let a = NdArray<Double>.range(to: 11)
-        let b = a[...5]
-        let c = a[5...]
+        let b = a[[...5]]
+        let c = a[[5...]]
         XCTAssert(a.overlaps(b))
         XCTAssert(b.overlaps(a))
         XCTAssert(b.overlaps(c))

@@ -9,7 +9,7 @@ class NdArraySliceTests: XCTestCase {
 
     func testDebugDescription() {
         let a = NdArraySlice(NdArray<Double>.zeros([2, 3, 4]), sliced: 0)
-        XCTAssert(a.debugDescription.contains("NdArraySlice(-, "))
+        XCTAssert(a.debugDescription.contains("NdArray(shape: [2, 3, 4], strides: [12, 4, 1]"))
     }
 
 }
