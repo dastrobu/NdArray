@@ -39,6 +39,7 @@ features to enable fast and simple handling of multidimensional numeric data.
 - [Type Concept](#type-concept)
   - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
+- [Debugging](#debugging)
 - [API Changes](#api-changes)
   - [TLDR](#tldr)
   - [Removal of `NdArraySlice`](#removal-of-ndarrayslice)
@@ -514,6 +515,25 @@ Numerical operations are performed using [BLAS](http://www.netlib.org/blas), see
 [BLAS cheat sheet](http://www.netlib.org/blas/blasqr.pdf) for an overview and [LAPACK](http://www.netlib.org/lapack).
 The functions of these libraries are provided by the
 [Accelerate Framework](https://developer.apple.com/documentation/accelerate) and are available on most Apple platforms.
+
+## Debugging
+
+When debugging some code, sometimes it can be helpful to look at the raw data in the debugger. This can be done with
+help of the `data` property, which is a typed `UnsafeMutableBufferPointer` pointing to the raw data.
+
+Here is an example in lldb:
+
+```
+(lldb) p a.data
+(UnsafeMutableBufferPointer<Double>) $R1 = 6 values (0x113d05000) {
+  [0] = 1
+  [1] = 2
+  [2] = 3
+  [3] = 4
+  [4] = 5
+  [5] = 6
+}
+```
 
 ## API Changes
 
