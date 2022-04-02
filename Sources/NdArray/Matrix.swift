@@ -186,7 +186,7 @@ public extension Matrix where T == Double {
 
     /// Invert the matrix
     ///
-    /// Inverse of the matrix is computed by LAPACKs SGETRI method which computes the inverse of a matrix using the
+    /// Inverse of the matrix is computed by LAPACKs DGETRI method which computes the inverse of a matrix using the
     /// LU factorization computed by DGETRF.
     ///
     /// This method inverts U and then computes inv(A) by solving the system
@@ -346,12 +346,12 @@ public extension Matrix where T == Float {
     /// Invert the matrix
     ///
     /// Inverse of the matrix is computed by LAPACKs SGETRI method which computes the inverse of a matrix using the
-    /// LU factorization computed by DGETRF.
+    /// LU factorization computed by SGETRF.
     ///
     /// This method inverts U and then computes inv(A) by solving the system
     /// inv(A)*L = inv(U) for inv(A).
     ///
-    /// If an error occurred, the data in out may have been changed to any data.
+    /// If an error occurred, the data in `out` may have been changed to any data.
     @discardableResult
     func inverted(out: Matrix<T>? = nil) throws -> Matrix<T> {
         var n = __CLPK_integer(shape[0])
