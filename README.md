@@ -133,7 +133,7 @@ Note, to avoid confusion with pure indexing, integer literals need to be convert
 ```swift
 let a = NdArray<Double>.range(to: 10)
 let _ = a[1] // does not work
-let s1: NdArray<Double> = a[Slice(1)] // selects slice at index one along zeroth dimension
+let s1: NdArray<Double> = a[[Slice(1)]] // selects slice at index one along zeroth dimension
 let a1: Double = a[[1]] // selects first element
 ```
 
