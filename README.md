@@ -13,34 +13,35 @@ features to enable fast and simple handling of multidimensional numeric data.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 ## Table of Contents
 
 - [Installation](#installation)
-  - [Swift Package Manager](#swift-package-manager)
+    - [Swift Package Manager](#swift-package-manager)
 - [Multiple Views on Underlying Data](#multiple-views-on-underlying-data)
 - [Sliced and Strided Access](#sliced-and-strided-access)
-  - [Slices and the Stride Operator `~`](#slices-and-the-stride-operator-)
-  - [Single Slice](#single-slice)
-  - [`UnboundedRange` Slices](#unboundedrange-slices)
-  - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
-  - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
+    - [Slices and the Stride Operator `~`](#slices-and-the-stride-operator-)
+    - [Single Slice](#single-slice)
+    - [`UnboundedRange` Slices](#unboundedrange-slices)
+    - [`Range` and `ClosedRange` Slices](#range-and-closedrange-slices)
+    - [`PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices](#partialrangefrom-partialrangeupto-and-partialrangethrough-slices)
 - [Element Manipulation](#element-manipulation)
 - [Reshaping](#reshaping)
 - [Elementwise Operations](#elementwise-operations)
-  - [Scalars](#scalars)
-  - [Basic Functions](#basic-functions)
+    - [Scalars](#scalars)
+    - [Basic Functions](#basic-functions)
 - [Linear Algebra Operations for `Double` and `Float` `NdArray`s.](#linear-algebra-operations-for-double-and-float-ndarrays)
-  - [Matrix Vector Multiplication](#matrix-vector-multiplication)
-  - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
-  - [Matrix Inversion](#matrix-inversion)
-  - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
+    - [Matrix Vector Multiplication](#matrix-vector-multiplication)
+    - [Matrix Matrix Multiplication](#matrix-matrix-multiplication)
+    - [Matrix Inversion](#matrix-inversion)
+    - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Type Concept](#type-concept)
-  - [Subtypes](#subtypes)
+    - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
 - [API Changes](#api-changes)
-  - [TLDR](#tldr)
-  - [Removal of `NdArraySlice`](#removal-of-ndarrayslice)
+    - [TLDR](#tldr)
+    - [Removal of `NdArraySlice`](#removal-of-ndarrayslice)
 - [Not Implemented](#not-implemented)
 - [Out of Scope](#out-of-scope)
 - [Docs](#docs)
@@ -504,6 +505,25 @@ Numerical operations are performed using [BLAS](http://www.netlib.org/blas), see
 [BLAS cheat sheet](http://www.netlib.org/blas/blasqr.pdf) for an overview and [LAPACK](http://www.netlib.org/lapack).
 The functions of these libraries are provided by the
 [Accelerate Framework](https://developer.apple.com/documentation/accelerate) and are available on most Apple platforms.
+
+## Debugging
+
+When debugging some code, sometimes it can be helpful to look at the raw data in the debugger. This can be done with
+help of the `data` property, which is a typed `UnsafeMutableBufferPointer` pointing to the raw data.
+
+Here is an example in lldb:
+
+```
+(lldb) p a.data
+(UnsafeMutableBufferPointer<Double>) $R1 = 6 values (0x113d05000) {
+  [0] = 1
+  [1] = 2
+  [2] = 3
+  [3] = 4
+  [4] = 5
+  [5] = 6
+}
+```
 
 ## API Changes
 
