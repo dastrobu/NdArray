@@ -2,7 +2,7 @@
 // Created by Daniel Strobusch on 2019-05-04.
 //
 
-import Darwin
+import Foundation
 
 internal class NdArraySlice<T>: NdArray<T> {
     /// number of dimensions that have been sliced

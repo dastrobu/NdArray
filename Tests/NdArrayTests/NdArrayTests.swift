@@ -1,5 +1,5 @@
 import XCTest
-import Foundation
+import Darwin
 @testable import NdArray
 
 private func address<T>(_ p: UnsafeBufferPointer<T>) -> String {

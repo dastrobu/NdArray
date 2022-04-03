@@ -2,7 +2,7 @@
 // Created by Daniel Strobusch on 2019-05-11.
 //
 
-import Foundation
+import Darwin
 
 /// Extension defining the reduce operation
 public extension NdArray {

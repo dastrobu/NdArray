@@ -204,7 +204,7 @@ public extension Matrix where T == Double {
         let A = out ?? Matrix(empty: shape, order: .F)
         A[[0...]] = self[[0...]]
 
-        var ipiv = try A.luFactor()
+        let ipiv = try A.luInPlace()
 
         var lda = __CLPK_integer(n)
         var info: __CLPK_integer = 0
@@ -212,7 +212,7 @@ public extension Matrix where T == Double {
         // do optimal workspace query
         var lwork: __CLPK_integer = -1
         var work = [__CLPK_doublereal](repeating: 0.0, count: 1)
-        dgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
+        dgetri_(&n, A.dataStart, &lda, ipiv.dataStart, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -222,46 +222,11 @@ public extension Matrix where T == Double {
         work = [__CLPK_doublereal](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
-        dgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
+        dgetri_(&n, A.dataStart, &lda, ipiv.dataStart, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
         return A
-    }
-
-    /// Compute the LU factorization (in place) and return the pivot vector
-    ///
-    /// Factorization is computed by LAPACKs DGETRF method, which computes an LU factorization of a general
-    /// M-by-N matrix A using partial pivoting with row interchanges.
-    ///
-    /// The factorization has the form
-    ///    A = P * L * U
-    /// where P is a permutation matrix, L is lower triangular with unit
-    /// diagonal elements (lower trapezoidal if m > n), and U is upper
-    /// triangular (upper trapezoidal if m < n).
-    ///
-    /// This is the right-looking Level 3 BLAS version of the algorithm.
-    ///
-    /// This array must be in column major storage.
-    private func luFactor() throws -> [__CLPK_integer] {
-        // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
-        // LU factorization may be implemented, yielding P, L and U explicitly.
-        precondition(isFContiguous,
-            """
-            Cannot compute LU factorization if not f contiguous
-            Given out array is \(debugDescription).
-            """)
-        var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
-        var m = __CLPK_integer(shape[0])
-        var n = __CLPK_integer(shape[1])
-        // leading dimension is the number of rows in column major order
-        var lda = __CLPK_integer(m)
-        var info: __CLPK_integer = 0
-        dgetrf_(&m, &n, dataStart, &lda, &ipiv, &info)
-        if info != 0 {
-            throw LapackError.getrf(info)
-        }
-        return ipiv
     }
 
 }
@@ -363,7 +328,7 @@ public extension Matrix where T == Float {
         let A = out ?? Matrix(empty: shape, order: .F)
         A[[0...]] = self[[0...]]
 
-        var ipiv = try A.luFactor()
+        let ipiv = try A.luInPlace()
 
         var lda = __CLPK_integer(n)
         var info: __CLPK_integer = 0
@@ -371,7 +336,7 @@ public extension Matrix where T == Float {
         // do optimal workspace query
         var lwork: __CLPK_integer = -1
         var work = [__CLPK_real](repeating: 0.0, count: 1)
-        sgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
+        sgetri_(&n, A.dataStart, &lda, ipiv.dataStart, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
@@ -381,46 +346,11 @@ public extension Matrix where T == Float {
         work = [__CLPK_real](repeating: 0.0, count: Int(lwork))
 
         // do the inversion
-        sgetri_(&n, A.dataStart, &lda, &ipiv, &work, &lwork, &info)
+        sgetri_(&n, A.dataStart, &lda, ipiv.dataStart, &work, &lwork, &info)
         if info != 0 {
             throw LapackError.getri(info)
         }
         return A
-    }
-
-    /// Compute the LU factorization (in place) and return the pivot vector
-    ///
-    /// Factorization is computed by LAPACKs DGETRF method, which computes an LU factorization of a general
-    /// M-by-N matrix A using partial pivoting with row interchanges.
-    ///
-    /// The factorization has the form
-    ///    A = P * L * U
-    /// where P is a permutation matrix, L is lower triangular with unit
-    /// diagonal elements (lower trapezoidal if m > n), and U is upper
-    /// triangular (upper trapezoidal if m < n).
-    ///
-    /// This is the right-looking Level 3 BLAS version of the algorithm.
-    ///
-    /// This array must be in column major storage.
-    private func luFactor() throws -> [__CLPK_integer] {
-        // TODO: this is currently just a helper method for inverted, hence its private. Later a proper
-        // LU factorization may be implemented, yielding P, L and U explicitly.
-        precondition(isFContiguous,
-            """
-            Cannot compute LU factorization if not f contiguous
-            Given out array is \(debugDescription).
-            """)
-        var ipiv = [__CLPK_integer](repeating: 0, count: Swift.min(shape[0], shape[1]))
-        var m = __CLPK_integer(shape[0])
-        var n = __CLPK_integer(shape[1])
-        // leading dimension is the number of rows in column major order
-        var lda = __CLPK_integer(m)
-        var info: __CLPK_integer = 0
-        sgetrf_(&m, &n, dataStart, &lda, &ipiv, &info)
-        if info != 0 {
-            throw LapackError.getrf(info)
-        }
-        return ipiv
     }
 }
 
@@ -432,20 +362,22 @@ public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
         """)
 
     let y = Vector<Double>(empty: x.shape[0])
+    let lda: Int32
 
     let a: Matrix<Double>
     let order: CBLAS_ORDER
     if A.isFContiguous {
         order = CblasColMajor
         a = Matrix(A, order: .F)
+        lda = Int32(a.strides[1])
     } else {
         order = CblasRowMajor
         a = Matrix(A, order: .C)
+        lda = Int32(a.strides[0])
     }
 
     let m: Int32 = Int32(a.shape[0])
     let n: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
     cblas_dgemv(order, CblasNoTrans, m, n, 1, a.dataStart, lda, x.dataStart, incX, 0, y.dataStart, incY)
@@ -454,11 +386,25 @@ public func * (A: Matrix<Double>, x: Vector<Double>) -> Vector<Double> {
 }
 
 public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
+    // see https://www.intel.com/content/www/us/en/develop/documentation/mkl-tutorial-c/top/multiplying-matrices-using-dgemm.html
     precondition(A.shape[1] == B.shape[0],
         """
         Cannot multiply Matrix with shape \(A.shape) with Matrix with shape \(B.shape).
         Precondition failed while trying to multiply \(A.debugDescription) with \(B.debugDescription).
         """)
+
+    // multiply matrix shapes (m x k) * (k x n) = (m x n)
+    let m: Int32 = Int32(A.shape[0])
+    let k: Int32 = Int32(A.shape[1])
+    let n: Int32 = Int32(B.shape[1])
+
+    // Leading dimension of array A, or the number of elements between successive rows (for row major storage) in memory.
+    let lda: Int32
+    // Leading dimension of array B, or the number of elements between successive rows (for row major storage)
+    let ldb: Int32
+    // Leading dimension of array C, or the number of elements between successive rows (for row major storage) in memory.
+    let ldc: Int32
+
     let a: Matrix<Double>
     let b: Matrix<Double>
     let c: Matrix<Double>
@@ -467,20 +413,20 @@ public func * (A: Matrix<Double>, B: Matrix<Double>) -> Matrix<Double> {
         order = CblasColMajor
         a = Matrix(A, order: .F)
         b = Matrix(B, order: .F)
-        c = Matrix<Double>(empty: [A.shape[0], B.shape[1]], order: .F)
+        c = Matrix<Double>(empty: [Int(m), Int(n)], order: .F)
+        lda = Int32(a.strides[1])
+        ldb = Int32(b.strides[1])
+        ldc = Int32(c.strides[1])
     } else {
         order = CblasRowMajor
         a = Matrix(A, order: .C)
         b = Matrix(B, order: .C)
-        c = Matrix<Double>(empty: [A.shape[0], B.shape[1]], order: .C)
+        c = Matrix<Double>(empty: [Int(m), Int(n)], order: .C)
+        lda = Int32(a.strides[0])
+        ldb = Int32(b.strides[0])
+        ldc = Int32(c.strides[0])
     }
 
-    let m: Int32 = Int32(a.shape[0])
-    let n: Int32 = Int32(b.shape[1])
-    let k: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.shape[0])
-    let ldb: Int32 = Int32(b.shape[0])
-    let ldc: Int32 = Int32(c.shape[0])
     cblas_dgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.dataStart, lda, b.dataStart, ldb, 0, c.dataStart, ldc)
     return c
 }
@@ -495,19 +441,22 @@ public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
         """)
     let y = Vector<Float>(empty: x.shape[0])
 
+    let lda: Int32
+
     let a: Matrix<Float>
     let order: CBLAS_ORDER
     if A.isFContiguous {
         order = CblasColMajor
         a = Matrix(A, order: .F)
+        lda = Int32(a.strides[1])
     } else {
         order = CblasRowMajor
         a = Matrix(A, order: .C)
+        lda = Int32(a.strides[0])
     }
 
     let m: Int32 = Int32(a.shape[0])
     let n: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.shape[0])
     let incX: Int32 = Int32(x.strides[0])
     let incY: Int32 = Int32(y.strides[0])
     cblas_sgemv(order, CblasNoTrans, m, n, 1, a.dataStart, lda, x.dataStart, incX, 0, y.dataStart, incY)
@@ -516,11 +465,24 @@ public func * (A: Matrix<Float>, x: Vector<Float>) -> Vector<Float> {
 }
 
 public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
+    // see https://www.intel.com/content/www/us/en/develop/documentation/mkl-tutorial-c/top/multiplying-matrices-using-dgemm.html
     precondition(A.shape[1] == B.shape[0],
         """
         Cannot multiply Matrix with shape \(A.shape) with Matrix with shape \(B.shape).
         Precondition failed while trying to multiply \(A.debugDescription) with \(B.debugDescription).
         """)
+
+    // multiply matrix shapes (m x k) * (k x n) = (m x n)
+    let m: Int32 = Int32(A.shape[0])
+    let k: Int32 = Int32(A.shape[1])
+    let n: Int32 = Int32(B.shape[1])
+
+    // Leading dimension of array A, or the number of elements between successive rows (for row major storage) in memory.
+    let lda: Int32
+    // Leading dimension of array B, or the number of elements between successive rows (for row major storage)
+    let ldb: Int32
+    // Leading dimension of array C, or the number of elements between successive rows (for row major storage) in memory.
+    let ldc: Int32
 
     let a: Matrix<Float>
     let b: Matrix<Float>
@@ -530,20 +492,20 @@ public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
         order = CblasColMajor
         a = Matrix(A, order: .F)
         b = Matrix(B, order: .F)
-        c = Matrix<Float>(empty: [A.shape[0], B.shape[1]], order: .F)
+        c = Matrix<Float>(empty: [Int(m), Int(n)], order: .F)
+        lda = Int32(a.strides[1])
+        ldb = Int32(b.strides[1])
+        ldc = Int32(c.strides[1])
     } else {
         order = CblasRowMajor
         a = Matrix(A, order: .C)
         b = Matrix(B, order: .C)
-        c = Matrix<Float>(empty: [A.shape[0], B.shape[1]], order: .C)
+        c = Matrix<Float>(empty: [Int(m), Int(n)], order: .C)
+        lda = Int32(a.strides[0])
+        ldb = Int32(b.strides[0])
+        ldc = Int32(c.strides[0])
     }
 
-    let m: Int32 = Int32(a.shape[0])
-    let n: Int32 = Int32(b.shape[1])
-    let k: Int32 = Int32(a.shape[1])
-    let lda: Int32 = Int32(a.shape[0])
-    let ldb: Int32 = Int32(b.shape[0])
-    let ldc: Int32 = Int32(c.shape[0])
     cblas_sgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.dataStart, lda, b.dataStart, ldb, 0, c.dataStart, ldc)
     return c
 }

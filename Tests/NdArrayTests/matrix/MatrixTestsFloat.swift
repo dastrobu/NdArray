@@ -1,5 +1,5 @@
 import XCTest
-import Foundation
+import Darwin
 @testable import NdArray
 
 class MatrixTestsFloat: XCTestCase {
@@ -140,6 +140,76 @@ class MatrixTestsFloat: XCTestCase {
         let B = Matrix<Float>.ones([2, 2, ])
         XCTAssertEqual((A * B).shape, [2, 2])
         XCTAssertEqual((A * B).dataArray, [2.0, 2.0, 2.0, 2.0])
+    }
+
+    func testMatMatMulWideC() {
+        let A = Matrix<Float>([
+            [4.0, 0.0],
+            [0.25, 0.75]
+        ])
+        let B = Matrix<Float>([
+            [4.0, 5.0, 6.0],
+            [0.0, 0.75, 1.5]
+        ])
+        XCTAssertEqual((A * B).shape, [2, 3])
+        XCTAssertEqual((A * B).dataArray,
+            Matrix<Float>([
+                [16.0, 20.0, 24.0],
+                [1.0, 1.8125, 2.625],
+            ], order: .C).dataArray, accuracy: 1e-15)
+    }
+
+    func testMatMatMulWideF() {
+        let A = Matrix<Float>([
+            [4.0, 0.0],
+            [0.25, 0.75]
+        ], order: .F)
+        let B = Matrix<Float>([
+            [4.0, 5.0, 6.0],
+            [0.0, 0.75, 1.5]
+        ], order: .F)
+        XCTAssertEqual((A * B).shape, [2, 3])
+        XCTAssertEqual((A * B).dataArray,
+            Matrix<Float>([
+                [16.0, 20.0, 24.0],
+                [1.0, 1.8125, 2.625],
+            ], order: .F).dataArray, accuracy: 1e-15)
+    }
+
+    func testMatMatMulTallC() {
+        let A = Matrix<Float>([
+            [4.0, 0.0, 0.5],
+            [0.25, 0.75, 2.0]
+        ], order: .F)
+        let B = Matrix<Float>([
+            [4.0, 5.0],
+            [0.0, 0.75],
+            [1.0, 1.75]
+        ], order: .F)
+        XCTAssertEqual((A * B).shape, [2, 2])
+        XCTAssertEqual((A * B).dataArray,
+            Matrix<Float>([
+                [[16.5, 20.875],
+                 [3.0, 5.3125]]
+            ], order: .F).dataArray, accuracy: 1e-15)
+    }
+
+    func testMatMatMulTallF() {
+        let A = Matrix<Float>([
+            [4.0, 0.0, 0.5],
+            [0.25, 0.75, 2.0]
+        ], order: .F)
+        let B = Matrix<Float>([
+            [4.0, 5.0],
+            [0.0, 0.75],
+            [1.0, 1.75]
+        ], order: .F)
+        XCTAssertEqual((A * B).shape, [2, 2])
+        XCTAssertEqual((A * B).dataArray,
+            Matrix<Float>([
+                [[16.5, 20.875],
+                 [3.0, 5.3125]]
+            ], order: .F).dataArray, accuracy: 1e-15)
     }
 
     func testMatVecMul() {
