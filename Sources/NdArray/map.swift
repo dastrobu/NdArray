@@ -2,7 +2,7 @@
 // Created by Daniel Strobusch on 2019-05-11.
 //
 
-import Foundation
+import Darwin
 
 /// extension implementing map
 public extension NdArray {

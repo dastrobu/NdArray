@@ -1,4 +1,4 @@
-import Foundation
+import Darwin
 
 fileprivate extension RangeReplaceableCollection where Self: StringProtocol {
     func paddingToLeft(toLength n: Int, withPad pad: Element = " ") -> String {
