@@ -83,7 +83,7 @@ public extension Matrix where T == Float {
 
     /// Compute the LU factorization.
     ///
-    /// Factorization is computed by LAPACKs DGETRF method, which computes an LU factorization of a general
+    /// Factorization is computed by LAPACKs SGETRF method, which computes an LU factorization of a general
     /// M-by-N matrix A using partial pivoting with row interchanges.
     ///
     /// The factorization has the form
@@ -119,7 +119,7 @@ public extension Matrix where T == Float {
 
     /// Compute the LU factorization (in place) and return the pivot vector
     ///
-    /// Factorization is computed by LAPACKs DGETRF method, which computes an LU factorization of a general
+    /// Factorization is computed by LAPACKs SGETRF method, which computes an LU factorization of a general
     /// M-by-N matrix A using partial pivoting with row interchanges.
     ///
     /// The factorization has the form
