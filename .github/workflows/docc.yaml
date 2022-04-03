@@ -1,0 +1,14 @@
+name: docc
+on:
+  - push
+
+jobs:
+  docs:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: fwal/setup-swift@v1
+      - run: swift build --target NdArray -Xswiftc -emit-symbol-graph -Xswiftc -emit-symbol-graph-dir -Xswiftc .build
+      - run: git clone https://github.com/apple/swift-docc.git --depth 1
+      - run: cd swift-docc && swift build -c debug
+      - run: swift-docc/.build/debug/docc convert Sources/NdArray/NdArray.docc --fallback-display-name NdArray --fallback-bundle-identifier NdArray --fallback-bundle-version 1 --additional-symbol-graph-dir .build --output-path docs
