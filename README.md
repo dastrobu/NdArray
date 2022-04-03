@@ -107,7 +107,7 @@ takes all elements along an axis. The stride `~ 2` selects only every second ele
 NumPy's syntax.
 
 ```
-NdArray        NumPy
+NdArray          NumPy
 a[[0...]]        a[::]
 a[[0... ~ 2]]    a[::2]
 a[[..<42 ~ 2]]   a[:42:2]
