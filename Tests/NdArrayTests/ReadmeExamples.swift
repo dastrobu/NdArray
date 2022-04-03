@@ -179,6 +179,24 @@ class ReadmeExamples: XCTestCase {
             //  [ 1.0,  0.0]]
         }
         do {
+            print("LU Factorization")
+            let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
+            let (P, L, U) = try A.lu()
+            print(P)
+            // [[0.0, 1.0],
+            //  [1.0, 0.0]]
+            print(L)
+            // [[1.0, 0.0],
+            //  [0.0, 1.0]]
+            print(U)
+            // [[2.0, 3.0],
+            //  [0.0, 1.0]]
+            print(P * L * U)
+            // [[0.0, 1.0],
+            //  [2.0, 3.0]]
+        }
+        do {
+            print("Solve a Linear System of Equations")
             let A = Matrix<Double>(NdArray.range(to: 4).reshaped([2, 2]))
             let x = Vector<Double>.ones(2)
             print(try A.solve(x)) // [-1.0,  1.0]
