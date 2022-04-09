@@ -5,8 +5,6 @@ on:
 jobs:
   docs:
     runs-on: macos-latest
-    # TODO checkout https://github.com/marketplace/actions/swift-docc-action
-
     steps:
       - uses: actions/checkout@v2
       - uses: fwal/setup-swift@v1
@@ -21,7 +19,8 @@ jobs:
           transform-static-hosting: 'true'
       - uses: fregante/setup-git-user@v1
       - run: |
-          if [[ git commit -m "update docs" docs ]]; then
+          git add docs
+          if [[ git commit -m "update docs"]]; then
             git push 
           fi
       # TODO commit to docs folder
