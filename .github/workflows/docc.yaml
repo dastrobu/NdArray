@@ -19,6 +19,13 @@ jobs:
           hosting-base-path: ndarray
           disable-indexing: 'true'
           transform-static-hosting: 'true'
+      - uses: fregante/setup-git-user@v1
+      - run: |
+          if [[ git commit -m "update docs" docs ]]; then
+            git push 
+          fi
+      # TODO commit to docs folder
+      # TODO check formatting and hosting on github pages
 #      - uses: dastrobu/setup-swift-docc@v0
 #      - run: swift build --target NdArray -Xswiftc -emit-symbol-graph -Xswiftc -emit-symbol-graph-dir -Xswiftc .build
 #      - run: swift-docc/.build/debug/docc convert Sources/NdArray/NdArray.docc --fallback-display-name NdArray --fallback-bundle-identifier NdArray --fallback-bundle-version 1 --additional-symbol-graph-dir .build --output-path docs
