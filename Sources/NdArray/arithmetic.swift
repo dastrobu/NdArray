@@ -365,177 +365,177 @@ public extension NdArray where T == Float {
 
 // AdditiveArithmetic operators
 
-public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
+public func + <K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
     let b = T(copy: a)
     b += x
     return b
 }
 
-public func +<K: AdditiveArithmetic, T: NdArray<K>>(x: K, a: T) -> T {
+public func + <K: AdditiveArithmetic, T: NdArray<K>>(x: K, a: T) -> T {
     a + x
 }
 
-public func +<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
+public func + <K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c += b
     return c
 }
 
-public func +=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
+public func += <K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
     a.add(b)
 }
 
-public func -<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
+public func - <K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) -> T {
     let b = T(copy: a)
     b -= x
     return b
 }
 
-public func +=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) {
+public func += <K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) {
     a.add(x)
 }
 
-public func -=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) {
+public func -= <K: AdditiveArithmetic, T: NdArray<K>>(a: T, x: K) {
     a.subtract(x)
 }
 
-public func -<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
+public func - <K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c -= b
     return c
 }
 
-public func -=<K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
+public func -= <K: AdditiveArithmetic, T: NdArray<K>>(a: T, b: T) {
     a.subtract(b)
 }
 
 // Numeric operators
-public prefix func -<K: Numeric, T: NdArray<K>>(a: T) -> T {
+public prefix func - <K: Numeric, T: NdArray<K>>(a: T) -> T {
     let b = T(copy: a)
     b *= -1
     return b
 }
 
-public func *<K: Numeric, T: NdArray<K>>(a: T, x: K) -> T {
+public func * <K: Numeric, T: NdArray<K>>(a: T, x: K) -> T {
     let b = T(copy: a)
     b *= x
     return b
 }
 
-public func *=<K: Numeric, T: NdArray<K>>(a: T, x: K) {
+public func *= <K: Numeric, T: NdArray<K>>(a: T, x: K) {
     a.multiply(by: x)
 }
 
-public func *<K: Numeric, T: NdArray<K>>(x: K, a: T) -> T {
+public func * <K: Numeric, T: NdArray<K>>(x: K, a: T) -> T {
     a * x
 }
 
 // Double operators
-public prefix func -<T: NdArray<Double>>(a: T) -> T {
+public prefix func - <T: NdArray<Double>>(a: T) -> T {
     let b = T(copy: a)
     b *= -1
     return b
 }
 
-public func *<T: NdArray<Double>>(a: T, x: Double) -> T {
+public func * <T: NdArray<Double>>(a: T, x: Double) -> T {
     let b = T(copy: a)
     b *= x
     return b
 }
 
-public func /<T: NdArray<Double>>(a: T, x: Double) -> T {
+public func / <T: NdArray<Double>>(a: T, x: Double) -> T {
     let b = T(copy: a)
     b /= x
     return b
 }
 
-public func *=<T: NdArray<Double>>(a: T, x: Double) {
+public func *= <T: NdArray<Double>>(a: T, x: Double) {
     a.multiply(by: x)
 }
 
-public func *<T: NdArray<Double>>(x: Double, a: T) -> T {
+public func * <T: NdArray<Double>>(x: Double, a: T) -> T {
     a * x
 }
 
-public func /=<T: NdArray<Double>>(a: T, x: Double) {
+public func /= <T: NdArray<Double>>(a: T, x: Double) {
     a.divide(by: x)
 }
 
-public func +<T: NdArray<Double>>(a: T, b: T) -> T {
+public func + <T: NdArray<Double>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c += b
     return c
 }
 
-public func +=<T: NdArray<Double>>(a: T, b: T) {
+public func += <T: NdArray<Double>>(a: T, b: T) {
     a.add(1, b)
 }
 
-public func +<T: NdArray<Double>>(x: Double, a: T) -> T {
+public func + <T: NdArray<Double>>(x: Double, a: T) -> T {
     a + x
 }
 
-public func -<T: NdArray<Double>>(a: T, b: T) -> T {
+public func - <T: NdArray<Double>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c -= b
     return c
 }
 
-public func -=<T: NdArray<Double>>(a: T, b: T) {
+public func -= <T: NdArray<Double>>(a: T, b: T) {
     a.add(-1, b)
 }
 
 // Float operators
-public prefix func -<T: NdArray<Float>>(a: T) -> T {
+public prefix func - <T: NdArray<Float>>(a: T) -> T {
     let b = T(copy: a)
     b *= -1
     return b
 }
 
-public func *<T: NdArray<Float>>(a: T, x: Float) -> T {
+public func * <T: NdArray<Float>>(a: T, x: Float) -> T {
     let b = T(copy: a)
     b *= x
     return b
 }
 
-public func /<T: NdArray<Float>>(a: T, x: Float) -> T {
+public func / <T: NdArray<Float>>(a: T, x: Float) -> T {
     let b = T(copy: a)
     b /= x
     return b
 }
 
-public func *=<T: NdArray<Float>>(a: T, x: Float) {
+public func *= <T: NdArray<Float>>(a: T, x: Float) {
     a.multiply(by: x)
 }
 
-public func *<T: NdArray<Float>>(x: Float, a: T) -> T {
+public func * <T: NdArray<Float>>(x: Float, a: T) -> T {
     a * x
 }
 
-public func /=<T: NdArray<Float>>(a: T, x: Float) {
+public func /= <T: NdArray<Float>>(a: T, x: Float) {
     a.divide(by: x)
 }
 
-public func +<T: NdArray<Float>>(a: T, b: T) -> T {
+public func + <T: NdArray<Float>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c += b
     return c
 }
 
-public func +=<T: NdArray<Float>>(a: T, b: T) {
+public func += <T: NdArray<Float>>(a: T, b: T) {
     a.add(1, b)
 }
 
-public func +<T: NdArray<Float>>(x: Float, a: T) -> T {
+public func + <T: NdArray<Float>>(x: Float, a: T) -> T {
     a + x
 }
 
-public func -<T: NdArray<Float>>(a: T, b: T) -> T {
+public func - <T: NdArray<Float>>(a: T, b: T) -> T {
     let c = T(copy: a)
     c -= b
     return c
 }
 
-public func -=<T: NdArray<Float>>(a: T, b: T) {
+public func -= <T: NdArray<Float>>(a: T, b: T) {
     a.add(-1, b)
 }
