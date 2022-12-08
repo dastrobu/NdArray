@@ -36,4 +36,4 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - run: xcodebuild -scheme NdArray -destination 'platform=watchOS Simulator,name=Apple Watch Series 7 - 45mm'
+      - run: xcodebuild -scheme NdArray -destination 'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)'
