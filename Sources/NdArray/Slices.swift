@@ -29,8 +29,15 @@ internal enum SliceKind {
      a[..<42 ~ 3] ≡ a[Slice(upperBound: 42, stride: 3)]
      a[1..<42 ~ 3] ≡ a[Slice(lowerBound: 1, upperBound: 42, stride: 3)]
  */
-public struct Slice {
+public struct Slice: ExpressibleByIntegerLiteral {
+
+    public typealias IntegerLiteralType = Int
+
     internal let sliceKind: SliceKind
+
+    public init(integerLiteral value: Int) {
+        self.init(value)
+    }
 
     public init(_ i: Int) {
         sliceKind = .index(i)

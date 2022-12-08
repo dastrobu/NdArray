@@ -267,6 +267,30 @@ open class NdArray<T>: CustomDebugStringConvertible,
     /**
      slice access
      */
+    public subscript(slices: Slice...) -> NdArray<T> {
+        get {
+            self[slices]
+        }
+        set {
+            self[slices] = newValue
+        }
+    }
+
+    /**
+     index access
+     */
+    public subscript(index: Int...) -> T {
+        get {
+            self[index]
+        }
+        set {
+            self[index] = newValue
+        }
+    }
+
+    /**
+     slice access
+     */
     public subscript(slices: [Slice]) -> NdArray<T> {
         get {
             var a = NdArraySlice(self, sliced: 0)
