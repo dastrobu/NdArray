@@ -1,6 +1,6 @@
 # NdArray
 
-[![Swift Version](https://img.shields.io/badge/swift-5.6-blue.svg)](https://swift.org)
+[![Swift Version](https://img.shields.io/badge/swift-5.7-blue.svg)](https://swift.org)
 ![Platform](https://img.shields.io/badge/platform-macOS|iOS|tvOS|whatchOS-lightgray.svg)
 ![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci.yaml/badge.svg)
 [![documentation](https://github.com/dastrobu/NdArray/raw/main/docs/badge.svg?sanitize=true)](https://dastrobu.github.io/NdArray/)
@@ -61,7 +61,7 @@ all compiler warnings on `0.4.0` before upgrading to `0.5.0`, see also [API Chan
 ```swift
 let package = Package(
     dependencies: [
-        .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.4.0"),
+        .package(url: "https://github.com/dastrobu/NdArray.git", from: "0.5.0"),
     ]
 )
 ```
@@ -78,7 +78,7 @@ NdArray is very similar to
 ```swift
 let a = NdArray<Double>([9, 9, 0, 9])
 let b = NdArray(a)
-a[[2]] = 9.0
+a[2] = 9.0
 print(b) // [9.0, 9.0, 9.0, 9.0]
 print(a.ownsData) // true
 print(b.ownsData) // false
@@ -90,11 +90,11 @@ Like NumPy's ndarray, slices and strides can be created.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-let b = NdArray(a[[0... ~ 2]]) // every second element
+let b = NdArray(a[0... ~ 2]) // every second element
 print(a) // [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
 print(b) // [0.0, 2.0, 4.0, 6.0, 8.0]
 print(b.strides) // [2]
-b[[0...]].set(0)
+b[0...].set(0)
 print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
 print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
 ``` 
@@ -108,25 +108,25 @@ takes all elements along an axis. The stride `~ 2` selects only every second ele
 NumPy's syntax.
 
 ```
-NdArray          NumPy
-a[[0...]]        a[::]
-a[[0... ~ 2]]    a[::2]
-a[[..<42 ~ 2]]   a[:42:2]
-a[[3..<42 ~ 2]]  a[3:42:2]
-a[[3...42 ~ 2]]  a[3:41:2]
+NdArray        NumPy
+a[0...]        a[::]
+a[0... ~ 2]    a[::2]
+a[..<42 ~ 2]   a[:42:2]
+a[3..<42 ~ 2]  a[3:42:2]
+a[3...42 ~ 2]  a[3:41:2]
 ```
 
 Alternatively, slice objects can be created programmatically. The following notations are equivalent:
 
 ```
- a[[0...]] ≡ a[Slice()]
- a[[1...]] ≡ a[Slice(lowerBound: 1)]]
- a[[..<42]] ≡ a[Slice(upperBound: 42)]]
- a[[...42]] ≡ a[Slice(upperBound: 43)]]
- a[[1..<42]] ≡ a[Slice(lowerBound: 1, upperBound: 42)]]
- a[[1... ~ 2]] ≡ a[Slice(lowerBound: 1, upperBound, stride: 2)]]
- a[[..<42 ~ 3]] ≡ a[Slice(upperBound: 42, stride: 3)]]
- a[[1..<42 ~ 3]] ≡ a[Slice(lowerBound: 1, upperBound: 42, stride: 3)]]
+ a[0...] ≡ a[Slice()]
+ a[1...] ≡ a[Slice(lowerBound: 1)]
+ a[..<42] ≡ a[Slice(upperBound: 42)]
+ a[...42] ≡ a[Slice(upperBound: 43)]
+ a[1..<42] ≡ a[Slice(lowerBound: 1, upperBound: 42)]
+ a[1... ~ 2] ≡ a[Slice(lowerBound: 1, upperBound, stride: 2)]
+ a[..<42 ~ 3] ≡ a[Slice(upperBound: 42, stride: 3)]
+ a[1..<42 ~ 3] ≡ a[Slice(lowerBound: 1, upperBound: 42, stride: 3)]
 ```
 
 Note, to avoid confusion with pure indexing, integer literals need to be converted to a slice explicitly. This means
@@ -134,8 +134,8 @@ Note, to avoid confusion with pure indexing, integer literals need to be convert
 ```swift
 let a = NdArray<Double>.range(to: 10)
 let _ = a[1] // does not work
-let s1: NdArray<Double> = a[[Slice(1)]] // selects slice at index one along zeroth dimension
-let a1: Double = a[[1]] // selects first element
+let s1: NdArray<Double> = a[Slice(1)] // selects slice at index one along zeroth dimension
+let a1: Double = a[1] // selects first element
 ```
 
 More detailed examples on each slice type are provided in the sections below.
@@ -149,11 +149,11 @@ let a = NdArray<Double>.ones([2, 2])
 print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
-a[[Slice(1)]].set(0.0)
+a[Slice(1)].set(0.0)
 print(a)
 // [[1.0, 1.0],
 //  [0.0, 0.0]]
-a[[0..., Slice(1)]].set(2.0)
+a[0..., 1].set(2.0)
 print(a)
 // [[1.0, 2.0],
 //  [0.0, 2.0]]
@@ -164,11 +164,11 @@ use [element indexing](#element-manipulation) instead or use the `Vector` subtyp
 
 ```swift
 let a = NdArray<Double>.range(to: 4)
-print(a[[Slice(0)]]) // [0.0]
-print(a[[0]]) // 0.0
+print(a[Slice(0)]) // [0.0]
+print(a[0]) // 0.0
 let v = Vector(a)
 print(v[0] as Double) // 0.0
-print(v[[0]]) // 0.0
+print(v[0]) // 0.0
 ```
 
 ### `UnboundedRange` Slices
@@ -180,7 +180,7 @@ let a = NdArray<Double>.ones([2, 2])
 print(a)
 // [[1.0, 1.0],
 //  [1.0, 1.0]]
-a[[0..., Slice(1)]].set(0.0)
+a[0..., 1].set(0.0)
 print(a)
 // [[1.0, 0.0],
 //  [1.0, 0.0]]
@@ -196,7 +196,7 @@ print(a)
 //  [4.0, 5.0],
 //  [6.0, 7.0],
 //  [8.0, 9.0]]
-a[[0... ~ 2]].set(0.0)
+a[0... ~ 2].set(0.0)
 print(a)
 // [[0.0, 0.0],
 //  [2.0, 3.0],
@@ -215,9 +215,9 @@ Ranges `n..<m` and closed ranges `n...m` allow selecting certain sub arrays.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-print(a[[2..<4]]) // [2.0, 3.0]
-print(a[[2...4]]) // [2.0, 3.0, 4.0]
-print(a[[2...4 ~ 2]]) // [2.0, 4.0]
+print(a[2..<4]) // [2.0, 3.0]
+print(a[2...4]) // [2.0, 3.0, 4.0]
+print(a[2...4 ~ 2]) // [2.0, 4.0]
 ``` 
 
 ### `PartialRangeFrom`, `PartialRangeUpTo` and `PartialRangeThrough` Slices
@@ -226,21 +226,20 @@ Partial ranges `...<m`, `...m` and `n...` define only one bound.
 
 ```swift
 let a = NdArray<Double>.range(to: 10)
-print(a[[..<4]]) // [0.0, 1.0, 2.0, 3.0]
-print(a[[...4]]) // [0.0, 1.0, 2.0, 3.0, 4.0]
-print(a[[4...]]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
-print(a[[4... ~ 2]]) // [4.0, 6.0, 8.0]
+print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
+print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
+print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+print(a[4... ~ 2]) // [4.0, 6.0, 8.0]
 ``` 
 
 ## Element Manipulation
 
-Individual elements can be indexed by passing a (Swift) array as index. In the future, there may be varargs support on
-subscript to be able to pass indices directly [#44](https://github.com/dastrobu/NdArray/issues/44).
+Individual elements can be indexed by passing a (Swift) array as index or varargs.
 
 ```swift
 let a = NdArray<Double>.range(to: 12).reshaped([2, 2, 3])
 a[[0, 1, 2]]
-a[0, 1, 2]  // not supported yet
+a[0, 1, 2]
 ```
 
 For efficient iteration of all indices consider using e.g. `apply`, `map` or `reduce`.
@@ -269,7 +268,7 @@ Scaling every second element in a matrix by its row index could be done in the f
 ```swift
 let a = NdArray<Double>.ones([4, 3])
 for i in 0..<a.shape[0] {
-    a[[Slice(i), 0... ~ 2]] *= Double(i)
+    a[Slice(i), 0... ~ 2] *= Double(i)
 }
 print(a)
 // [[0.0, 1.0, 0.0],
@@ -504,8 +503,8 @@ When creating a new array from an existing one, no copy is made unless necessary
 let A = NdArray<Double>.ones(5)
 var B = NdArray(A) // no copy
 B = NdArray(copy: A) // copy explicitly required
-B = NdArray(A[[0... ~ 2]]) // no copy, but B will not be contiguous
-B = NdArray(A[[0... ~ 2]], order: .C) // copy, because otherwise new array will not have C ordering
+B = NdArray(A[0... ~ 2]) // no copy, but B will not be contiguous
+B = NdArray(A[0... ~ 2], order: .C) // copy, because otherwise new array will not have C ordering
 ```
 
 ### Subtypes
@@ -611,10 +610,10 @@ object, slices are obtained by
 
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
-var B = A[[0...]] // NdArray with sliced = 1, i.e. one dimension has been sliced
-B = A[[0..., 0... ~ 2]] // NdArray with sliced = 2, i.e. one dimension has been sliced
-B = A[[0..., 0... ~ 2, ..<1]] // NdArray with sliced = 3, i.e. one dimension has been sliced
-B = A[[0..., 0... ~ 2, ..<1, 0...]] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
+var B = A[0...] // NdArray with sliced = 1, i.e. one dimension has been sliced
+B = A[0..., 0... ~ 2] // NdArray with sliced = 2, i.e. one dimension has been sliced
+B = A[0..., 0... ~ 2, ..<1] // NdArray with sliced = 3, i.e. one dimension has been sliced
+B = A[0..., 0... ~ 2, ..<1, 0...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
 ```
 
 With this API, there is no subtypes returned when slicing, requiring to remember how many times the array was already
