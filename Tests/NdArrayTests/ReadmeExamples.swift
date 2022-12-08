@@ -252,6 +252,21 @@ class ReadmeExamples: XCTestCase {
         //  [0.0, 0.0]]
     }
 
+    func testDataArray() {
+        let a = [1, 2, 3]
+        let b = NdArray(a)
+        let c = b.dataArray
+        print(c)
+        // [1, 2, 3]
+    }
+
+    func testData() {
+        let a = NdArray([1, 2, 3])
+        let aData = a.data
+        print(aData)
+        // UnsafeMutableBufferPointer(start: 0x0000600002796760, count: 3)
+    }
+
     func testTypes() {
         do {
             let A = NdArray<Double>.ones(5)

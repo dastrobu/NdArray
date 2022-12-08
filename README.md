@@ -37,6 +37,8 @@ features to enable fast and simple handling of multidimensional numeric data.
   - [LU Factorization](#lu-factorization)
   - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
+- [Interaction with Swift Arrays](#interaction-with-swift-arrays)
+- [Raw Data Access](#raw-data-access)
 - [Type Concept](#type-concept)
   - [Subtypes](#subtypes)
 - [Numerical Backend](#numerical-backend)
@@ -492,6 +494,36 @@ print("this is a 2d array in multi line format line \n\(NdArray<Double>.zeros([2
 //  [0.0, 0.0]]
 ```
 
+## Interaction with Swift Arrays
+
+Normal Swift arrays can be converted to a NdArray and back as follows.
+
+```swift
+let a = [1, 2, 3]
+let b = NdArray(a)
+let c = b.dataArray
+print(c)
+// [1, 2, 3]
+```
+
+It should be noted that the conversion requires copying data. This is usually quite fast, but if a numeric algorithm
+would convert very small array back and forth, it could slow down the algorithm unnecessarily.
+
+## Raw Data Access
+
+Instead of converting to another type, sometimes it can be helpful to access raw data. Especially, when passing data to
+another low level numeric library.
+Raw data can be accessed via the `data` property.
+
+```swift
+let a = NdArray([1, 2, 3])
+let aData = a.data
+print(aData)
+// UnsafeMutableBufferPointer(start: 0x0000600002796760, count: 3)
+```
+
+Note that strides and dimensions must be taken care of manually.
+
 ## Type Concept
 
 The idea is to have basic `NdArray` type, which keeps a pointer to data and stores shape and stride information. Since
@@ -585,7 +617,7 @@ B = A[0...][0... ~ 2][..<1] // NdArraySlice with sliced = 3, i.e. one dimension 
 B = A[0...][0... ~ 2][..<1][0...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
 ```
 
-So it is recommended to convert to an `NdArray` after slicing before continuing to work with the data.
+So it was recommended to convert to an `NdArray` after slicing before continuing to work with the data.
 
 ```swift
 let A = NdArray<Double>.ones([2, 2, 2])
