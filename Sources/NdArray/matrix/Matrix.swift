@@ -513,3 +513,15 @@ public func * (A: Matrix<Float>, B: Matrix<Float>) -> Matrix<Float> {
     cblas_sgemm(order, CblasNoTrans, CblasNoTrans, m, n, k, 1, a.dataStart, lda, b.dataStart, ldb, 0, c.dataStart, ldc)
     return c
 }
+
+public extension Matrix where T: AdditiveArithmetic {
+    convenience init(diag: Vector<T>, order: Contiguous = .C) {
+        let shape = [diag.shape[0], diag.shape[0]]
+        self.init(empty: shape)
+        let z = Vector<T>.zeros(diag.shape[0])
+        for (i, x) in diag.enumerated() {
+            self[Slice(i)] = z
+            self[i, i] = x
+        }
+    }
+}
