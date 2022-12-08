@@ -1,10 +1,12 @@
 disabled_rules: # rule identifiers to exclude from running
-  - trailing_comma
-  - identifier_name
-  - force_try
-  - line_length
   - file_length
+  - force_try
+  - identifier_name
+  - line_length
+  - shorthand_operator
   - todo
+  - trailing_comma
+  - type_body_length
 function_body_length:
   - 100
 cyclomatic_complexity:
