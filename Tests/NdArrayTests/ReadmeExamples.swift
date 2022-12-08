@@ -9,7 +9,7 @@ class ReadmeExamples: XCTestCase {
     func testAliasing() {
         let a = NdArray<Double>([9, 9, 0, 9])
         let b = NdArray(a)
-        a[[2]] = 9.0
+        a[2] = 9.0
         print(b) // [9.0, 9.0, 9.0, 9.0]
         print(a.ownsData) // true
         print(b.ownsData) // false
@@ -17,11 +17,11 @@ class ReadmeExamples: XCTestCase {
 
     func testSlices() {
         let a = NdArray<Double>.range(to: 10)
-        let b = NdArray(a[[0... ~ 2]]) // every second element
+        let b = NdArray(a[0... ~ 2]) // every second element
         print(a) // [0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
         print(b) // [0.0, 2.0, 4.0, 6.0, 8.0]
         print(b.strides) // [2]
-        b[[0...]].set(0)
+        b[0...].set(0)
         print(a) // [0.0, 1.0, 0.0, 3.0, 0.0, 5.0, 0.0, 7.0, 0.0, 9.0]
         print(b) // [0.0, 0.0, 0.0, 0.0, 0.0]
     }
@@ -32,22 +32,22 @@ class ReadmeExamples: XCTestCase {
             print(a)
             // [[1.0, 1.0],
             //  [1.0, 1.0]]
-            a[[Slice(1)]].set(0.0)
+            a[Slice(1)].set(0.0)
             print(a)
             // [[1.0, 1.0],
             //  [0.0, 0.0]]
-            a[[0..., Slice(1)]].set(2.0)
+            a[0..., 1].set(2.0)
             print(a)
             // [[1.0, 2.0],
             //  [0.0, 2.0]]
         }
         do {
             let a = NdArray<Double>.range(to: 4)
-            print(a[[Slice(0)]]) // [0.0]
-            print(a[[0]]) // 0.0
+            print(a[Slice(0)]) // [0.0]
+            print(a[0]) // 0.0
             let v = Vector(a)
             print(v[0] as Double) // 0.0
-            print(v[[0]]) // 0.0
+            print(v[0]) // 0.0
         }
     }
 
@@ -57,7 +57,7 @@ class ReadmeExamples: XCTestCase {
             print(a)
             // [[1.0, 1.0],
             //  [1.0, 1.0]]
-            a[[0..., Slice(1)]].set(0.0)
+            a[0..., 1].set(0.0)
             print(a)
             // [[1.0, 0.0],
             //  [1.0, 0.0]]
@@ -70,7 +70,7 @@ class ReadmeExamples: XCTestCase {
             // [4.0, 5.0],
             // [6.0, 7.0],
             // [8.0, 9.0]]
-            a[[0... ~ 2]].set(0.0)
+            a[0... ~ 2].set(0.0)
             print(a)
             // [[0.0, 0.0],
             // [2.0, 3.0],
@@ -82,17 +82,17 @@ class ReadmeExamples: XCTestCase {
 
     func testRangeAndClosedRange() {
         let a = NdArray<Double>.range(to: 10)
-        print(a[[2..<4]]) // [2.0, 3.0]
-        print(a[[2...4]]) // [2.0, 3.0, 4.0]
-        print(a[[2...4 ~ 2]]) // [2.0, 4.0]
+        print(a[2..<4]) // [2.0, 3.0]
+        print(a[2...4]) // [2.0, 3.0, 4.0]
+        print(a[2...4 ~ 2]) // [2.0, 4.0]
     }
 
     func testPartialRanges() {
         let a = NdArray<Double>.range(to: 10)
-        print(a[[..<4]]) // [0.0, 1.0, 2.0, 3.0]
-        print(a[[...4]]) // [0.0, 1.0, 2.0, 3.0, 4.0]
-        print(a[[4...]]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
-        print(a[[4... ~ 2]]) // [4.0, 6.0, 8.0]
+        print(a[..<4]) // [0.0, 1.0, 2.0, 3.0]
+        print(a[...4]) // [0.0, 1.0, 2.0, 3.0, 4.0]
+        print(a[4...]) // [4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
+        print(a[4... ~ 2]) // [4.0, 6.0, 8.0]
     }
 
     func testScalars() {
@@ -257,33 +257,33 @@ class ReadmeExamples: XCTestCase {
             let A = NdArray<Double>.ones(5)
             var B = NdArray(A) // no copy
             B = NdArray(copy: A) // copy explicitly required
-            B = NdArray(A[[0... ~ 2]]) // no copy, but B will not be contiguous
-            B = NdArray(A[[0... ~ 2]], order: .C) // copy, because otherwise new array will not have C ordering
+            B = NdArray(A[0... ~ 2]) // no copy, but B will not be contiguous
+            B = NdArray(A[0... ~ 2], order: .C) // copy, because otherwise new array will not have C ordering
 
             _ = B
         }
         do {
             let A = NdArray<Double>.ones([2, 2, 2])
-            var B = A[[0...]] // return NdArraySlice with sliced = 1, i.e. one dimension has been sliced
-            B = A[[0..., 0... ~ 2]] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
-            B = A[[0..., 0... ~ 2, ...1]] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
+            var B = A[0...] // return NdArraySlice with sliced = 1, i.e. one dimension has been sliced
+            B = A[0..., 0... ~ 2] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
+            B = A[0..., 0... ~ 2, ...1] // return NdArraySlice with sliced = 2, i.e. one dimension has been sliced
             // B = A[0..., 0... ~ 2, ...1, 0...] // Precondition failed: Cannot slice array with ndim 3 more than 3 times.
 
             _ = B
         }
         do {
             let A = NdArray<Double>.ones([2, 2, 2])
-            var B = NdArray(A[[0...]]) // B has shape [2, 2, 2]
+            var B = NdArray(A[0...]) // B has shape [2, 2, 2]
             print(B.shape)
-            B = NdArray(A[[0..., 0... ~ 2]]) // B has shape [2, 1, 2]
+            B = NdArray(A[0..., 0... ~ 2]) // B has shape [2, 1, 2]
             print(B.shape)
-            B = NdArray(A[[0..., 0... ~ 2, ..<1]]) // B has shape [2, 1, 1]
+            B = NdArray(A[0..., 0... ~ 2, ..<1]) // B has shape [2, 1, 1]
             print(B.shape)
         }
         do {
             let A = NdArray<Double>.ones([2, 2])
             let B = NdArray<Double>.zeros(2)
-            A[[0..., Slice(0)]] = B[[0...]]
+            A[0..., Slice(0)] = B[0...]
             print(A)
             // [[0.0, 1.0],
             //  [0.0, 1.0]]
@@ -322,7 +322,7 @@ class ReadmeExamples: XCTestCase {
         do {
             let a = NdArray<Double>.ones([4, 3])
             for i in 0..<a.shape[0] {
-                a[[Slice(i), 0... ~ 2]] *= Double(i)
+                a[Slice(i), 0... ~ 2] *= Double(i)
             }
             print(a)
             // [[0.0, 1.0, 0.0],
@@ -333,7 +333,7 @@ class ReadmeExamples: XCTestCase {
         do {
             let a = NdArray<Double>.ones([4, 3])
             for i in 0..<a.shape[0] {
-                let ai = Vector(a[[Slice(i)]])
+                let ai = Vector(a[Slice(i)])
                 for j in stride(from: 0, to: a.shape[1], by: 2) {
                     ai[j] *= Double(i)
                 }
