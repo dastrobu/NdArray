@@ -606,7 +606,7 @@ print(A)
 //  [0.0, 1.0]]
 ```
 
-These conversions are not necessary any more starting from version `0.4.0`. With the new slice API, based on the `Slice`
+These conversions are not necessary anymore, starting from version `0.4.0`. With the new slice API, based on the `Slice`
 object, slices are obtained by
 
 ```swift
