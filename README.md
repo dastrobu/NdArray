@@ -519,7 +519,7 @@ let a = NdArray<Double>.ones([2, 2])
 let b = NdArray<Double>.zeros(2)
 let A = Matrix<Double>(a) // matrix from array without copy
 let x = Vector<Double>(b) // vector from array without copy
-let Ax = A * x; // matrix vector multiplication is defined
+let Ax = A * x // matrix vector multiplication is defined
 let _ = Vector<Double>(a) // Precondition failed: Cannot create vector with shape [2, 2]. Vector must have one dimension.
 ````
 
