@@ -508,6 +508,21 @@ print(c)
 
 It should be noted that the conversion requires copying data. This is usually quite fast, but if a numeric algorithm
 would convert very small array back and forth, it could slow down the algorithm unnecessarily.
+Multidimensional arrays will be represented as flat arrays, to convert a vector or a matrix to nested arrays, make use
+of the sequence protocols as shown below.
+
+```swift
+let v = Vector<Int>([1, 2, 3])
+print(Array(v))
+// [1, 2, 3]
+let M = Matrix<Int>([
+  [1, 2, 3],
+  [3, 2, 1],
+])
+let a = Array(M).map({ Array($0) })
+print(a)
+// [[1, 2, 3], [3, 2, 1]]
+```
 
 ## Raw Data Access
 

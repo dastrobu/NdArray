@@ -5,11 +5,15 @@
 import Darwin
 import Accelerate
 
-open class Matrix<T>: NdArray<T> {
+open class Matrix<T>: NdArray<T>, Sequence {
 
     /// flag to indicate if this matrix is a square matrix
     var isSquare: Bool {
         shape[0] == shape[1]
+    }
+
+    public convenience init(_ a: [[T]]) {
+        self.init(a, order: .C)
     }
 
     /// create an 2D NdArray from a plain array

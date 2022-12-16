@@ -260,6 +260,19 @@ class ReadmeExamples: XCTestCase {
         // [1, 2, 3]
     }
 
+    func testSequenceProtocol() {
+        let v = Vector<Int>([1, 2, 3])
+        print(Array(v))
+        // [1, 2, 3]
+        let M = Matrix<Int>([
+            [1, 2, 3],
+            [3, 2, 1],
+        ])
+        let a = Array(M).map({ Array($0) })
+        print(a)
+        // [[1, 2, 3], [3, 2, 1]]
+    }
+
     func testData() {
         let a = NdArray([1, 2, 3])
         let aData = a.data
