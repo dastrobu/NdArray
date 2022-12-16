@@ -373,4 +373,12 @@ class ReadmeExamples: XCTestCase {
             //  [3.0, 1.0, 3.0]]
         }
     }
+
+    func testPlot() {
+        let m = 2
+        let A = Matrix<Double>(NdArray.range(to: Double(m * m)).reshaped([m, m]))
+        let x = Vector<Double>.ones(m)
+        let X = Matrix<Double>.ones([m, m])
+        plot(try! A.solve(X))
+    }
 }
