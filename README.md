@@ -35,6 +35,7 @@ features to enable fast and simple handling of multidimensional numeric data.
   - [Matrix Transpose](#matrix-transpose)
   - [Matrix Inversion](#matrix-inversion)
   - [LU Factorization](#lu-factorization)
+  - [Singular Value Decomposition (SVD)](#singular-value-decomposition-svd)
   - [Solve a Linear System of Equations](#solve-a-linear-system-of-equations)
 - [Pretty Printing](#pretty-printing)
 - [Interaction with Swift Arrays](#interaction-with-swift-arrays)
