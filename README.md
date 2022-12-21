@@ -3,7 +3,6 @@
 [![Swift Version](https://img.shields.io/badge/swift-5.7-blue.svg)](https://swift.org)
 ![Platform](https://img.shields.io/badge/platform-macOS|iOS|tvOS|whatchOS-lightgray.svg)
 ![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci.yaml/badge.svg)
-[![documentation](https://github.com/dastrobu/NdArray/raw/main/docs/badge.svg?sanitize=true)](https://dastrobu.github.io/NdArray/)
 
 N dimensional array package for numeric computing in [Swift](https://swift.org).
 
@@ -712,4 +711,4 @@ Some features would be nice to have at some time but currently out of scope.
 
 ## Docs
 
-Read the generated [docs](https://dastrobu.github.io/NdArray).
+Read the generated [docs](https://dastrobu.github.io/NdArray/documentation/ndarray).

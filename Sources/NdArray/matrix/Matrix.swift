@@ -5,6 +5,7 @@
 import Darwin
 import Accelerate
 
+/// Special NdArray subtype for two dimensional data.
 open class Matrix<T>: NdArray<T>, Sequence {
 
     /// flag to indicate if this matrix is a square matrix
