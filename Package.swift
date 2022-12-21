@@ -11,10 +11,16 @@ let package = Package(
             name: "NdArray",
             targets: ["NdArray"]),
     ],
-    dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-    ],
+    dependencies: {
+        // https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/
+        var deps: [PackageDescription.Package.Dependency] = []
+        #if swift(>=5.6.0)
+        deps.append(
+            .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
+        )
+        #endif
+        return deps
+    }(),
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.

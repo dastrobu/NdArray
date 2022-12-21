@@ -10,6 +10,7 @@ public enum SortOrder {
     case descending
 }
 
+/// Special NdArray subtype for one dimensional data.
 open class Vector<T>: NdArray<T>, Sequence {
     public required init(empty count: Int) {
         super.init(empty: count)

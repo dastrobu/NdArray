@@ -1,11 +1,13 @@
 import Darwin
 import Accelerate
 
+/// Memory layout for contiguous data
 public enum Contiguous {
     case C
     case F
 }
 
+/// Array for dimensional data.
 open class NdArray<T>: CustomDebugStringConvertible,
     CustomStringConvertible {
 

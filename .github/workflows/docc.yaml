@@ -1,0 +1,26 @@
+name: generate-documentation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-docs:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: generate-documentation
+        # https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/generating-documentation-for-hosting-online/
+        run: >
+          swift package 
+          --allow-writing-to-directory ./docs 
+          generate-documentation 
+          --output-path ./docs 
+          --hosting-base-path NdArray 
+          --disable-indexing 
+          --transform-for-static-hosting
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs

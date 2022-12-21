@@ -5,6 +5,7 @@
 # Swift Package Manager
 .build/
 .swiftpm
+docs
 
 DerivedData/
 
