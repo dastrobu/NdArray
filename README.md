@@ -1,6 +1,6 @@
 # NdArray
 
-[![Swift Version](https://img.shields.io/badge/swift-5.7-blue.svg)](https://swift.org)
+[![Swift Version](https://img.shields.io/badge/swift-5.9-blue.svg)](https://swift.org)
 ![Platform](https://img.shields.io/badge/platform-macOS|iOS|tvOS|whatchOS-lightgray.svg)
 ![Build](https://github.com/dastrobu/NdArray/actions/workflows/ci.yaml/badge.svg)
 
