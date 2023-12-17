@@ -23,6 +23,9 @@ jobs:
           --hosting-base-path NdArray 
           --disable-indexing 
           --transform-for-static-hosting
+      - name: generate theme-settings.json
+        run: echo '' > theme-settings.json
+        working-directory: docs
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
