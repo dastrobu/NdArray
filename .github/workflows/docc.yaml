@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v6
       - uses: swift-actions/setup-swift@v3
         with:
-          swift-version: "5.9"
+          swift-version: "6.2"
 
       - name: generate-documentation
         # https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/generating-documentation-for-hosting-online/
