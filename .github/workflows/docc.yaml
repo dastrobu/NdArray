@@ -10,18 +10,18 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: swift-actions/setup-swift@v1
+      - uses: swift-actions/setup-swift@v3
         with:
           swift-version: "5.9"
       - name: generate-documentation
         # https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/generating-documentation-for-hosting-online/
         run: >
-          swift package 
-          --allow-writing-to-directory ./docs 
-          generate-documentation 
-          --output-path ./docs 
-          --hosting-base-path NdArray 
-          --disable-indexing 
+          swift package
+          --allow-writing-to-directory ./docs
+          generate-documentation
+          --output-path ./docs
+          --hosting-base-path NdArray
+          --disable-indexing
           --transform-for-static-hosting
       - name: generate theme-settings.json
         run: echo '' > theme-settings.json
