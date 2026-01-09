@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -11,16 +11,10 @@ let package = Package(
             name: "NdArray",
             targets: ["NdArray"]),
     ],
-    dependencies: {
+    dependencies: [
         // https://apple.github.io/swift-docc-plugin/documentation/swiftdoccplugin/
-        var deps: [PackageDescription.Package.Dependency] = []
-        #if swift(>=5.6.0)
-        deps.append(
-            .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.0")
-        )
-        #endif
-        return deps
-    }(),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.3.5"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.

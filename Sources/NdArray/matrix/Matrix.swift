@@ -33,7 +33,11 @@ open class Matrix<T>: NdArray<T>, Sequence {
             for i in 0..<rowCount {
                 let row = a[i]
                 precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
-                memcpy(dataStart + i * strides[0], row, colCount * MemoryLayout<T>.stride)
+                row.withUnsafeBufferPointer { p in
+                    if let base = p.baseAddress {
+                        memcpy(dataStart + i * strides[0], base, colCount * MemoryLayout<T>.stride)
+                    }
+                }
             }
         case .F:
             for i in 0..<rowCount {
