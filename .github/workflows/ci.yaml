@@ -6,7 +6,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: norio-nomura/action-swiftlint@3.2.1
         with:
           args: --strict
@@ -19,7 +19,7 @@ jobs:
           - "6.2"
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: swift-actions/setup-swift@v3
         with:
           swift-version: ${{ matrix.swift-version }}
@@ -27,15 +27,15 @@ jobs:
   iOS-build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: xcodebuild -scheme NdArray -destination 'platform=iOS Simulator,name=iPhone 13'
   tvOS-build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: xcodebuild -scheme NdArray -destination 'platform=tvOS Simulator,name=Apple TV'
   whatchOS-build:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: xcodebuild -scheme NdArray -destination 'platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)'
