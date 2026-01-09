@@ -186,7 +186,11 @@ open class NdArray<T>: CustomDebugStringConvertible,
             for i in 0..<rowCount {
                 let row = a[i]
                 precondition(row.count == colCount, "\(row.count) == \(colCount) at row \(i)")
-                memcpy(dataStart + i * strides[0], row, colCount * MemoryLayout<T>.stride)
+                row.withUnsafeBufferPointer { p in
+                    if let base = p.baseAddress {
+                        memcpy(dataStart + i * strides[0], base, colCount * MemoryLayout<T>.stride)
+                    }
+                }
             }
         case .F:
             for i in 0..<rowCount {
@@ -219,7 +223,11 @@ open class NdArray<T>: CustomDebugStringConvertible,
                 for j in 0..<jCount {
                     let aij = ai[j]
                     precondition(aij.count == kCount, "\(aij.count) == \(kCount) at index \(i), \(j)")
-                    memcpy(dataStart + i * strides[0] + j * strides[1], aij, kCount * MemoryLayout<T>.stride)
+                    aij.withUnsafeBufferPointer { p in
+                        if let base = p.baseAddress {
+                            memcpy(dataStart + i * strides[0] + j * strides[1], base, kCount * MemoryLayout<T>.stride)
+                        }
+                    }
                 }
             }
         case .F:
